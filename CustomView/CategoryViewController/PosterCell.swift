@@ -21,6 +21,8 @@ class PosterCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
     private func configure() {
         contentView.addSubview(posterImageView)
         posterImageView.contentMode = .scaleAspectFill

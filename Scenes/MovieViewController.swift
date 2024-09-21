@@ -28,10 +28,10 @@ class MovieViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let categories = [
-            Category(title: "Popular"),
-            Category(title: "Now Playing"),
-            Category(title: "Upcoming"),
-            Category(title: "Top Rated")
+            Category(title: "Popular",image: UIImage(named: "shrek-poster")),
+            Category(title: "Now Playing",image: UIImage(named: "shrek-poster")),
+            Category(title: "Upcoming",image: UIImage(named: "shrek-poster")),
+            Category(title: "Top Rated",image: UIImage(named: "shrek-poster"))
         ]
         
         for category in categories {
