@@ -27,13 +27,13 @@ class MovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let categories = [
             Category(title: "Popular"),
             Category(title: "Now Playing"),
             Category(title: "Upcoming"),
             Category(title: "Top Rated")
         ]
+        
         for category in categories {
             let categoryVC = CategoryViewController(category: category)
             addChild(categoryVC)

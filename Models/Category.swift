@@ -8,6 +8,6 @@
 import Foundation
 
 struct Category {
-    let title: String
-//    let categoryURLs: [URL]
+    var title: String
+//    var url: URL 
 }

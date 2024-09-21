@@ -32,5 +32,4 @@ class PosterCell: UICollectionViewCell {
             posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    
 }
