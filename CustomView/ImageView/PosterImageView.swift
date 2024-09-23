@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class PosterImageView: UIImageView {
 
     override init(frame: CGRect) {

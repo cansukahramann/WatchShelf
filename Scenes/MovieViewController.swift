@@ -31,7 +31,9 @@ class MovieViewController: UIViewController {
         
         let configurations: [(title: String, movieAPI: MovieAPI)] = [
             ("Popular", .popular),
-            ("Upcoming", .upcoming)
+            ("Now Playing",.nowPlaying),
+            ("Upcoming", .upcoming),
+            ("Top Rated", .topRated)
         ]
         
         for configuration in configurations {

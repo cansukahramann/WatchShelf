@@ -27,19 +27,8 @@ class TvShowViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let categories = [
-//            Category(title: "Popular",image: UIImage(named: "frog-poster")),
-//            Category(title: "Airing Today",image: UIImage(named: "frog-poster")),
-//            Category(title: "Now Playing",image: UIImage(named: "frog-poster")),
-//            Category(title: "Top Rated",image: UIImage(named: "frog-poster"))
-//        ]
-//        
-//        for category in categories {
-//            let categoryVC = CategoryViewController(category: category)
-//            addChild(categoryVC)
-//            stackView.addArrangedSubview(categoryVC.view)
-//            categoryVC.didMove(toParent: self)
-//        }
+        
+       
         setUpUI()
     }
     

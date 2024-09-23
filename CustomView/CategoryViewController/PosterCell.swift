@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PosterCell: UICollectionViewCell {
     
@@ -14,16 +15,18 @@ class PosterCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        setupConstraint()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configure(model: ContentResult) {
+        posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterPath)"))
+    }
     
-    
-    private func configure() {
+    private func setupConstraint() {
         contentView.addSubview(posterImageView)
         posterImageView.contentMode = .scaleAspectFill
         

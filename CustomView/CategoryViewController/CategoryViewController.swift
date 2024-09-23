@@ -6,9 +6,9 @@
 //
 
 import UIKit
+import Kingfisher
 
-class CategoryViewController: UIViewController {
-    
+class CategoryViewController: UIViewController, CategoryViewModelDelegate {
     private let viewModel = CategoryViewModel()
     
     private var collectionView: UICollectionView = {
@@ -40,8 +40,10 @@ class CategoryViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         setupConstraints()
-        
         categoryNameLabel.text = title
+        
+        viewModel.delegate = self
+        viewModel.request()
     }
     
     init(title: String, movieAPI: MovieAPI) {
@@ -56,6 +58,11 @@ class CategoryViewController: UIViewController {
         let layout = UIHelper.twoColumnHorizontalLayout(in: collectionView)
         collectionView.setCollectionViewLayout(layout, animated: false)
     }
+    
+    func updateCollectionView() {
+        collectionView.reloadData()
+    }
+    
     
     private func setupConstraints() {
         view.addSubview(collectionView)
@@ -78,12 +85,12 @@ class CategoryViewController: UIViewController {
 
 extension CategoryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return viewModel.contentResult.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
-        cell.backgroundColor =  .red
+        cell.configure(model: viewModel.contentResult[indexPath.item])
         return cell
     }
 }
@@ -91,7 +98,6 @@ extension CategoryViewController: UICollectionViewDataSource {
 extension CategoryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailVC = DetailViewController()
-        
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }

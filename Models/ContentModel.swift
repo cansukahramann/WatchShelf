@@ -9,7 +9,7 @@ import Foundation
 
 struct ContentModel: Codable{
     let page: Int
-    let results: [ContentResult]?
+    let results: [ContentResult]
 }
 
 struct ContentResult: Codable {
