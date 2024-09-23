@@ -22,7 +22,6 @@ class PosterImageView: UIImageView {
     private func configure() {
         layer.cornerRadius = 12
         clipsToBounds = true
-        image = UIImage(named: "shrek-poster")
         translatesAutoresizingMaskIntoConstraints = false
     }
 }

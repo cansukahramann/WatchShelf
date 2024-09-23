@@ -1,5 +1,5 @@
 //
-//  CategoryViewController.swift
+//  ContentViewController.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 17.09.2024.
@@ -8,9 +8,7 @@
 import UIKit
 import Kingfisher
 
-class CategoryViewController: UIViewController, CategoryViewModelDelegate {
-    private let viewModel = CategoryViewModel()
-    
+class ContentViewController: UIViewController, ContentViewModelDelegate {
     private var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .systemBackground
@@ -30,26 +28,31 @@ class CategoryViewController: UIViewController, CategoryViewModelDelegate {
         return label
     }()
     
+    private var viewModel: ContentViewModel! = nil
+    
+    init(title: String, contentAPI: ContentAPI) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.title = title
+        
+        viewModel = ContentViewModel(contentAPI: contentAPI)
+        viewModel.delegate = self
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         setupConstraints()
         categoryNameLabel.text = title
         
-        viewModel.delegate = self
-        viewModel.request()
-    }
-    
-    init(title: String, movieAPI: MovieAPI) {
-        super.init(nibName: nil, bundle: nil)
-        self.title = title
-        viewModel.movieAPI = movieAPI
+        viewModel.fetchContent()
     }
     
     override func viewDidLayoutSubviews() {
@@ -83,7 +86,7 @@ class CategoryViewController: UIViewController, CategoryViewModelDelegate {
     }
 }
 
-extension CategoryViewController: UICollectionViewDataSource {
+extension ContentViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.contentResult.count
     }
@@ -95,7 +98,7 @@ extension CategoryViewController: UICollectionViewDataSource {
     }
 }
 
-extension CategoryViewController: UICollectionViewDelegate {
+extension ContentViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailVC = DetailViewController()
         navigationController?.pushViewController(detailVC, animated: true)

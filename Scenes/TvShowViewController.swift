@@ -27,8 +27,19 @@ class TvShowViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let configurations: [(title: String, contentAPI: ContentAPI)] = [
+            ("Airing Today", .airingTodayTVShow),
+            ("On The Air",.onTheAirTVShow),
+            ("Popular", .popularTVShow),
+            ("Top Rated", .topRatedTVShow)
+        ]
         
-       
+        for configuration in configurations {
+            let categoryVC = ContentViewController(title: configuration.title, contentAPI: configuration.contentAPI)
+            addChild(categoryVC)
+            stackView.addArrangedSubview(categoryVC.view)
+            categoryVC.didMove(toParent: self)
+        }
         setUpUI()
     }
     

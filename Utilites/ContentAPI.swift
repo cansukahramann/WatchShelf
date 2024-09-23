@@ -1,5 +1,5 @@
 //
-//  MovieService.swift
+//  ContentAPI.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 22.09.2024.
@@ -8,11 +8,16 @@
 import Foundation
 import Moya
 
-enum MovieAPI: TargetType {
-    case popular
-    case nowPlaying
-    case upcoming
-    case topRated
+enum ContentAPI: TargetType {
+    case popularMovie
+    case nowPlayingMovie
+    case upcomingMovie
+    case topRatedMovie
+    
+    case airingTodayTVShow
+    case onTheAirTVShow
+    case popularTVShow
+    case topRatedTVShow
     
     var baseURL: URL {
         URL(string: "https://api.themoviedb.org/3")!
@@ -20,14 +25,23 @@ enum MovieAPI: TargetType {
     
     var path: String {
         switch self {
-        case .popular:
+        case .popularMovie:
             "movie/popular"
-        case .nowPlaying:
+        case .nowPlayingMovie:
             "movie/now_playing"
-        case .upcoming:
+        case .upcomingMovie:
             "movie/upcoming"
-        case .topRated:
+        case .topRatedMovie:
             "movie/top_rated"
+            
+        case .airingTodayTVShow:
+            "tv/airing_today"
+        case .onTheAirTVShow:
+            "tv/on_the_air"
+        case .popularTVShow:
+            "tv/popular"
+        case .topRatedTVShow:
+            "tv/top_rated"
         }
     }
     

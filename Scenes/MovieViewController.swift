@@ -29,15 +29,15 @@ class MovieViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let configurations: [(title: String, movieAPI: MovieAPI)] = [
-            ("Popular", .popular),
-            ("Now Playing",.nowPlaying),
-            ("Upcoming", .upcoming),
-            ("Top Rated", .topRated)
+        let configurations: [(title: String, contentAPI: ContentAPI)] = [
+            ("Popular", .popularMovie),
+            ("Now Playing",.nowPlayingMovie),
+            ("Upcoming", .upcomingMovie),
+            ("Top Rated", .topRatedMovie)
         ]
         
         for configuration in configurations {
-            let categoryVC = CategoryViewController(title: configuration.title, movieAPI: configuration.movieAPI)
+            let categoryVC = ContentViewController(title: configuration.title, contentAPI: configuration.contentAPI)
             addChild(categoryVC)
             stackView.addArrangedSubview(categoryVC.view)
             categoryVC.didMove(toParent: self)
