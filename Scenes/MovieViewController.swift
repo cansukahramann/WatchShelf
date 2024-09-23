@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Moya
 
 class MovieViewController: UIViewController {
     
@@ -27,21 +28,21 @@ class MovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let categories = [
-            Category(title: "Popular",image: UIImage(named: "shrek-poster")),
-            Category(title: "Now Playing",image: UIImage(named: "shrek-poster")),
-            Category(title: "Upcoming",image: UIImage(named: "shrek-poster")),
-            Category(title: "Top Rated",image: UIImage(named: "shrek-poster"))
+        
+        let configurations: [(title: String, movieAPI: MovieAPI)] = [
+            ("Popular", .popular),
+            ("Upcoming", .upcoming)
         ]
         
-        for category in categories {
-            let categoryVC = CategoryViewController(category: category)
+        for configuration in configurations {
+            let categoryVC = CategoryViewController(title: configuration.title, movieAPI: configuration.movieAPI)
             addChild(categoryVC)
             stackView.addArrangedSubview(categoryVC.view)
             categoryVC.didMove(toParent: self)
         }
         setUpUI()
     }
+    
     
     private func setUpUI() {
         view.addSubview(scrollView)

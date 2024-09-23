@@ -7,10 +7,9 @@
 
 import UIKit
 
-
 class CategoryViewController: UIViewController {
     
-    var category: Category
+    private let viewModel = CategoryViewModel()
     
     private var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -31,12 +30,6 @@ class CategoryViewController: UIViewController {
         return label
     }()
     
-    
-    init(category: Category) {
-        self.category = category
-        super.init(nibName: nil, bundle: nil)
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -47,7 +40,14 @@ class CategoryViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         setupConstraints()
-        categoryNameLabel.text = category.title
+        
+        categoryNameLabel.text = title
+    }
+    
+    init(title: String, movieAPI: MovieAPI) {
+        super.init(nibName: nil, bundle: nil)
+        self.title = title
+        viewModel.movieAPI = movieAPI
     }
     
     override func viewDidLayoutSubviews() {
@@ -56,7 +56,6 @@ class CategoryViewController: UIViewController {
         let layout = UIHelper.twoColumnHorizontalLayout(in: collectionView)
         collectionView.setCollectionViewLayout(layout, animated: false)
     }
-    
     
     private func setupConstraints() {
         view.addSubview(collectionView)
@@ -84,11 +83,7 @@ extension CategoryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
-        if let image = category.image {
-            cell.posterImageView.image = image
-        } else {
-            cell.posterImageView.image = UIImage(named: "default-movie")
-        }
+        cell.backgroundColor =  .red
         return cell
     }
 }

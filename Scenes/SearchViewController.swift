@@ -30,17 +30,17 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         let categoryImages = ["default-movie","","","","","","","","",""]
 
-        for imageName in categoryImages {
-            if let categoryImage = UIImage(named: "default-movie") {
-                let category = Category(image: categoryImage)
-                let categoryVC = CategoryViewController(category: category)
-                addChild(categoryVC)
-                stackView.addArrangedSubview(categoryVC.view)
-                categoryVC.didMove(toParent: self)
-            } else {
-                // Görsel yüklenemedi, varsayılan bir davranış belirleyebilirsin
-            }
-        }
+//        for imageName in categoryImages {
+//            if let categoryImage = UIImage(named: "default-movie") {
+//                let category = Category(image: categoryImage)
+//                let categoryVC = CategoryViewController(category: category)
+//                addChild(categoryVC)
+//                stackView.addArrangedSubview(categoryVC.view)
+//                categoryVC.didMove(toParent: self)
+//            } else {
+//                // Görsel yüklenemedi, varsayılan bir davranış belirleyebilirsin
+//            }
+//        }
         setUpUI()
     }
     
@@ -52,8 +52,8 @@ class SearchViewController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
-        searchController.searchBar.tintColor = .systemBackground
-        searchController.searchBar.barTintColor = .systemBackground
+        searchController.searchBar.tintColor = .red
+        searchController.searchBar.barTintColor = .red
     }
     
     private func setUpUI() {
