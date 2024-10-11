@@ -21,13 +21,14 @@ class EventLabel: UILabel {
     convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
         self.init(frame: .zero)
         self.textAlignment = textAlignment
-        self.font = UIFont.systemFont(ofSize: fontSize)
+        self.font = UIFont.boldSystemFont(ofSize: fontSize)
     }
     
     private func configure() {
         textColor = .label
         adjustsFontSizeToFitWidth = true
         minimumScaleFactor = 0.9
+        numberOfLines = 0 
         translatesAutoresizingMaskIntoConstraints = false
     }
 }

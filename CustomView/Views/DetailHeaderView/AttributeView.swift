@@ -10,7 +10,7 @@ import UIKit
 class AttributeView: UIView {
     
     let attributeImage = UIImageView()
-    let attributeLabel = EventLabel(textAlignment: .left, fontSize: 16)
+    let attributeLabel = EventLabel(textAlignment: .left, fontSize: 14)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

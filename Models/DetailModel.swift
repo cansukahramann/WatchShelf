@@ -16,8 +16,20 @@ struct DetailModel: Codable {
     let releaseDate: String
     let runtime: Int
     let voteAverage: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case id,title,overview,runtime,genres
+        case posterPath = "poster_path"
+        case releaseDate = "release_date"
+        case voteAverage = "vote_average"
+    }
 }
 
 struct Genres: Codable {
+    let id: Int
     let name: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id,name
+    }
 }

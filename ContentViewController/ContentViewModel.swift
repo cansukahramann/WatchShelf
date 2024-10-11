@@ -15,8 +15,10 @@ protocol ContentViewModelDelegate: AnyObject {
 class ContentViewModel {
     weak var delegate: ContentViewModelDelegate?
     private let provider = MoyaProvider<ContentAPI>()
-    
+   
     var contentResult = [ContentResult]()
+
+    
     private let contentAPI: ContentAPI
     
     init(contentAPI: ContentAPI) {
@@ -31,13 +33,12 @@ class ContentViewModel {
             case .success(let response):
                 contentResult = mapResponse(from: response.data)
                 delegate?.updateCollectionView()
-                
             case .failure(let error):
                 print(error)
             }
         }
     }
-    
+
     private func mapResponse(from data: Data) -> [ContentResult] {
         let response = try! JSONDecoder().decode(ContentModel.self, from: data)
         return response.results

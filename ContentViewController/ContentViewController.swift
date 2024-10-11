@@ -81,7 +81,7 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 250)
-           
+            
         ])
     }
 }
@@ -93,6 +93,7 @@ extension ContentViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
+        
         cell.configure(model: viewModel.contentResult[indexPath.item])
         return cell
     }
@@ -100,7 +101,8 @@ extension ContentViewController: UICollectionViewDataSource {
 
 extension ContentViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailVC = DetailViewController()
+        let selectedMovieID = viewModel.contentResult[indexPath.item].id
+        let detailVC = DetailViewController(movieID: selectedMovieID)
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }

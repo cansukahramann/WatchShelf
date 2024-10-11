@@ -26,6 +26,11 @@ class PosterCell: UICollectionViewCell {
         posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterPath)"))
     }
     
+    func configureSimilar(model: SimilarResult) {
+        posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterPath)"))
+    }
+    
+
     private func setupConstraint() {
         contentView.addSubview(posterImageView)
         posterImageView.contentMode = .scaleAspectFill

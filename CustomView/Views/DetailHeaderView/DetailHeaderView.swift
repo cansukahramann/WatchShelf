@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailHeaderView: UIView {
     
@@ -32,6 +33,7 @@ class DetailHeaderView: UIView {
     
     private func createAttributeView(image: UIImage, text: String) -> AttributeView {
         let attributeView = AttributeView()
+        attributeView.translatesAutoresizingMaskIntoConstraints = false
         attributeView.attributeImage.image = image
         attributeView.attributeLabel.text = text
         return attributeView
@@ -41,9 +43,6 @@ class DetailHeaderView: UIView {
         addSubview(titleLabel)
         addSubview(posterImageView)
         addSubview(stackView)
-        posterImageView.image = .shrekPoster
-        titleLabel.text = "sadasdasd"
-        titleLabel.textColor = .red
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
@@ -53,18 +52,28 @@ class DetailHeaderView: UIView {
             
             posterImageView.topAnchor.constraint(equalTo: topAnchor),
             posterImageView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
-            posterImageView.widthAnchor.constraint(equalToConstant: 160),
-            posterImageView.heightAnchor.constraint(equalToConstant: 180),
+            posterImageView.widthAnchor.constraint(equalToConstant: 180),
+            posterImageView.heightAnchor.constraint(equalToConstant: 210),
             
             stackView.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+    }
+    
+    
+    func configure(model: DetailModel) {
+        titleLabel.text = model.title
+        posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterPath)"))
+        
+        let genreString = model.genres.map { $0.name }.joined(separator: ", ")
+        
         let attributes = [
-            (Image.dateSymbol, "2024"),
-            (Image.genreSymbol, "Drama"),
-            (Image.runtimeSymbol, "2h 30m"),
-            (Image.ratingSymbol, "8.5/10")
+            (Image.dateSymbol, "\(model.releaseDate)"),
+            (Image.genreSymbol, "\(genreString)"),
+            (Image.runtimeSymbol, "\(model.runtime)"),
+            (Image.ratingSymbol, "\(model.voteAverage)")
         ]
         
         for (image, text) in attributes {
@@ -72,5 +81,4 @@ class DetailHeaderView: UIView {
             stackView.addArrangedSubview(attributeView)
         }
     }
-    
 }

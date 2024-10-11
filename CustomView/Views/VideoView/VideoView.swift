@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class VideoView: UIView {
+class VideoView: UIView, WKNavigationDelegate {
     
     let webView: WKWebView = {
         let prefs = WKWebpagePreferences()
@@ -23,7 +23,7 @@ class VideoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupVideoView()
-        
+        webView.navigationDelegate = self
         
     }
     
@@ -44,7 +44,10 @@ class VideoView: UIView {
                 </body>
                 </html>
                 """
-        webView.loadHTMLString(embedHTML, baseURL: nil)}
+        webView.loadHTMLString(embedHTML, baseURL: nil)
+        UIHelper.showHUD()
+        
+    }
     
     func setupVideoView() {
         addSubview(webView)
@@ -55,4 +58,13 @@ class VideoView: UIView {
             webView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        UIHelper.dismissHUD()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        UIHelper.showHUDerrorMessage()
+    }
+    
 }

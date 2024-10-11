@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import ProgressHUD
 
-struct UIHelper {
+enum UIHelper {
     static func twoColumnHorizontalLayout(in collectionView: UIView) -> UICollectionViewFlowLayout {
         let width = collectionView.bounds.width
         let padding: CGFloat = 8
@@ -21,5 +22,23 @@ struct UIHelper {
         flowLayout.scrollDirection = .horizontal
         
         return flowLayout
+    }
+    
+    static func showHUD() {
+        ProgressHUD.animate(symbol: "movieclapper",interaction: false)
+        ProgressHUD.colorAnimation = .red
+        ProgressHUD.colorHUD = .lightText
+        
+    }
+
+    static func dismissHUD(delay: CGFloat = 0.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            ProgressHUD.dismiss()
+        }
+    }
+    static func showHUDerrorMessage() {
+        ProgressHUD.succeed("Something went wrong")
+        ProgressHUD.colorAnimation = .red
+        ProgressHUD.colorHUD = .lightText
     }
 }
