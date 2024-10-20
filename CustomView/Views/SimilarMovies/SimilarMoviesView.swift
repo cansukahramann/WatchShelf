@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SimilarMoviesViewDelegate: AnyObject {
+    func similarMovieSelected(movieID: Int)
+}
+
 class SimilarMoviesView: UIView {
 
     private var collectionView: UICollectionView = {
@@ -21,12 +25,13 @@ class SimilarMoviesView: UIView {
     
     let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
     private var model =  [SimilarResult]()
+    weak var delegate: SimilarMoviesViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCollectionView()
         titleLabel.text = "Similar Movies"
-    
+
     }
     
     required init?(coder: NSCoder) {
@@ -56,7 +61,7 @@ class SimilarMoviesView: UIView {
         ])
     }
 
-    func update(model: [SimilarResult]) {
+    func updateSimilarMovie(model: [SimilarResult]) {
         self.model = model
         collectionView.reloadData()
     }
@@ -71,6 +76,12 @@ extension SimilarMoviesView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
         cell.configureSimilar(model: model[indexPath.item])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedSimilarMovieID = model[indexPath.item].id
+        delegate?.similarMovieSelected(movieID: selectedSimilarMovieID)
+        
     }
 }
 

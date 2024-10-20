@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class CastCell: UICollectionViewCell {
     
@@ -13,6 +14,8 @@ class CastCell: UICollectionViewCell {
     var castRealName = NameLabel(textColor: .white, fontSize: 16)
     var castMovieName = NameLabel(textColor: .white.withAlphaComponent(0.7), fontSize: 12)
     var posterImageView = PosterImageView(frame: .zero)
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,7 +49,16 @@ class CastCell: UICollectionViewCell {
             castMovieName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             castMovieName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             castMovieName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        
+            
         ])
+    }
+    
+    func configure(model: Cast) {
+        posterImageView.backgroundColor = model.profilePath == nil ? .red : .clear
+        if let profilePath = model.profilePath {
+            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)"))
+        }
+        castRealName.text = model.name
+        castMovieName.text = model.character
     }
 }

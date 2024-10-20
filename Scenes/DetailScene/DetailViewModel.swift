@@ -10,6 +10,8 @@ import Moya
 
 protocol DetailViewModelDelegate: AnyObject {
     func updateUI(model: DetailModel)
+    func updateSimilarMovieUI(model: [SimilarResult])
+    func updateMovieCastUI(model: [Cast])
 }
 
 class DetailViewModel {
@@ -18,8 +20,9 @@ class DetailViewModel {
     var movieID: Int
     var detailModel: DetailModel!
     var similarModel = [SimilarResult]()
+    var movieCastModel = [Cast]()
     let group = DispatchGroup()
-
+    
     weak var delegate: DetailViewModelDelegate?
     
     init(movieID: Int) {
@@ -46,11 +49,26 @@ class DetailViewModel {
             switch result {
             case.success(let response):
                 similarModel = mapResponseDetail(from: response.data)!
+                delegate?.updateSimilarMovieUI(model: similarModel)
             case.failure(let error):
                 print(error)
             }
+            group.leave()
         }
-        group.leave()
+        
+        
+        group.enter()
+        detailProvider.request(.movieCredits(movieID: movieID)) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let response):
+                movieCastModel = mapResponseMovieCast(from: response.data)!
+                delegate?.updateMovieCastUI(model: movieCastModel)
+            case.failure(let error):
+                print(error)
+            }
+            group.leave()
+        }
         
         group.notify(queue: .main) {
             print("perfect")
@@ -58,7 +76,7 @@ class DetailViewModel {
     }
     
     
-   
+    
     private func mapResponse(from data: Data) -> DetailModel? {
         let response = try! JSONDecoder().decode(DetailModel.self, from: data)
         return response
@@ -68,4 +86,10 @@ class DetailViewModel {
         let response = try! JSONDecoder().decode(SimilarModel.self, from: data)
         return response.results
     }
+    
+    private func mapResponseMovieCast(from data: Data) -> [Cast]? {
+        let response = try! JSONDecoder().decode(MovieCastModel.self, from: data)
+        return response.cast
+    }
 }
+

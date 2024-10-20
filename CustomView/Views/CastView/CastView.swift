@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CastViewDelegate: AnyObject {
+    func movieCastSelected()
+}
+
 class CastView: UIView {
     
     private var collectionView: UICollectionView = {
@@ -20,6 +24,7 @@ class CastView: UIView {
     }()
     
     private let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
+    var movieCastModel = [Cast]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,20 +57,26 @@ class CastView: UIView {
             collectionView.heightAnchor.constraint(equalToConstant: 240),
         ])
     }
+    
+    func updateCastView(model: [Cast]) {
+        self.movieCastModel = model
+        collectionView.reloadData()
+    }
 }
 
 extension CastView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return movieCastModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCell.reuseID, for: indexPath) as! CastCell
-        cell.posterImageView.image = UIImage(named: "shrek-cast")
-        cell.posterImageView.backgroundColor = .blue
-        cell.castMovieName.text = "Shrek"
-        cell.castRealName.text = "Shrek"
+        cell.configure(model: movieCastModel[indexPath.item])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
     }
 }
 

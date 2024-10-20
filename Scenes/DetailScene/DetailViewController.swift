@@ -8,14 +8,15 @@
 import UIKit
 import Kingfisher
 
-class DetailViewController: UIViewController, DetailViewModelDelegate {    
-    
-    
+class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMoviesViewDelegate {
+
     private let headerView = DetailHeaderView(frame: .zero)
     private let descriptionView = DescriptionView(frame: .zero)
     private let videoView = VideoView(frame: .zero)
     private let similarMoviesView = SimilarMoviesView(frame: .zero)
     private let castView = CastView(frame: .zero)
+    
+    private var detailViewModel: DetailViewModel!
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -30,8 +31,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate {
         stackView.spacing = 36
         return stackView
     }()
-    
-    private var detailViewModel: DetailViewModel!
     
     convenience init(movieID: Int) {
         self.init(nibName: nil, bundle: nil)
@@ -49,6 +48,8 @@ class DetailViewController: UIViewController, DetailViewModelDelegate {
         configureCollectionView()
         detailViewModel.fetchDetail()
         detailViewModel.delegate = self
+        similarMoviesView.delegate = self
+        
     }
     
     private func setupView() {
@@ -100,6 +101,20 @@ class DetailViewController: UIViewController, DetailViewModelDelegate {
     func updateUI(model: DetailModel) {
         headerView.configure(model: model)
         descriptionView.configure(text: model.overview)
-//        similarMoviesView.update(model: similarModel.results)
     }
+    
+    func updateSimilarMovieUI(model: [SimilarResult]) {
+        similarMoviesView.updateSimilarMovie(model: model)
+    }
+    
+    func similarMovieSelected(movieID: Int) {
+        let detailVC = DetailViewController(movieID: movieID)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func updateMovieCastUI(model: [Cast]) {
+        castView.updateCastView(model: model)
+    }
+    
+    
 }

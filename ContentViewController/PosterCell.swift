@@ -27,7 +27,10 @@ class PosterCell: UICollectionViewCell {
     }
     
     func configureSimilar(model: SimilarResult) {
-        posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterPath)"))
+        posterImageView.backgroundColor = model.posterPath == nil ? .red : .clear
+        if let posterPath = model.posterPath {
+            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
+        }
     }
     
 

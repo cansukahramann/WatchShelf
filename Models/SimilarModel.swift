@@ -14,7 +14,7 @@ struct SimilarModel: Codable {
 
 struct SimilarResult: Codable {
     let id: Int
-    let posterPath: String
+    let posterPath: String?
     
     enum CodingKeys: String, CodingKey {
         case id
