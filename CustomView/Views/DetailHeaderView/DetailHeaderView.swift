@@ -65,7 +65,11 @@ class DetailHeaderView: UIView {
     
     func configure(model: DetailModel) {
         titleLabel.text = model.title
-        posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterPath)"))
+        if let posterPath = model.posterPath {
+            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"))
+        } else {
+            #warning("handle else case")
+        }
         
         let genreString = model.genres.map { $0.name }.joined(separator: ", ")
         

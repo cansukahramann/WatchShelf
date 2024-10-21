@@ -9,9 +9,8 @@ import Foundation
 import Moya
 
 protocol DetailViewModelDelegate: AnyObject {
-    func updateUI(model: DetailModel)
-    func updateSimilarMovieUI(model: [SimilarResult])
-    func updateMovieCastUI(model: [Cast])
+    
+    func didFetchDetail()
 }
 
 class DetailViewModel {
@@ -21,6 +20,7 @@ class DetailViewModel {
     var detailModel: DetailModel!
     var similarModel = [SimilarResult]()
     var movieCastModel = [Cast]()
+    var movieVideoModel = [MovieVideo]()
     let group = DispatchGroup()
     
     weak var delegate: DetailViewModelDelegate?
@@ -37,7 +37,6 @@ class DetailViewModel {
             switch result {
             case.success(let response):
                 detailModel = mapResponse(from: response.data)
-                delegate?.updateUI(model: detailModel)
             case.failure(let error):
                 print(error)
             }
@@ -49,7 +48,6 @@ class DetailViewModel {
             switch result {
             case.success(let response):
                 similarModel = mapResponseDetail(from: response.data)!
-                delegate?.updateSimilarMovieUI(model: similarModel)
             case.failure(let error):
                 print(error)
             }
@@ -63,7 +61,18 @@ class DetailViewModel {
             switch result {
             case .success(let response):
                 movieCastModel = mapResponseMovieCast(from: response.data)!
-                delegate?.updateMovieCastUI(model: movieCastModel)
+            case.failure(let error):
+                print(error)
+            }
+            group.leave()
+        }
+        
+        group.enter()
+        detailProvider.request(.movieVideo(movieID: movieID)) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case.success(let response):
+                movieVideoModel = mapResponseMovieTrailer(from: response.data)!
             case.failure(let error):
                 print(error)
             }
@@ -71,7 +80,7 @@ class DetailViewModel {
         }
         
         group.notify(queue: .main) {
-            print("perfect")
+            self.delegate?.didFetchDetail()
         }
     }
     
@@ -90,6 +99,11 @@ class DetailViewModel {
     private func mapResponseMovieCast(from data: Data) -> [Cast]? {
         let response = try! JSONDecoder().decode(MovieCastModel.self, from: data)
         return response.cast
+    }
+    
+    private func mapResponseMovieTrailer(from data: Data) -> [MovieVideo]? {
+        let response = try! JSONDecoder().decode(MovieVideoModel.self, from: data)
+        return response.results
     }
 }
 

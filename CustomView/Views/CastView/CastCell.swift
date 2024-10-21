@@ -31,6 +31,12 @@ class CastCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        posterImageView.kf.cancelDownloadTask()
+        posterImageView.image = nil
+    }
+    
     private func setupConstraint() {
         contentView.addSubview(posterImageView)
         contentView.addSubview(castRealName)
@@ -54,10 +60,12 @@ class CastCell: UICollectionViewCell {
     }
     
     func configure(model: Cast) {
-        posterImageView.backgroundColor = model.profilePath == nil ? .red : .clear
         if let profilePath = model.profilePath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)"))
+        } else {
+            posterImageView.image = UIImage(named: "no-photo")
         }
+        
         castRealName.text = model.name
         castMovieName.text = model.character
     }

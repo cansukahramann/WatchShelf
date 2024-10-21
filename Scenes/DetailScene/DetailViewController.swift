@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMoviesViewDelegate {
-
+   
     private let headerView = DetailHeaderView(frame: .zero)
     private let descriptionView = DescriptionView(frame: .zero)
     private let videoView = VideoView(frame: .zero)
@@ -83,7 +83,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     
     private func configureVideoView() {
         stackView.addArrangedSubview(videoView)
-        videoView.getVideo(videoCode: "CwXOrWvPBPk") 
         
         NSLayoutConstraint.activate([
             videoView.heightAnchor.constraint(equalToConstant: 200)
@@ -98,23 +97,19 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
         stackView.addArrangedSubview(castView)
     }
     
-    func updateUI(model: DetailModel) {
-        headerView.configure(model: model)
-        descriptionView.configure(text: model.overview)
-    }
-    
-    func updateSimilarMovieUI(model: [SimilarResult]) {
-        similarMoviesView.updateSimilarMovie(model: model)
-    }
-    
     func similarMovieSelected(movieID: Int) {
         let detailVC = DetailViewController(movieID: movieID)
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
-    func updateMovieCastUI(model: [Cast]) {
-        castView.updateCastView(model: model)
+    func didFetchDetail() {
+        headerView.configure(model: detailViewModel.detailModel)
+        descriptionView.configure(text: detailViewModel.detailModel.overview)
+    
+        similarMoviesView.updateSimilarMovie(model: detailViewModel.similarModel)
+        
+        castView.updateCastView(model: detailViewModel.movieCastModel)
+        
+        videoView.getVideo(model: detailViewModel.movieVideoModel)
     }
-    
-    
 }

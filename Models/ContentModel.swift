@@ -14,7 +14,7 @@ struct ContentModel: Codable{
 
 struct ContentResult: Codable {
     let id: Int 
-    let posterPath: String
+    let posterPath: String?
     
     enum CodingKeys: String, CodingKey {
         case id

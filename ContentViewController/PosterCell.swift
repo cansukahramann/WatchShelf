@@ -22,14 +22,25 @@ class PosterCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        posterImageView.kf.cancelDownloadTask()
+        posterImageView.image = nil
+    }
+    
     func configure(model: ContentResult) {
-        posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterPath)"))
+        if let posterPath = model.posterPath {
+            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
+        } else {
+            posterImageView.image = UIImage(named: "default-poster")
+        }
     }
     
     func configureSimilar(model: SimilarResult) {
-        posterImageView.backgroundColor = model.posterPath == nil ? .red : .clear
         if let posterPath = model.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
+        } else {
+            posterImageView.image = UIImage(named: "default-poster")
         }
     }
     
