@@ -12,4 +12,5 @@ enum Image {
     static let genreSymbol = UIImage(systemName: "film")
     static let runtimeSymbol = UIImage(systemName: "clock")
     static let ratingSymbol = UIImage(systemName: "star.fill")
+    static let locationSymbol = UIImage(systemName: "mappin.and.ellipse")
 }

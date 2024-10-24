@@ -81,7 +81,6 @@ extension SimilarMoviesView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedSimilarMovieID = model[indexPath.item].id
         delegate?.similarMovieSelected(movieID: selectedSimilarMovieID)
-        
     }
 }
 

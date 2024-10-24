@@ -34,6 +34,7 @@ class PosterCell: UICollectionViewCell {
         } else {
             posterImageView.image = UIImage(named: "default-poster")
         }
+        
     }
     
     func configureSimilar(model: SimilarResult) {

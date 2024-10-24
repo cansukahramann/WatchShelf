@@ -10,8 +10,8 @@ import Kingfisher
 
 class DetailHeaderView: UIView {
     
-    let posterImageView = PosterImageView(frame: .zero)
-    let titleLabel = EventLabel(textAlignment: .left, fontSize: 26)
+    private let posterImageView = PosterImageView(frame: .zero)
+    private let titleLabel = EventLabel(textAlignment: .left, fontSize: 26)
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -52,12 +52,12 @@ class DetailHeaderView: UIView {
             
             posterImageView.topAnchor.constraint(equalTo: topAnchor),
             posterImageView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
+            posterImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             posterImageView.widthAnchor.constraint(equalToConstant: 180),
             posterImageView.heightAnchor.constraint(equalToConstant: 210),
             
             stackView.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
         
     }
@@ -68,7 +68,7 @@ class DetailHeaderView: UIView {
         if let posterPath = model.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"))
         } else {
-            #warning("handle else case")
+            posterImageView.image = UIImage(named: "default-poster")
         }
         
         let genreString = model.genres.map { $0.name }.joined(separator: ", ")
@@ -76,8 +76,30 @@ class DetailHeaderView: UIView {
         let attributes = [
             (Image.dateSymbol, "\(model.releaseDate)"),
             (Image.genreSymbol, "\(genreString)"),
-            (Image.runtimeSymbol, "\(model.runtime)"),
+            (Image.runtimeSymbol, "\(model.runtime) min"),
             (Image.ratingSymbol, "\(model.voteAverage)")
+        ]
+        
+        for (image, text) in attributes {
+            let attributeView = createAttributeView(image: image!, text: text)
+            stackView.addArrangedSubview(attributeView)
+        }
+    }
+    
+    func configureCastDetail(model: CastDetailModel) {
+        titleLabel.text = model.name
+        if let profilePath = model.profilePath {
+            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)"))
+        } else {
+            posterImageView.image = UIImage(named: "no-photo")
+        }
+        
+        let placeOfBirth = model.placeOfBirthday ?? "N/A"
+        let birthday = model.birthday ?? "N/A"
+        
+        let attributes = [
+            (Image.locationSymbol, placeOfBirth),
+            (Image.dateSymbol, birthday)
         ]
         
         for (image, text) in attributes {

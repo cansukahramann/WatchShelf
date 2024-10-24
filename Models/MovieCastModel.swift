@@ -8,7 +8,7 @@
 import Foundation
 
 struct MovieCastModel: Codable {
-    let id: Int?
+    let id: Int
     let cast: [Cast]
 }
 
@@ -20,7 +20,7 @@ struct Cast: Codable {
     let castId: Int
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case id 
         case name
         case profilePath = "profile_path"
         case character

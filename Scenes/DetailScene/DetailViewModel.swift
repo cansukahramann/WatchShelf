@@ -83,9 +83,7 @@ class DetailViewModel {
             self.delegate?.didFetchDetail()
         }
     }
-    
-    
-    
+ 
     private func mapResponse(from data: Data) -> DetailModel? {
         let response = try! JSONDecoder().decode(DetailModel.self, from: data)
         return response
@@ -106,4 +104,3 @@ class DetailViewModel {
         return response.results
     }
 }
-

@@ -8,15 +8,15 @@
 import UIKit
 import Kingfisher
 
-class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMoviesViewDelegate {
-   
+class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMoviesViewDelegate, CastViewDelegate {
+    
     private let headerView = DetailHeaderView(frame: .zero)
     private let descriptionView = DescriptionView(frame: .zero)
     private let videoView = VideoView(frame: .zero)
     private let similarMoviesView = SimilarMoviesView(frame: .zero)
     private let castView = CastView(frame: .zero)
     
-    private var detailViewModel: DetailViewModel!
+    private var viewModel: DetailViewModel!
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -28,14 +28,16 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 36
+        stackView.spacing = 18
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
     convenience init(movieID: Int) {
         self.init(nibName: nil, bundle: nil)
-        detailViewModel = DetailViewModel(movieID: movieID)
+        viewModel = DetailViewModel(movieID: movieID)
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,18 +48,17 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
         configureVideoView()
         configureCastView()
         configureCollectionView()
-        detailViewModel.fetchDetail()
-        detailViewModel.delegate = self
+        viewModel.fetchDetail()
+        viewModel.delegate = self
         similarMoviesView.delegate = self
+        castView.delegate = self
         
     }
     
     private func setupView() {
         view.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
         scrollView.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
         
         NSLayoutConstraint.activate( [
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -102,14 +103,19 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
-    func didFetchDetail() {
-        headerView.configure(model: detailViewModel.detailModel)
-        descriptionView.configure(text: detailViewModel.detailModel.overview)
+    func movieCastSelected(castID: Int) {
+        let castDetailVC = CastDetailViewController(castID: castID)
+        navigationController?.pushViewController(castDetailVC, animated: true)
+    }
     
-        similarMoviesView.updateSimilarMovie(model: detailViewModel.similarModel)
+    func didFetchDetail() {
+        headerView.configure(model: viewModel.detailModel)
+        descriptionView.configure(text: viewModel.detailModel.overview)
         
-        castView.updateCastView(model: detailViewModel.movieCastModel)
+        similarMoviesView.updateSimilarMovie(model: viewModel.similarModel)
         
-        videoView.getVideo(model: detailViewModel.movieVideoModel)
+        castView.updateCastView(model: viewModel.movieCastModel)
+        
+        videoView.getVideo(model: viewModel.movieVideoModel)
     }
 }

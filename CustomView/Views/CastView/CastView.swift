@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CastViewDelegate: AnyObject {
-    func movieCastSelected()
+    func movieCastSelected(castID: Int)
 }
 
 class CastView: UIView {
@@ -25,6 +25,7 @@ class CastView: UIView {
     
     private let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
     var movieCastModel = [Cast]()
+    weak var delegate: CastViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,7 +77,8 @@ extension CastView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let selectedCastID = movieCastModel[indexPath.item].id
+        delegate?.movieCastSelected(castID: selectedCastID)
     }
 }
 

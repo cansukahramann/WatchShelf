@@ -41,6 +41,7 @@ class CastCell: UICollectionViewCell {
         contentView.addSubview(posterImageView)
         contentView.addSubview(castRealName)
         contentView.addSubview(castMovieName)
+        posterImageView.contentMode = .scaleAspectFill
         
         NSLayoutConstraint.activate( [
             posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 8),
