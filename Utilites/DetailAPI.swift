@@ -68,7 +68,7 @@ enum DetailAPI: TargetType {
         }
     }
     
-    var method: Moya.Method {
+    var method: Moya.Method {
         .get
     }
     

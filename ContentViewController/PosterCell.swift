@@ -45,6 +45,14 @@ class PosterCell: UICollectionViewCell {
         }
     }
     
+    func configureMovieCredits(model: CastCredit) {
+        if let posterPath = model.posterPath {
+            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
+        } else {
+            posterImageView.image = UIImage(named: "default-poster")
+        }
+    }
+    
 
     private func setupConstraint() {
         contentView.addSubview(posterImageView)
