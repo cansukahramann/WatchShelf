@@ -14,7 +14,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     private let descriptionView = DescriptionView(frame: .zero)
     private let videoView = VideoView(frame: .zero)
     private let similarMoviesView = SimilarMoviesView(frame: .zero)
-    private let castView = CastView(frame: .zero)
+    private let castView = MovieCastView(frame: .zero)
     
     private var viewModel: DetailViewModel!
     

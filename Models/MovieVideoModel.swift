@@ -8,8 +8,8 @@
 import Foundation
 
 struct MovieVideoModel: Codable {
-    let results: [MovieVideo]
+    let results: [Results]
 }
-struct MovieVideo: Codable {
+struct Results: Codable {
     let key: String
 }

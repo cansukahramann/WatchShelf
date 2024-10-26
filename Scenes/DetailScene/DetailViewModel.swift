@@ -20,7 +20,7 @@ class DetailViewModel {
     var detailModel: DetailModel!
     var similarModel = [SimilarResult]()
     var movieCastModel = [Cast]()
-    var movieVideoModel = [MovieVideo]()
+    var movieVideoModel = [Results]()
     let group = DispatchGroup()
     
     weak var delegate: DetailViewModelDelegate?
@@ -99,7 +99,7 @@ class DetailViewModel {
         return response.cast
     }
     
-    private func mapResponseMovieTrailer(from data: Data) -> [MovieVideo]? {
+    private func mapResponseMovieTrailer(from data: Data) -> [Results]? {
         let response = try! JSONDecoder().decode(MovieVideoModel.self, from: data)
         return response.results
     }

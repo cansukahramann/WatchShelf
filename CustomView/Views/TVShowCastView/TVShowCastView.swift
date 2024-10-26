@@ -1,17 +1,17 @@
 //
-//  CastView.swift
+//  TVShowCastView.swift
 //  WatchShelf
 //
-//  Created by Cansu Kahraman on 9.10.2024.
+//  Created by Cansu Kahraman on 26.10.2024.
 //
 
 import UIKit
 
-protocol CastViewDelegate: AnyObject {
-    func movieCastSelected(castID: Int)
+protocol TVShowCastViewDelegate: AnyObject {
+    func tvCastSelected(castID: Int)
 }
 
-class CastView: UIView {
+class TVShowCastView: UIView {
     
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -24,8 +24,8 @@ class CastView: UIView {
     }()
     
     private let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
-    var movieCastModel = [Cast]()
-    weak var delegate: CastViewDelegate?
+    var model = [SeriesCast]()
+    weak var delegate: TVShowCastViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,31 +59,32 @@ class CastView: UIView {
         ])
     }
     
-    func updateCastView(model: [Cast]) {
-        self.movieCastModel = model
+    func updateCastView(model: [SeriesCast]) {
+        self.model = model
         collectionView.reloadData()
     }
 }
 
-extension CastView: UICollectionViewDataSource {
+extension TVShowCastView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movieCastModel.count
+        return model.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCell.reuseID, for: indexPath) as! CastCell
-        cell.configure(model: movieCastModel[indexPath.item])
+        cell.configureTVShowCast(model: model[indexPath.item])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedCastID = movieCastModel[indexPath.item].id
-        delegate?.movieCastSelected(castID: selectedCastID)
+        let selectedCastID = model[indexPath.item].id
+        delegate?.tvCastSelected(castID: selectedCastID)
     }
 }
 
-extension CastView: UICollectionViewDelegateFlowLayout {
+extension TVShowCastView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 150, height: collectionView.bounds.height)
     }
 }
+

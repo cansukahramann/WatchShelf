@@ -52,8 +52,8 @@ class DetailHeaderView: UIView {
             
             posterImageView.topAnchor.constraint(equalTo: topAnchor),
             posterImageView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
-            posterImageView.widthAnchor.constraint(equalToConstant: 180),
-            posterImageView.heightAnchor.constraint(equalToConstant: 210),
+            posterImageView.widthAnchor.constraint(equalToConstant: 192),
+            posterImageView.heightAnchor.constraint(equalToConstant: 240),
             posterImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 0),
             
             stackView.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 16),

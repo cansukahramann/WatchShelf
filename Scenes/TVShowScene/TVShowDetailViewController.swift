@@ -8,11 +8,13 @@
 import UIKit
 
 
-class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate {
+class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate,TVShowCastViewDelegate, SimilarTVShowViewDelegate {
   
     private let headerView = DetailHeaderView(frame: .zero)
     private let descriptionView = DescriptionView(frame: .zero)
     private let videoView = VideoView(frame: .zero)
+    private let castView = TVShowCastView(frame: .zero)
+    private let similarView = SimilarTVShowView(frame: .zero)
     
     private var viewModel: TVShowDetailViewModel!
 
@@ -43,6 +45,9 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         configureUI()
         viewModel.fetchTVDetail()
         viewModel.delegate = self
+        castView.delegate = self
+        similarView.delegate = self
+        
     }
     
     private func setupUI() {
@@ -66,10 +71,30 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     private func configureUI() {
         stackView.addArrangedSubview(headerView)
         stackView.addArrangedSubview(descriptionView)
+        stackView.addArrangedSubview(videoView)
+        NSLayoutConstraint.activate([
+            videoView.heightAnchor.constraint(equalToConstant: 200)
+        ])
+        stackView.addArrangedSubview(castView)
+        stackView.addArrangedSubview(similarView)
     }
     
     func didFetchDetail() {
         headerView.configureTVDetail(model: viewModel.model)
         descriptionView.configure(text: viewModel.model.overview)
+        videoView.getTVVideo(model: viewModel.tvVideoModel)
+        castView.updateCastView(model: viewModel.tvCastModel)
+        similarView.updateSimilarMovie(model: viewModel.tvSimilarModel)
     }
+    
+    func tvCastSelected(castID: Int) {
+        let castDetailVC = CastDetailViewController(castID: castID)
+        navigationController?.pushViewController(castDetailVC, animated: true)
+    }
+    
+    func similarTVShowSelected(tvShowID: Int) {
+        let tvShowDetail = TVShowDetailViewController(tvShowID: tvShowID)
+        navigationController?.pushViewController(tvShowDetail, animated: true)
+    }
+   
 }

@@ -60,7 +60,18 @@ class CastCell: UICollectionViewCell {
         ])
     }
     
-    func configure(model: Cast) {
+    func configureMovieCast(model: Cast) {
+        if let profilePath = model.profilePath {
+            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)"))
+        } else {
+            posterImageView.image = UIImage(named: "no-photo")
+        }
+        
+        castRealName.text = model.name
+        castMovieName.text = model.character
+    }
+    
+    func configureTVShowCast(model: SeriesCast) {
         if let profilePath = model.profilePath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)"))
         } else {

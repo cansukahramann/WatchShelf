@@ -32,7 +32,7 @@ class VideoView: UIView, WKNavigationDelegate {
     }
     
     
-    func getVideo(model: [MovieVideo]) {
+    func getVideo(model: [Results]) {
         guard let firstModel = model.first else {
             print("Video not found")
             return
@@ -42,6 +42,17 @@ class VideoView: UIView, WKNavigationDelegate {
         webView.load(URLRequest(url: url))
         UIHelper.showHUD()
         
+    }
+    
+    func getTVVideo (model: [Results]) {
+        guard let firstModel = model.first else {
+            print("Video not found")
+            return
+        }
+        
+        let url = URL(string: "https://www.youtube.com/embed/\(firstModel.key)")!
+        webView.load(URLRequest(url: url))
+        UIHelper.showHUD()
     }
     
     func setupVideoView() {
