@@ -8,10 +8,12 @@
 import UIKit
 
 
-class CastDetailViewController: UIViewController, CastDetailViewModelDelegate{
+class CastDetailViewController: UIViewController, CastDetailViewModelDelegate, CastMovieCreditsDelegate, CastTVCreditsDelegate{
     
     private let headerView = DetailHeaderView(frame: .zero)
     private let descriptionView = DescriptionView(frame: .zero)
+    private let castMovieCredits = CastMovieCredits(frame: .zero)
+    private let castTVCredits = CastTVCredits(frame: .zero)
     
     private var viewModel: CastDetailViewModel!
     
@@ -26,6 +28,7 @@ class CastDetailViewController: UIViewController, CastDetailViewModelDelegate{
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 18
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
@@ -36,6 +39,10 @@ class CastDetailViewController: UIViewController, CastDetailViewModelDelegate{
         
         viewModel.delegate = self
         viewModel.fetchCastDetail()
+        
+        castMovieCredits.delegate = self
+        castTVCredits.delegate = self
+        
     }
     
     convenience init(castID: Int) {
@@ -64,10 +71,24 @@ class CastDetailViewController: UIViewController, CastDetailViewModelDelegate{
     func configureUI() {
         stackView.addArrangedSubview(headerView)
         stackView.addArrangedSubview(descriptionView)
+        stackView.addArrangedSubview(castMovieCredits)
+        stackView.addArrangedSubview(castTVCredits)
     }
     
     func didFetchCastDetail() {
         headerView.configureCastDetail(model: viewModel.castDetailModel)
         descriptionView.configure(text: viewModel.castDetailModel.biography ?? "N/A")
+        castMovieCredits.updateCreditsMovie(model: viewModel.movies)
+        castTVCredits.updateTVCredits(model: viewModel.tvShows)
+    }
+    
+    func movieCreditsSelected(movieID: Int) {
+        let detailVC = DetailViewController(movieID: movieID)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func selectedTVCredits(tvID: Int) {
+        let detailVC = TVShowDetailViewController()
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }

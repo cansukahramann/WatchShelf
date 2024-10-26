@@ -29,6 +29,7 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
     }()
     
     private var viewModel: ContentViewModel! = nil
+    var didSelectItem: ((_ id: Int) -> Void)? 
     
     init(title: String, contentAPI: ContentAPI) {
         super.init(nibName: nil, bundle: nil)
@@ -101,8 +102,7 @@ extension ContentViewController: UICollectionViewDataSource {
 
 extension ContentViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedMovieID = viewModel.contentResult[indexPath.item].id
-        let detailVC = DetailViewController(movieID: selectedMovieID)
-        navigationController?.pushViewController(detailVC, animated: true)
+        let selectedItemID = viewModel.contentResult[indexPath.item].id
+        didSelectItem?(selectedItemID)
     }
 }

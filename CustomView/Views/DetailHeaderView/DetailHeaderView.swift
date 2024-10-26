@@ -108,4 +108,29 @@ class DetailHeaderView: UIView {
             stackView.addArrangedSubview(attributeView)
         }
     }
+    
+    func configureTVDetail(model: SeriesDetailModel) {
+        titleLabel.text = model.name
+        if let posterPath = model.posterPath {
+            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
+        } else {
+            posterImageView.image = UIImage(named: "no-photo")
+        }
+        
+        
+        let genresString = model.genres.map { $0.name }.joined(separator: ", ")
+        
+        let attributes = [
+            (Image.dateSymbol, "\(model.firstAirDate) - \(model.lastAirDate)"),
+            (Image.genreSymbol, "\(genresString)"),
+            (Image.runtimeSymbol, "\(model.numberOfSeasons) "),
+            (Image.infoSymbol, "\(model.status)"),
+            (Image.ratingSymbol, "\(model.voteAverage)")
+        ]
+        
+        for (image, text) in attributes {
+            let attributeView = createAttributeView(image: image!, text: text)
+            stackView.addArrangedSubview(attributeView)
+        }
+    }
 }

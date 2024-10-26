@@ -37,14 +37,19 @@ class MovieViewController: UIViewController {
         ]
         
         for configuration in configurations {
-            let categoryVC = ContentViewController(title: configuration.title, contentAPI: configuration.contentAPI)
-            addChild(categoryVC)
-            stackView.addArrangedSubview(categoryVC.view)
-            categoryVC.didMove(toParent: self)
+            let contentVC = ContentViewController(title: configuration.title, contentAPI: configuration.contentAPI)
+            contentVC.didSelectItem = { [weak navigationController] id in
+                let viewController = DetailViewController(movieID: id)
+                navigationController?.pushViewController(viewController, animated: true)
+            }
+            
+            addChild(contentVC)
+            stackView.addArrangedSubview(contentVC.view)
+            contentVC.didMove(toParent: self)
         }
+        
         setUpUI()
     }
-    
     
     private func setUpUI() {
         view.addSubview(scrollView)

@@ -35,10 +35,14 @@ class TvShowViewController: UIViewController {
         ]
         
         for configuration in configurations {
-            let categoryVC = ContentViewController(title: configuration.title, contentAPI: configuration.contentAPI)
-            addChild(categoryVC)
-            stackView.addArrangedSubview(categoryVC.view)
-            categoryVC.didMove(toParent: self)
+            let contentVC = ContentViewController(title: configuration.title, contentAPI: configuration.contentAPI)
+            contentVC.didSelectItem = { [weak navigationController] id in
+                let viewController = TVShowDetailViewController(tvShowID: id)
+                navigationController?.pushViewController(viewController, animated: true)
+            }
+            addChild(contentVC)
+            stackView.addArrangedSubview(contentVC.view)
+            contentVC.didMove(toParent: self)
         }
         setUpUI()
     }
