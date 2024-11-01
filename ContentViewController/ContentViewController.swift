@@ -9,6 +9,7 @@ import UIKit
 import Kingfisher
 
 class ContentViewController: UIViewController, ContentViewModelDelegate {
+    
     private var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .systemBackground
@@ -28,7 +29,7 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
         return label
     }()
     
-    private var viewModel: ContentViewModel! = nil
+    private var viewModel: ContentViewModel!
     var didSelectItem: ((_ id: Int) -> Void)? 
     
     init(title: String, contentAPI: ContentAPI) {
@@ -94,7 +95,6 @@ extension ContentViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
-        
         cell.configure(model: viewModel.contentResult[indexPath.item])
         return cell
     }

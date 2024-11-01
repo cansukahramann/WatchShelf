@@ -9,6 +9,8 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+    private let searchListView = SearchListView(frame: .zero)
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemBackground
@@ -28,23 +30,10 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         configureSearchController()
         super.viewDidLoad()
-        let categoryImages = ["default-movie","","","","","","","","",""]
-
-//        for imageName in categoryImages {
-//            if let categoryImage = UIImage(named: "default-movie") {
-//                let category = Category(image: categoryImage)
-//                let categoryVC = CategoryViewController(category: category)
-//                addChild(categoryVC)
-//                stackView.addArrangedSubview(categoryVC.view)
-//                categoryVC.didMove(toParent: self)
-//            } else {
-//                // Görsel yüklenemedi, varsayılan bir davranış belirleyebilirsin
-//            }
-//        }
         setUpUI()
+        configureUI()
+        didFetchTrending()
     }
-    
-    
     
     func configureSearchController() {
         let searchController = UISearchController()
@@ -73,8 +62,17 @@ class SearchViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
+    }
+    
+    func configureUI() {
+        stackView.addArrangedSubview(searchListView)
+    }
+    
+    func didFetchTrending() {
+        searchListView.didFetchTrending()
     }
 }
 

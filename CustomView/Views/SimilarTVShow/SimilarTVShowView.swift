@@ -31,7 +31,6 @@ class SimilarTVShowView: UIView {
         super.init(frame: frame)
         setupCollectionView()
         titleLabel.text = "Similar Shows"
-
     }
     
     required init?(coder: NSCoder) {
@@ -45,7 +44,6 @@ class SimilarTVShowView: UIView {
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),

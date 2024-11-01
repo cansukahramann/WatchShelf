@@ -52,7 +52,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
         viewModel.delegate = self
         similarMoviesView.delegate = self
         castView.delegate = self
-        
     }
     
     private func setupView() {

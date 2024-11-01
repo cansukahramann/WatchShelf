@@ -24,7 +24,6 @@ class TvShowViewController: UIViewController {
         return stackView
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         let configurations: [(title: String, contentAPI: ContentAPI)] = [
