@@ -7,7 +7,9 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, SearchListViewDelegate {
+  
+    
     
     private let searchListView = SearchListView(frame: .zero)
     
@@ -25,7 +27,8 @@ class SearchViewController: UIViewController {
         stackView.distribution = .fillEqually
         return stackView
     }()
-    
+
+    var viewModel: SearchListViewModel!
     
     override func viewDidLoad() {
         configureSearchController()
@@ -33,6 +36,8 @@ class SearchViewController: UIViewController {
         setUpUI()
         configureUI()
         didFetchTrending()
+        searchListView.delegate = self
+        
     }
     
     func configureSearchController() {
@@ -73,6 +78,21 @@ class SearchViewController: UIViewController {
     
     func didFetchTrending() {
         searchListView.didFetchTrending()
+    }
+    
+    func trendigAllSelected(id: Int, type: MediaType?) {
+        if let mediaType = type {
+            switch mediaType {
+            case .movie:
+                let movieDetailViewController = DetailViewController(movieID: id)
+                navigationController?.pushViewController(movieDetailViewController, animated: true)
+                print(id)
+            case .tv:
+                let tvDetailViewController = TVShowDetailViewController(tvShowID: id)
+                navigationController?.pushViewController(tvDetailViewController, animated: true)
+                print("tv id\(id)")
+            }
+        }
     }
 }
 

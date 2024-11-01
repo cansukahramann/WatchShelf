@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SearchListViewDelegate: AnyObject {
+    func trendigAllSelected(id: Int, type: MediaType?)
+}
+
 class SearchListView: UIView, SearchListViewModelDelegate {
     
     private var collectionView: UICollectionView = {
@@ -20,6 +24,7 @@ class SearchListView: UIView, SearchListViewModelDelegate {
     }()
     
     var viewModel =  SearchListViewModel()
+    weak var delegate: SearchListViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,6 +76,11 @@ extension SearchListView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedTrend = viewModel.model[indexPath.item]
+        let selectedId = selectedTrend.id
+        let selectedMediaType = selectedTrend.type
+        
+        delegate?.trendigAllSelected(id: selectedId, type: selectedMediaType)
         
     }
 }

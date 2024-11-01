@@ -14,11 +14,27 @@ struct TrendingAllModel: Codable {
 struct TrendingAll: Codable {
     let posterPath: String?
     let id: Int
-    
+    let mediaType: String
     
     enum CodingKeys: String, CodingKey {
         case posterPath = "poster_path"
-        case id 
- 
+        case id
+        case mediaType = "media_type"
+        
     }
+    var type: MediaType? {
+        switch mediaType {
+        case "movie":
+            return .movie
+        case "tv":
+            return .tv
+        default:
+            return nil
+        }
+    }
+}
+
+enum MediaType {
+    case movie
+    case tv
 }
