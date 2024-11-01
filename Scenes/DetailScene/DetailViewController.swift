@@ -90,7 +90,11 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     }
     
     private func configureCollectionView() {
-        stackView.addArrangedSubview(similarMoviesView)
+        if viewModel.similarModel.isEmpty {
+            stackView.removeArrangedSubview(similarMoviesView)
+        } else {
+            stackView.addArrangedSubview(similarMoviesView)
+        }
     }
     
     private func configureCastView() {
@@ -110,11 +114,8 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     func didFetchDetail() {
         headerView.configure(model: viewModel.detailModel)
         descriptionView.configure(text: viewModel.detailModel.overview)
-        
         similarMoviesView.updateSimilarMovie(model: viewModel.similarModel)
-        
         castView.updateCastView(model: viewModel.movieCastModel)
-        
         videoView.getVideo(model: viewModel.movieVideoModel)
     }
 }

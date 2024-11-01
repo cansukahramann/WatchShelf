@@ -11,8 +11,8 @@ struct SeriesDetailModel: Codable {
     let id: Int
     let name: String
     let overview: String
-    let firstAirDate: String
-    let lastAirDate: String
+    let firstAirDate: String?
+    let lastAirDate: String?
     let posterPath: String?
     let genres: [Genre]
     let numberOfSeasons: Int

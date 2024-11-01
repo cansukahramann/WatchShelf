@@ -86,11 +86,9 @@ class SearchViewController: UIViewController, SearchListViewDelegate {
             case .movie:
                 let movieDetailViewController = DetailViewController(movieID: id)
                 navigationController?.pushViewController(movieDetailViewController, animated: true)
-                print(id)
             case .tv:
                 let tvDetailViewController = TVShowDetailViewController(tvShowID: id)
                 navigationController?.pushViewController(tvDetailViewController, animated: true)
-                print("tv id\(id)")
             }
         }
     }

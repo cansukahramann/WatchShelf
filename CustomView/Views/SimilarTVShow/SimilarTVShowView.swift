@@ -59,9 +59,17 @@ class SimilarTVShowView: UIView {
         ])
     }
 
-    func updateSimilarMovie(model: [SimilarResult]) {
+    func updateSimilarTVShow(model: [SimilarResult]) {
         self.model = model
-        collectionView.reloadData()
+        if model.isEmpty {
+            collectionView.isHidden = true
+            titleLabel.isHidden = true
+        } else {
+            collectionView.isHidden = false
+            titleLabel.isHidden = false
+            collectionView.reloadData()
+        }
+        self.layoutIfNeeded()
     }
 }
 

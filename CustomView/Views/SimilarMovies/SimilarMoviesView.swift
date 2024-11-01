@@ -30,6 +30,7 @@ class SimilarMoviesView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCollectionView()
+        
         titleLabel.text = "Similar Movies"
 
     }
@@ -63,7 +64,14 @@ class SimilarMoviesView: UIView {
 
     func updateSimilarMovie(model: [SimilarResult]) {
         self.model = model
-        collectionView.reloadData()
+        if model.isEmpty {
+            collectionView.isHidden = true
+            titleLabel.isHidden = true
+        } else {
+            collectionView.isHidden = false
+            titleLabel.isHidden = false 
+            collectionView.reloadData()
+        }
     }
 }
 

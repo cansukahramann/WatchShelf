@@ -17,6 +17,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     private let similarView = SimilarTVShowView(frame: .zero)
     
     private var viewModel: TVShowDetailViewModel!
+    
 
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -76,7 +77,11 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
             videoView.heightAnchor.constraint(equalToConstant: 200)
         ])
         stackView.addArrangedSubview(castView)
-        stackView.addArrangedSubview(similarView)
+        if viewModel.tvSimilarModel.isEmpty {
+            stackView.removeArrangedSubview(similarView)
+        } else {
+            stackView.addArrangedSubview(similarView)
+        }
     }
     
     func didFetchDetail() {
@@ -84,7 +89,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         descriptionView.configure(text: viewModel.model.overview)
         videoView.getTVVideo(model: viewModel.tvVideoModel)
         castView.updateCastView(model: viewModel.tvCastModel)
-        similarView.updateSimilarMovie(model: viewModel.tvSimilarModel)
+        similarView.updateSimilarTVShow(model: viewModel.tvSimilarModel)
     }
     
     func tvCastSelected(castID: Int) {
