@@ -64,14 +64,7 @@ class SimilarMoviesView: UIView {
 
     func updateSimilarMovie(model: [SimilarResult]) {
         self.model = model
-        if model.isEmpty {
-            collectionView.isHidden = true
-            titleLabel.isHidden = true
-        } else {
-            collectionView.isHidden = false
-            titleLabel.isHidden = false 
-            collectionView.reloadData()
-        }
+        collectionView.reloadData()
     }
 }
 

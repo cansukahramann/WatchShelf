@@ -61,15 +61,7 @@ class SimilarTVShowView: UIView {
 
     func updateSimilarTVShow(model: [SimilarResult]) {
         self.model = model
-        if model.isEmpty {
-            collectionView.isHidden = true
-            titleLabel.isHidden = true
-        } else {
-            collectionView.isHidden = false
-            titleLabel.isHidden = false
-            collectionView.reloadData()
-        }
-        self.layoutIfNeeded()
+        collectionView.reloadData()
     }
 }
 
