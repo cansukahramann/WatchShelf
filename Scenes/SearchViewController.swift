@@ -40,11 +40,14 @@ class SearchViewController: UIViewController {
     func configureSearchController() {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "Search and don’t get lost..."
-        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.searchTextField.isUserInteractionEnabled = false
+        searchController.searchBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchBarTapped)))
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
-        searchController.searchBar.tintColor = .red
-        searchController.searchBar.barTintColor = .red
+    }
+    
+    @objc private func searchBarTapped() {
+        print("Did tap search bar")
     }
     
     private func setUpUI() {
