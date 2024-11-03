@@ -40,14 +40,9 @@ class TrendViewController: UIViewController {
     func configureSearchController() {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "Search and don’t get lost..."
-        searchController.searchBar.searchTextField.isUserInteractionEnabled = false
-        searchController.searchBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchBarTapped)))
+        searchController.searchBar.delegate = self
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
-    }
-    
-    @objc private func searchBarTapped() {
-        print("Did tap search bar")
     }
     
     private func setUpUI() {
@@ -94,3 +89,9 @@ class TrendViewController: UIViewController {
     }
 }
 
+extension TrendViewController: UISearchBarDelegate {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        navigationController?.pushViewController(SearchViewController(), animated: true)
+        return false
+    }
+}
