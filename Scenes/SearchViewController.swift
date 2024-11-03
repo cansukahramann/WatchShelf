@@ -7,9 +7,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, SearchListViewDelegate {
-  
-    
+class SearchViewController: UIViewController {
     
     private let searchListView = SearchListView(frame: .zero)
     
@@ -36,7 +34,6 @@ class SearchViewController: UIViewController, SearchListViewDelegate {
         setUpUI()
         configureUI()
         didFetchTrending()
-        searchListView.delegate = self
         
     }
     
