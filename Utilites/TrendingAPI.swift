@@ -11,9 +11,6 @@ import Moya
 enum TrendingAPI: TargetType {
     
     case trendingAll
-    case trendingMovie
-    case trendingPeople
-    case trendingTv
     
     
     var baseURL: URL {
@@ -24,12 +21,7 @@ enum TrendingAPI: TargetType {
         switch self {
         case .trendingAll:
             "all/day"
-        case .trendingMovie:
-           "movie/day"
-        case .trendingPeople:
-            "person/day"
-        case .trendingTv:
-            "tv/day"
+        
         }
     }
     
