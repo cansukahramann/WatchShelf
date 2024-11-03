@@ -41,7 +41,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        configureUI()
         setupView()
         configureDetailHeaderView()
         configureDescriptionView()
@@ -71,6 +71,15 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
             stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
+    }
+    
+    func configureUI() {
+        view.backgroundColor = .systemBackground
+        
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        navigationItem.rightBarButtonItem = addButton
+        addButton.tintColor = .red
+        
     }
     
     private func configureDetailHeaderView() {
@@ -117,5 +126,10 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
         similarMoviesView.updateSimilarMovie(model: viewModel.similarModel)
         castView.updateCastView(model: viewModel.movieCastModel)
         videoView.getVideo(model: viewModel.movieVideoModel)
+    }
+    
+    @objc
+    func addButtonTapped() {
+        
     }
 }

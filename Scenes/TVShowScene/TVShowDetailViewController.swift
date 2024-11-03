@@ -82,6 +82,10 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         } else {
             stackView.addArrangedSubview(similarView)
         }
+        
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTap))
+        navigationItem.rightBarButtonItem = addButton
+        addButton.tintColor = .red
     }
     
     func didFetchDetail() {
@@ -102,4 +106,8 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         navigationController?.pushViewController(tvShowDetail, animated: true)
     }
    
+    @objc
+    func addButtonTap() {
+        
+    }
 }
