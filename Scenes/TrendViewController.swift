@@ -1,5 +1,5 @@
 //
-//  SearchViewController.swift
+//  TrendViewController.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 17.09.2024.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class TrendViewController: UIViewController {
     
-    private let searchListView = SearchListView(frame: .zero)
+    private let searchListView = TrendListView(frame: .zero)
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -26,7 +26,7 @@ class SearchViewController: UIViewController {
         return stackView
     }()
 
-    var viewModel: SearchListViewModel!
+    var viewModel: TrendListViewModel!
     
     override func viewDidLoad() {
         configureSearchController()

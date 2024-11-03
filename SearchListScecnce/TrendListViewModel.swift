@@ -1,5 +1,5 @@
 //
-//  SearchListViewModel.swift
+//  TrendListViewModel.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 31.10.2024.
@@ -8,15 +8,15 @@
 import Foundation
 import Moya
 
-protocol SearchListViewModelDelegate: AnyObject {
+protocol TrendListViewModelDelegate: AnyObject {
     func updateCollectionView()
 }
 
-class SearchListViewModel {
+class TrendListViewModel {
     
     private let provider = MoyaProvider<TrendingAPI>()
     var model = [TrendingAll]()
-    weak var delegate: SearchListViewModelDelegate?
+    weak var delegate: TrendListViewModelDelegate?
 
     func fetchTrendigAll() {
         provider.request(.trendingAll) { [weak self] result in

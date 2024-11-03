@@ -1,5 +1,5 @@
 //
-//  SearchListView.swift
+//  TrendListView.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 31.10.2024.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol SearchListViewDelegate: AnyObject {
+protocol TrendListViewDelegate: AnyObject {
     func trendigAllSelected(id: Int, type: MediaType?)
 }
 
-class SearchListView: UIView, SearchListViewModelDelegate {
+class TrendListView: UIView, TrendListViewModelDelegate {
     
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -23,8 +23,8 @@ class SearchListView: UIView, SearchListViewModelDelegate {
         return collectionView
     }()
     
-    var viewModel =  SearchListViewModel()
-    weak var delegate: SearchListViewDelegate?
+    var viewModel =  TrendListViewModel()
+    weak var delegate: TrendListViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,7 +64,7 @@ class SearchListView: UIView, SearchListViewModelDelegate {
     }
 }
 
-extension SearchListView: UICollectionViewDataSource {
+extension TrendListView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.model.count
     }
@@ -85,7 +85,7 @@ extension SearchListView: UICollectionViewDataSource {
     }
 }
 
-extension SearchListView: UICollectionViewDelegateFlowLayout {
+extension TrendListView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width / 2) - 8
         let height: CGFloat = 300

@@ -41,7 +41,7 @@ class TabBarController: UITabBarController {
     }
     
     func createSearchNC() -> UINavigationController {
-        let searchVC = SearchViewController()
+        let searchVC = TrendViewController()
         searchVC.title = "Search"
         searchVC.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "sparkle.magnifyingglass"), tag: 3)
          
