@@ -95,7 +95,7 @@ extension ContentViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
-        cell.configure(model: viewModel.contentResult[indexPath.item])
+        cell.configure(posterPath: viewModel.contentResult[indexPath.item].posterPath)
         return cell
     }
 }

@@ -28,39 +28,13 @@ class PosterCell: UICollectionViewCell {
         posterImageView.image = nil
     }
     
-    func configure(model: ContentResult) {
-        if let posterPath = model.posterPath {
-            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
-        } else {
-            posterImageView.image = UIImage(named: "default-poster")
-        }
-        
-    }
-    
-    func configureSimilar(model: SimilarResult) {
-        if let posterPath = model.posterPath {
+    func configure(posterPath: String?) {
+        if let posterPath = posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
         } else {
             posterImageView.image = UIImage(named: "default-poster")
         }
     }
-    
-    func configureMovieCredits(model: CastCredit) {
-        if let posterPath = model.posterPath {
-            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
-        } else {
-            posterImageView.image = UIImage(named: "default-poster")
-        }
-    }
-    
-    func configureTrendingAll(model: TrendingAll) {
-        if let posterPath = model.posterPath {
-            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
-        } else {
-            posterImageView.image = UIImage(named: "default-poster")
-        }
-    }
-    
 
     private func setupConstraint() {
         contentView.addSubview(posterImageView)

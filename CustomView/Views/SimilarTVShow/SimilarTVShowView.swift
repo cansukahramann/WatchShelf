@@ -72,7 +72,7 @@ extension SimilarTVShowView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
-        cell.configureSimilar(model: model[indexPath.item])
+        cell.configure(posterPath: model[indexPath.item].posterPath)
         return cell
     }
     

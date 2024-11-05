@@ -27,6 +27,14 @@ class TVShowDetailViewModel {
         self.seriesID = tvShowID
     }
     
+    var isFavorite: Bool {
+        WatchListStore.shared.isMediaSaved(id: model.id)
+    }
+    
+    var favoriteStatusChangeMessage: String {
+        isFavorite ? "Added to Watchlist" : "Removed from Watchlist"
+    }
+    
     func fetchTVDetail() {
         group.enter()
         tvDetailProvider.request(.tvShowDetail(seriesID:seriesID)) { [weak self] result in

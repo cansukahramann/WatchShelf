@@ -69,6 +69,12 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         ])
     }
     
+    private func setRightBarButtonItem(with image: UIImage) {
+        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(addButtonTapped))
+        rightBarButtonItem.tintColor = .red
+        navigationItem.setRightBarButton(rightBarButtonItem, animated: true)
+    }
+    
     private func configureUI() {
         stackView.addArrangedSubview(headerView)
         stackView.addArrangedSubview(descriptionView)
@@ -78,12 +84,10 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         ])
         stackView.addArrangedSubview(castView)
         stackView.addArrangedSubview(similarView)
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTap))
-        navigationItem.rightBarButtonItem = addButton
-        addButton.tintColor = .red
     }
     
     func didFetchDetail() {
+        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark : .add)
         headerView.configureTVDetail(model: viewModel.model)
         descriptionView.configure(text: viewModel.model.overview)
         videoView.getTVVideo(model: viewModel.tvVideoModel)
@@ -102,7 +106,17 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     }
     
     @objc
-    func addButtonTap() {
-        
+    func addButtonTapped() {
+        WatchListStore.shared.updateMedia(viewModel.model.storeableMedia)
+        showAlert(message: viewModel.favoriteStatusChangeMessage)
+        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark : .add)
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            alert.dismiss(animated: true)
+        }
     }
 }
