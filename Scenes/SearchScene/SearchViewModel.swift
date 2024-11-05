@@ -16,6 +16,7 @@ final class SearchViewModel {
     weak var delegate: SearchViewModelDelegate?
     private var debounceTimer: Timer?
     private let service = SearchService()
+    var model: [SearchResponseModel.Result] = []
     
     func search(_ searchText: String) {
         debounceTimer?.invalidate()
@@ -30,7 +31,8 @@ final class SearchViewModel {
         service.search(searchText: searchText) { [weak self] result in
             switch result {
             case .success(let response):
-                self?.delegate?.didCompleteWith(results: response.results)
+                let filteredResults = response.results.filter { $0.media_type != .person }
+                self?.delegate?.didCompleteWith(results: filteredResults)
             case .failure:
                 self?.delegate?.didCompleteWithError()
             }
