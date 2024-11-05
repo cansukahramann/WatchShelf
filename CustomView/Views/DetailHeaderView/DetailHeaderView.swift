@@ -121,7 +121,7 @@ class DetailHeaderView: UIView {
         let genresString = model.genres.map { $0.name }.joined(separator: ", ")
         
         let attributes = [
-            (Image.dateSymbol, "\(model.firstAirDate) - \(model.lastAirDate)"),
+            (Image.dateSymbol, "\(model.firstAirDate ?? "") - \(model.lastAirDate ?? "")"),
             (Image.genreSymbol, "\(genresString)"),
             (Image.runtimeSymbol, "\(model.numberOfSeasons) "),
             (Image.infoSymbol, "\(model.status)"),
