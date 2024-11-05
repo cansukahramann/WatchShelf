@@ -14,6 +14,7 @@ struct SearchResponseModel: Decodable {
         let media_type: MediaType
         let release_date: String?
         let title: String?
+        let name: String?
     }
     
     enum MediaType: String, Decodable {
