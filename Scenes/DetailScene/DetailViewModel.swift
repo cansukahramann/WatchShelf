@@ -29,6 +29,14 @@ class DetailViewModel {
         self.movieID = movieID
     }
     
+    var isFavorite: Bool {
+        WatchListStore.shared.isMediaSaved(id: detailModel.id)
+    }
+    
+    var favoriteStatusChangeMessage: String {
+        isFavorite ? "Added to Watchlist" : "Removed from Watchlist"
+    }
+    
     func fetchDetail() {
         group.enter()
         detailProvider.request(.movieDetail(movieID: movieID)) { [weak self] result in

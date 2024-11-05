@@ -75,11 +75,12 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     
     func configureUI() {
         view.backgroundColor = .systemBackground
-        
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
-        navigationItem.rightBarButtonItem = addButton
-        addButton.tintColor = .red
-        
+    }
+    
+    private func setRightBarButtonItem(with image: UIImage) {
+        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(addButtonTapped))
+        rightBarButtonItem.tintColor = .red
+        navigationItem.setRightBarButton(rightBarButtonItem, animated: true)
     }
     
     private func configureDetailHeaderView() {
@@ -116,6 +117,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     }
     
     func didFetchDetail() {
+        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark : .add)
         headerView.configure(model: viewModel.detailModel)
         descriptionView.configure(text: viewModel.detailModel.overview)
         similarMoviesView.updateSimilarMovie(model: viewModel.similarModel)
@@ -125,6 +127,16 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     
     @objc
     func addButtonTapped() {
-        
+        WatchListStore.shared.updateMedia(viewModel.detailModel.storeableMedia)
+        showAlert(message: viewModel.favoriteStatusChangeMessage)
+        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark : .add)
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            alert.dismiss(animated: true)
+        }
     }
 }
