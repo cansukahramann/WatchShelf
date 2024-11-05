@@ -9,7 +9,7 @@ import UIKit
 
 
 class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate,TVShowCastViewDelegate, SimilarTVShowViewDelegate {
-  
+    
     private let headerView = DetailHeaderView(frame: .zero)
     private let descriptionView = DescriptionView(frame: .zero)
     private let videoView = VideoView(frame: .zero)
@@ -18,7 +18,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     
     private var viewModel: TVShowDetailViewModel!
     
-
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemBackground
@@ -38,7 +38,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         self.init(nibName: nil, bundle: nil)
         viewModel = TVShowDetailViewModel(tvShowID: tvShowID)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .purple
@@ -77,12 +77,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
             videoView.heightAnchor.constraint(equalToConstant: 200)
         ])
         stackView.addArrangedSubview(castView)
-        if viewModel.tvSimilarModel.isEmpty {
-            stackView.removeArrangedSubview(similarView)
-        } else {
-            stackView.addArrangedSubview(similarView)
-        }
-        
+        stackView.addArrangedSubview(similarView)
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTap))
         navigationItem.rightBarButtonItem = addButton
         addButton.tintColor = .red
@@ -105,7 +100,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         let tvShowDetail = TVShowDetailViewController(tvShowID: tvShowID)
         navigationController?.pushViewController(tvShowDetail, animated: true)
     }
-   
+    
     @objc
     func addButtonTap() {
         

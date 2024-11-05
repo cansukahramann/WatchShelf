@@ -92,18 +92,13 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     
     private func configureVideoView() {
         stackView.addArrangedSubview(videoView)
-        
         NSLayoutConstraint.activate([
             videoView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
     
     private func configureCollectionView() {
-        if viewModel.similarModel.isEmpty {
-            stackView.removeArrangedSubview(similarMoviesView)
-        } else {
-            stackView.addArrangedSubview(similarMoviesView)
-        }
+        stackView.addArrangedSubview(similarMoviesView)
     }
     
     private func configureCastView() {
