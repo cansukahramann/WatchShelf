@@ -71,7 +71,7 @@ extension TrendListView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
-        cell.configureTrendingAll(model: viewModel.model[indexPath.item])
+        cell.configure(posterPath: viewModel.model[indexPath.item].posterPath)
         return cell
     }
     

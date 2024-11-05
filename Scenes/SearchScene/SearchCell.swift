@@ -68,7 +68,7 @@ class SearchCell: UITableViewCell {
         ])
     }
     
-    func configure(result: SearchResponseModel.Result,displayName: String) {
+    func configure(result: SearchResponseModel.Result, displayName: String) {
         if let poster_path = result.poster_path {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(poster_path)"))
         } else {
@@ -78,5 +78,15 @@ class SearchCell: UITableViewCell {
         nameLabel.text = displayName
         dateLabel.text = result.release_date?.isEmpty == false ? result.release_date : "-"
         mediaType.image = result.media_type == .movie ? Image.movieTypeSymbol : Image.tvTypeSymbol
+    }
+    
+    func config(model: StoreableMedia) {
+        if let posterPath = model.posterPath{
+            posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
+        } else {
+            posterImageView.image = UIImage(named: "default-poster")
+        }
+        nameLabel.text = model.title
+        dateLabel.text = model.release_date
     }
 }
