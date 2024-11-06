@@ -11,7 +11,7 @@ import Kingfisher
 class PosterCell: UICollectionViewCell {
     
     static let reuseID = "PosterCell"
-    let posterImageView = PosterImageView(frame: .zero)
+    let posterImageView = PosterImageView(frame: .zero,isRound: false)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

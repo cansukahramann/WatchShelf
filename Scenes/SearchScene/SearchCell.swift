@@ -10,7 +10,7 @@ import Kingfisher
 
 class SearchCell: UITableViewCell {
     
-    private let posterImageView  = PosterImageView(frame: .zero)
+    private let posterImageView  = PosterImageView(frame: .zero,isRound: false)
     private let nameLabel = EventLabel(textAlignment: .left, fontSize: 24)
     private let dateLabel = EventLabel(textAlignment: .left, fontSize: 12)
     

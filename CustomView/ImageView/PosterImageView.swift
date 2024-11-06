@@ -10,18 +10,29 @@ import UIKit
 
 class PosterImageView: UIImageView {
     
-    override init(frame: CGRect) {
+    private var isRound: Bool
+    
+    init(frame: CGRect, isRound: Bool = false) {
+        
+        self.isRound = isRound
         super.init(frame: frame)
-        configure()
+        translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func configure() {
-        layer.cornerRadius = 12
-        clipsToBounds = true
+        self.isRound = false
+        super.init(coder: coder)
         translatesAutoresizingMaskIntoConstraints = false
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if isRound {
+            layer.cornerRadius = min(bounds.size.width, bounds.size.height) / 2
+        } else {
+            layer.cornerRadius = 12
+        }
+        clipsToBounds = true
+    }
+
 }
