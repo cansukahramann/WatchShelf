@@ -9,7 +9,7 @@ import UIKit
 
 class TrendViewController: UIViewController {
     
-    private let searchListView = TrendListView(frame: .zero)
+    private let trendListView = TrendListView(frame: .zero)
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -25,7 +25,7 @@ class TrendViewController: UIViewController {
         stackView.distribution = .fillEqually
         return stackView
     }()
-
+    
     var viewModel: TrendListViewModel!
     
     override func viewDidLoad() {
@@ -34,7 +34,7 @@ class TrendViewController: UIViewController {
         setUpUI()
         configureUI()
         didFetchTrending()
-        
+        trendListView.delegate = self
     }
     
     func configureSearchController() {
@@ -68,13 +68,16 @@ class TrendViewController: UIViewController {
     }
     
     func configureUI() {
-        stackView.addArrangedSubview(searchListView)
+        stackView.addArrangedSubview(trendListView)
     }
     
     func didFetchTrending() {
-        searchListView.didFetchTrending()
+        trendListView.didFetchTrending()
     }
     
+    
+}
+extension TrendViewController: TrendListViewDelegate {
     func trendigAllSelected(id: Int, type: MediaType?) {
         if let mediaType = type {
             switch mediaType {
