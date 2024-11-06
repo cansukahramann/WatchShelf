@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "empty_watchlist_animation.json",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
