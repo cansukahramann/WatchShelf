@@ -1,5 +1,5 @@
 //
-//  SeriesCastModel.swift
+//  TVShowCastModel.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 26.10.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SeriesCastModel: Codable {
+struct TVShowCastModel: Codable {
     let cast: [SeriesCast]
 }
 

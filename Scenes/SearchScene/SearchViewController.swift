@@ -72,7 +72,7 @@ final class SearchViewController: UITableViewController {
         
         switch selectedMediaType {
         case .movie:
-            navigationController?.pushViewController(DetailViewController(movieID: selectedId), animated: true)
+            navigationController?.pushViewController(MovieDetailViewController(movieID: selectedId), animated: true)
         case .tv:
             navigationController?.pushViewController(TVShowDetailViewController(tvShowID: selectedId), animated: true)
         case .person:

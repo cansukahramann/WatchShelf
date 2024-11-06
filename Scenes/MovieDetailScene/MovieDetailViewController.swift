@@ -1,5 +1,5 @@
 //
-//  DetailViewController.swift
+//  MovieDetailViewController.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 22.09.2024.
@@ -8,7 +8,7 @@
 import UIKit
 
 
-class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMoviesViewDelegate, CastViewDelegate {
+final class MovieDetailViewController: UIViewController, MovieDetailViewModelDelegate, SimilarMoviesViewDelegate, CastViewDelegate {
     
     private let headerView = DetailHeaderView(frame: .zero)
     private let descriptionView = DescriptionView(frame: .zero)
@@ -16,7 +16,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     private let similarMoviesView = SimilarMoviesView(frame: .zero)
     private let castView = MovieCastView(frame: .zero)
     
-    private var viewModel: DetailViewModel!
+    private var viewModel: MovieDetailViewModel!
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -35,7 +35,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     
     convenience init(movieID: Int) {
         self.init(nibName: nil, bundle: nil)
-        viewModel = DetailViewModel(movieID: movieID)
+        viewModel = MovieDetailViewModel(movieID: movieID)
     }
     
     
@@ -107,7 +107,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate, SimilarMo
     }
     
     func similarMovieSelected(movieID: Int) {
-        let detailVC = DetailViewController(movieID: movieID)
+        let detailVC = MovieDetailViewController(movieID: movieID)
         navigationController?.pushViewController(detailVC, animated: true)
     }
     

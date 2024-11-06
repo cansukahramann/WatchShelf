@@ -1,5 +1,5 @@
 //
-//  SeriesDetailModel.swift
+//  TVShowDetailModel.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 22.10.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SeriesDetailModel: Codable {
+struct TVShowDetailModel: Codable {
     let id: Int
     let name: String
     let overview: String

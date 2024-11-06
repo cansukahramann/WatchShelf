@@ -16,7 +16,7 @@ class TVShowDetailViewModel {
     
     private let tvDetailProvider = MoyaProvider<DetailAPI>() 
     var seriesID: Int
-    var model: SeriesDetailModel!
+    var model: TVShowDetailModel!
     var tvCastModel = [SeriesCast]()
     var tvVideoModel = [Results]()
     var tvSimilarModel = [SimilarResult]()
@@ -86,8 +86,8 @@ class TVShowDetailViewModel {
         }
     }
     
-    private func mapDetailResponse(from data: Data) -> SeriesDetailModel? {
-        let response = try! JSONDecoder().decode(SeriesDetailModel.self, from: data)
+    private func mapDetailResponse(from data: Data) -> TVShowDetailModel? {
+        let response = try! JSONDecoder().decode(TVShowDetailModel.self, from: data)
         return response
     }
     
@@ -97,7 +97,7 @@ class TVShowDetailViewModel {
     }
     
     private func mapCreditsResponse(from data: Data) -> [SeriesCast]? {
-        let response = try! JSONDecoder().decode(SeriesCastModel.self, from: data)
+        let response = try! JSONDecoder().decode(TVShowCastModel.self, from: data)
         return response.cast
     }
     

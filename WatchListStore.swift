@@ -54,7 +54,7 @@ extension DetailModel {
     }
 }
 
-extension SeriesDetailModel {
+extension TVShowDetailModel {
     var storeableMedia: StoreableMedia {
         StoreableMedia(id: id, title: name, posterPath: posterPath, type: .tv, release_date: firstAirDate)
     }

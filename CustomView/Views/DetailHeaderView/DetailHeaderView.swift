@@ -109,7 +109,7 @@ class DetailHeaderView: UIView {
         }
     }
     
-    func configureTVDetail(model: SeriesDetailModel) {
+    func configureTVDetail(model: TVShowDetailModel) {
         titleLabel.text = model.name
         if let posterPath = model.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))

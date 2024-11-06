@@ -21,7 +21,6 @@ enum TrendingAPI: TargetType {
         switch self {
         case .trendingAll:
             "all/day"
-        
         }
     }
     

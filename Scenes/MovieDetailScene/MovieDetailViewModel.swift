@@ -1,5 +1,5 @@
 //
-//  DetailViewModel.swift
+//  MovieDetailViewModel.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 8.10.2024.
@@ -8,12 +8,12 @@
 import Foundation
 import Moya
 
-protocol DetailViewModelDelegate: AnyObject {
+protocol MovieDetailViewModelDelegate: AnyObject {
     
     func didFetchDetail()
 }
 
-class DetailViewModel {
+final class MovieDetailViewModel {
     
     private let detailProvider = MoyaProvider<DetailAPI>()
     var movieID: Int
@@ -23,7 +23,7 @@ class DetailViewModel {
     var movieVideoModel = [Results]()
     let group = DispatchGroup()
     
-    weak var delegate: DetailViewModelDelegate?
+    weak var delegate: MovieDetailViewModelDelegate?
     
     init(movieID: Int) {
         self.movieID = movieID
