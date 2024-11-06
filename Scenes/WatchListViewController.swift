@@ -17,19 +17,18 @@ class WatchListViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-//        tableView.dataSource = self
-//        tableView.delegate = self
-   
+        tableView.dataSource = self
+        tableView.delegate = self
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
-
     
     private func setupUI() {
         view.addSubview(tableView)
@@ -41,7 +40,6 @@ class WatchListViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
 }
 
 extension WatchListViewController: UITableViewDataSource {
@@ -51,8 +49,8 @@ extension WatchListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as! SearchCell
-        let models = WatchListStore.shared.mediaList[indexPath.row]
-        cell.config(model: models)
+        let model = WatchListStore.shared.mediaList[indexPath.row]
+        cell.config(model: model)
         return cell
     }
 }
@@ -60,26 +58,34 @@ extension WatchListViewController: UITableViewDataSource {
 extension WatchListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let selectedMedia = WatchListStore.shared.mediaList[indexPath.row]
+        
+        if selectedMedia.type == .movie {
+            let movieDetailVC = DetailViewController(movieID: selectedMedia.id)
+            navigationController?.pushViewController(movieDetailVC, animated: true)
+        } else if selectedMedia.type == .tv {
+            let tvDetailVC = TVShowDetailViewController(tvShowID: selectedMedia.id)
+            navigationController?.pushViewController(tvDetailVC, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (_, _, completionHandler) in
-                guard let self = self else { return }
-                
-                let model = WatchListStore.shared.mediaList[indexPath.row]
-                WatchListStore.shared.updateMedia(model)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                let alert = UIAlertController(title: "Removed", message: "This item has been removed from your WatchList.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                
-                completionHandler(true)
-            }
-
-            deleteAction.backgroundColor = .red
-            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-            configuration.performsFirstActionWithFullSwipe = true
-            return configuration
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (_, _, completionHandler) in
+            guard let self = self else { return }
+            let mediaToRemove = WatchListStore.shared.mediaList[indexPath.row]
+            WatchListStore.shared.updateMedia(mediaToRemove)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            let alert = UIAlertController(title: "Removed", message: "This item has been removed from your WatchList.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+    
+            completionHandler(true)
         }
+        
+        deleteAction.backgroundColor = .red
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
+    }
 }
-
