@@ -14,12 +14,13 @@ protocol TrendListViewDelegate: AnyObject {
 class TrendListView: UIView, TrendListViewModelDelegate {
     
     private var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        let layout = createLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .systemBackground
         collectionView.showsVerticalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.isUserInteractionEnabled = true
+
         return collectionView
     }()
     
@@ -33,13 +34,68 @@ class TrendListView: UIView, TrendListViewModelDelegate {
         collectionView.dataSource = self
         collectionView.delegate = self
         setupConstraint()
-        
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    static func createLayout() -> UICollectionViewCompositionalLayout {
+        // Item
+        let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(2/3),
+            heightDimension: .fractionalHeight(1)))
+        
+        item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+        
+        let verticalStackItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(0.5)))
+        
+        verticalStackItem.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+        
+   
+        let verticalStackGroup = NSCollectionLayoutGroup.vertical(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1/3),
+                heightDimension: .fractionalHeight(1)),
+            repeatingSubitem: verticalStackItem,
+            count: 2)
+    
+        
+        let tripleItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)))
+        
+        tripleItem.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+        
+        let tripleHorizontalGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(0.3)),
+            repeatingSubitem: tripleItem,
+            count: 3)
+        
+        let horizontalGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(0.7 )),
+            subitems: [item, verticalStackGroup])
+        
+        
+        let verticalGroup = NSCollectionLayoutGroup.vertical(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(1.0)),
+            subitems: [horizontalGroup, tripleHorizontalGroup])
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: verticalGroup)
+        
+        // Return Layout
+        return UICollectionViewCompositionalLayout(section: section)
+    }
+
     
     func setupConstraint() {
         addSubview(collectionView)
@@ -48,8 +104,7 @@ class TrendListView: UIView, TrendListViewModelDelegate {
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 350)
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
@@ -79,16 +134,10 @@ extension TrendListView: UICollectionViewDataSource {
         let selectedTrend = viewModel.model[indexPath.item]
         let selectedId = selectedTrend.id
         let selectedMediaType = selectedTrend.type
-        
         delegate?.trendigAllSelected(id: selectedId, type: selectedMediaType)
-        
     }
 }
 
-extension TrendListView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width / 2) - 8
-        let height: CGFloat = 300
-        return CGSize(width: width, height: height)
-    }
+extension TrendListView: UICollectionViewDelegate {
+    
 }

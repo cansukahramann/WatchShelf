@@ -17,12 +17,14 @@ class PosterImageView: UIImageView {
         self.isRound = isRound
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
+        contentMode = .scaleAspectFit
     }
     
     required init?(coder: NSCoder) {
         self.isRound = false
         super.init(coder: coder)
         translatesAutoresizingMaskIntoConstraints = false
+        contentMode = .scaleAspectFit
     }
     
     override func layoutSubviews() {
