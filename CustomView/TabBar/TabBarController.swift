@@ -12,7 +12,7 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         UITabBar.appearance().backgroundColor = .systemBackground
         UITabBar.appearance().tintColor = .red
-        viewControllers = [createMovieNC(),createTvShowNC(),createScanNC(),createSearchNC(),createWatchListNC()]
+        viewControllers = [createMovieNC(),createTvShowNC(),createCategoryNC(),createSearchNC(),createWatchListNC()]
     }
     
     func createMovieNC() -> UINavigationController {
@@ -32,12 +32,12 @@ class TabBarController: UITabBarController {
 )
     }
     
-    func createScanNC() -> UINavigationController {
-        let scanVC = ScanViewController()
-        scanVC.title = "Scan kardeşim"
-        scanVC.tabBarItem = UITabBarItem(title: "Scan", image: UIImage(systemName: "barcode.viewfinder"), tag: 2)
+    func createCategoryNC() -> UINavigationController {
+        let categoryVC = CategoriesViewController()
+        categoryVC.title = "Categories"
+        categoryVC.tabBarItem = UITabBarItem(title: "Category", image: UIImage(systemName: "square.grid.2x2.fill"), tag: 2)
         
-        return UINavigationController(rootViewController: scanVC)
+        return UINavigationController(rootViewController: categoryVC)
     }
     
     func createSearchNC() -> UINavigationController {
