@@ -24,19 +24,19 @@ final class CategoryCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let darkRed = UIColor(red: 0.8, green: 0.1, blue: 0.1, alpha: 0.5)
-    let lightRed = UIColor(red: 1.0, green: 0.5, blue: 0.4, alpha: 0.5)
-    
+    let color1 = UIColor(red: 94/255, green: 62/255, blue: 143/255, alpha: 1.0)
+    let color2 = UIColor(red: 122/255, green: 82/255, blue: 168/255, alpha: 1.0)
+    let color3 = UIColor(red: 153/255, green: 101/255, blue: 199/255, alpha: 1.0)
+
     private func applyGradient() {
         gradientLayer = CAGradientLayer()
-        gradientLayer?.colors = [darkRed.cgColor, lightRed.cgColor]
+        gradientLayer?.colors =  [color1.cgColor, color2.cgColor, color3.cgColor]
         gradientLayer?.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer?.endPoint = CGPoint(x: 0, y: 1)
         gradientLayer?.frame = contentView.bounds
         if let gradientLayer = gradientLayer {
             contentView.layer.insertSublayer(gradientLayer, at: 0)
         }
-        
     }
     
     func animateCellTap(animationCompletion: @escaping () -> Void) {

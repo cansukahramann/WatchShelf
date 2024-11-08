@@ -79,7 +79,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     
     private func setRightBarButtonItem(with image: UIImage) {
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(addButtonTapped))
-        rightBarButtonItem.tintColor = .red
+        rightBarButtonItem.tintColor = UIColor(named: "app_color")
         navigationItem.setRightBarButton(rightBarButtonItem, animated: true)
     }
     

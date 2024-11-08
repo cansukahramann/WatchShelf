@@ -25,7 +25,7 @@ class AttributeView: UIView {
     private func configureImage() {
         addSubview(attributeImage)
         attributeImage.translatesAutoresizingMaskIntoConstraints = false
-        attributeImage.tintColor = .red
+        attributeImage.tintColor = UIColor(named: "app_color")
         
         NSLayoutConstraint.activate([
             attributeImage.widthAnchor.constraint(equalToConstant: 16),

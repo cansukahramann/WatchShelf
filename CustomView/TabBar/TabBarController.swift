@@ -11,7 +11,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UITabBar.appearance().backgroundColor = .systemBackground
-        UITabBar.appearance().tintColor = .red
+        UITabBar.appearance().tintColor = UIColor(named: "app_color")
         viewControllers = [createMovieNC(),createTvShowNC(),createCategoryNC(),createSearchNC(),createWatchListNC()]
     }
     

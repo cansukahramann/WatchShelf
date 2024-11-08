@@ -16,12 +16,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = TabBarController()
+        window?.rootViewController = LaunchScreenViewController()
         window?.makeKeyAndVisible()
+        configureNavigationBar()
     }
     
     func configureNavigationBar() {
-        UINavigationBar.appearance().tintColor = .red
+        if let appColor = UIColor(named: "app_color") {
+            UINavigationBar.appearance().tintColor = appColor
+            UINavigationBar.appearance().barTintColor = .white
+        } else {
+            print("app_color not found")
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

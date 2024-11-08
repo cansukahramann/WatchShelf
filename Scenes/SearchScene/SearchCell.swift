@@ -21,7 +21,7 @@ class SearchCell: UITableViewCell {
         imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.tintColor = .red
+        imageView.tintColor = UIColor(named: "app_color")
         return imageView
     }()
     
