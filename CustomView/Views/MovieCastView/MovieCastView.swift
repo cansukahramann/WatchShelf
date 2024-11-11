@@ -55,7 +55,7 @@ class MovieCastView: UIView {
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 240),
+            collectionView.heightAnchor.constraint(equalToConstant: 200),
         ])
     }
     
