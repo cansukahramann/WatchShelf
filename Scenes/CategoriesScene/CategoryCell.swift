@@ -40,10 +40,10 @@ final class CategoryCell: UICollectionViewCell {
     }
     
     func animateCellTap(animationCompletion: @escaping () -> Void) {
-        UIView.animate(withDuration: 0.2) { [self] in
+        UIView.animate(withDuration: 0.1) { [self] in
             transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
         } completion: { [self] _ in
-            UIView.animate(withDuration: 0.2) { [self] in
+            UIView.animate(withDuration: 0.1) { [self] in
                 transform = CGAffineTransform.identity
             } completion: { _ in
                 animationCompletion()
@@ -63,8 +63,8 @@ final class CategoryCell: UICollectionViewCell {
         ])
     }
     
-    func configure() {
-        categoryName.text = "Romance"
+    func configure(model: GenreResponse) {
+        categoryName.text = model.name
     }
     
 }
