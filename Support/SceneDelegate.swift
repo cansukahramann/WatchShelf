@@ -24,7 +24,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func configureNavigationBar() {
         if let appColor = UIColor(named: "app_color") {
             UINavigationBar.appearance().tintColor = appColor
-            UINavigationBar.appearance().barTintColor = .white
         } else {
             print("app_color not found")
         }

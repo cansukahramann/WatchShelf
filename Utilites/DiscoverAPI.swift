@@ -13,7 +13,6 @@ enum DiscoverAPI: TargetType {
     case movie(genres: [Int])
     case tv(genres: [Int])
     
-    
     var baseURL: URL {
         URL(string: "https://api.themoviedb.org/3/discover")!
     }
