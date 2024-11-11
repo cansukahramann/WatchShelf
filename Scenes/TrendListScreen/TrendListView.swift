@@ -41,7 +41,7 @@ class TrendListView: UIView, TrendListViewModelDelegate {
     }
     
     static func createLayout() -> UICollectionViewCompositionalLayout {
-        // Item
+
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(2/3),
             heightDimension: .fractionalHeight(1)))
@@ -72,14 +72,14 @@ class TrendListView: UIView, TrendListViewModelDelegate {
         let tripleHorizontalGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(0.3)),
+                heightDimension: .fractionalHeight(0.4)),
             repeatingSubitem: tripleItem,
             count: 3)
         
         let horizontalGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(0.7 )),
+                heightDimension: .fractionalHeight(0.6)),
             subitems: [item, verticalStackGroup])
         
         
