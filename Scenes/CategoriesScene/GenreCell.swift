@@ -1,5 +1,5 @@
 //
-//  CategoryCell.swift
+//  GenreCell.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 7.11.2024.
@@ -8,7 +8,7 @@
 import UIKit
 
 
-final class CategoryCell: UICollectionViewCell {
+final class GenreCell: UICollectionViewCell {
     
     static let reuseID = "CategoryCell"
     let categoryName = EventLabel(textAlignment: .center, fontSize: 24)

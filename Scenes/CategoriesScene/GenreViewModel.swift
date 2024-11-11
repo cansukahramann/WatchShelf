@@ -1,5 +1,5 @@
 //
-//  CategoryViewModel.swift
+//  GenreViewModel.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 8.11.2024.
@@ -8,13 +8,13 @@
 import Foundation
 import Moya
 
-protocol CategoryViewModelDelegate: AnyObject {
+protocol GenreViewModelDelegate: AnyObject {
     func updateCollectionView()
 }
 
-final class CategoryViewModel {
+final class GenreViewModel {
 
-    weak var delegate: CategoryViewModelDelegate?
+    weak var delegate: GenreViewModelDelegate?
     private let genreProvider = MoyaProvider<GenreAPI>()
     var genreModel = [GenreResponse]()
     

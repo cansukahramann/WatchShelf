@@ -1,5 +1,5 @@
 //
-//  CategoriesViewController.swift
+//  GenreViewController.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 7.11.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CategoriesViewController: UIViewController,CategoryViewModelDelegate {
+class GenreViewController: UIViewController,GenreViewModelDelegate {
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -22,12 +22,12 @@ class CategoriesViewController: UIViewController,CategoryViewModelDelegate {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .systemBackground
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseID)
+        collectionView.register(GenreCell.self, forCellWithReuseIdentifier: GenreCell.reuseID)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
-    var viewModel = CategoryViewModel()
+    var viewModel = GenreViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,21 +54,21 @@ class CategoriesViewController: UIViewController,CategoryViewModelDelegate {
     }
 }
 
-extension CategoriesViewController: UICollectionViewDataSource {
+extension GenreViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.genreModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseID, for: indexPath) as! CategoryCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCell.reuseID, for: indexPath) as! GenreCell
         cell.configure(model: viewModel.genreModel[indexPath.item])
         return cell
     }
 }
 
-extension CategoriesViewController: UICollectionViewDelegate {
+extension GenreViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? GenreCell else { return }
         cell.animateCellTap { [unowned self] in
             let categoryDetailVC = CategoryDetailViewController(genreID: viewModel.genreModel[indexPath.item].id)
             self.navigationController?.pushViewController(categoryDetailVC, animated: true)

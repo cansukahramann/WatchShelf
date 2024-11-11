@@ -33,7 +33,7 @@ class TabBarController: UITabBarController {
     }
     
     func createCategoryNC() -> UINavigationController {
-        let categoryVC = CategoriesViewController()
+        let categoryVC = GenreViewController()
         categoryVC.title = "Categories"
         categoryVC.tabBarItem = UITabBarItem(title: "Category", image: UIImage(systemName: "square.grid.2x2.fill"), tag: 2)
         
