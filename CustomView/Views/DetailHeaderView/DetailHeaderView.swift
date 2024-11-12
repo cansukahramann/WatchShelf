@@ -123,7 +123,7 @@ class DetailHeaderView: UIView {
         let attributes = [
             (Image.dateSymbol, "\(model.firstAirDate ?? "") - \(model.lastAirDate ?? "")"),
             (Image.genreSymbol, "\(genresString)"),
-            (Image.runtimeSymbol, "\(model.numberOfSeasons) "),
+            (Image.runtimeSymbol, "\(model.numberOfSeasons) season"),
             (Image.infoSymbol, "\(model.status)"),
             (Image.ratingSymbol, "\(model.voteAverage)")
         ]
