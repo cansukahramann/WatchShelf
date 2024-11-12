@@ -24,22 +24,31 @@ final class GenreCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let color1 = UIColor(red: 94/255, green: 62/255, blue: 143/255, alpha: 1.0)
-    let color2 = UIColor(red: 122/255, green: 82/255, blue: 168/255, alpha: 1.0)
-    let color3 = UIColor(red: 153/255, green: 101/255, blue: 199/255, alpha: 1.0)
-    let color4 = UIColor(red: 168/255, green: 82/255, blue: 220/255, alpha: 1.0)
-    
     private func applyGradient() {
         gradientLayer = CAGradientLayer()
-        gradientLayer?.colors =  [color1.cgColor, color2.cgColor, color3.cgColor,color4.cgColor]
+        gradientLayer?.colors = [UIColor.black.cgColor, UIColor.black.cgColor]
         gradientLayer?.startPoint = CGPoint(x: 0.5, y: 0)
         gradientLayer?.endPoint = CGPoint(x: 0.5, y: 1)
-        gradientLayer?.locations = [0.0, 0.3, 0.6, 0.9]
+        gradientLayer?.locations = [0.0, 1.0]
         gradientLayer?.frame = contentView.bounds
-        if let gradientLayer = gradientLayer {
-            contentView.layer.insertSublayer(gradientLayer, at: 0)
-        }
+        contentView.layer.insertSublayer(gradientLayer!, at: 0)
+        
+        let borderLayer = CALayer()
+        borderLayer.frame = contentView.bounds
+        borderLayer.borderColor = UIColor.white.cgColor
+        borderLayer.borderWidth = 4.0
+        borderLayer.cornerRadius = 12.0
+        borderLayer.opacity = 0.5
+
+        borderLayer.shadowColor = UIColor.white.cgColor
+        borderLayer.shadowOpacity = 0.9
+        borderLayer.shadowOffset = CGSize(width: 8, height: 8)
+        borderLayer.shadowRadius = 10.0
+
+        contentView.layer.addSublayer(borderLayer)
+        
     }
+
     
     func animateCellTap(animationCompletion: @escaping () -> Void) {
         UIView.animate(withDuration: 0.1) { [self] in
