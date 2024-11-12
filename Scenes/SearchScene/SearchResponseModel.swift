@@ -8,20 +8,34 @@
 import Foundation
 
 struct SearchResponseModel: Decodable {
+    let results: [Result]
+    
     struct Result: Decodable {
         let id: Int
-        let poster_path: String?
-        let media_type: MediaType
-        let release_date: String?
+        let posterPath: String?
+        let mediaType: MediaType
+        let releaseDate: String?
         let title: String?
         let name: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case id, title, name
+            case posterPath = "poster_path"
+            case mediaType = "media_type"
+            case releaseDate = "release_date"
+
+        }
+        
+        enum MediaType: String, Decodable {
+            case movie
+            case tv
+            case person
+        }
+
     }
-    
-    enum MediaType: String, Decodable {
-        case movie
-        case tv
-        case person
-    }
-    
-    let results: [Result]
 }
+
+
+
+
+

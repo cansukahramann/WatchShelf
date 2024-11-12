@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SearchViewControllerDelegate: AnyObject {
-    func selectedContent(id: Int, type: SearchResponseModel.MediaType)
+    func selectedContent(id: Int, type: SearchResponseModel.Result.MediaType)
 }
 
 final class SearchViewController: UITableViewController {
@@ -67,7 +67,7 @@ final class SearchViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedContent = viewModel.model[indexPath.row]
         let selectedId = selectedContent.id
-        let selectedMediaType = selectedContent.media_type
+        let selectedMediaType = selectedContent.mediaType
         delegate?.selectedContent(id: selectedId, type: selectedMediaType)
         
         switch selectedMediaType {

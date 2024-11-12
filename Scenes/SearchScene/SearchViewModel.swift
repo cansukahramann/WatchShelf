@@ -31,7 +31,7 @@ final class SearchViewModel {
         service.search(searchText: searchText) { [weak self] result in
             switch result {
             case .success(let response):
-                let filteredResults = response.results.filter { $0.media_type != .person }
+                let filteredResults = response.results.filter { $0.mediaType != .person }
                 self?.delegate?.didCompleteWith(results: filteredResults)
             case .failure:
                 self?.delegate?.didCompleteWithError()

@@ -69,15 +69,15 @@ class SearchCell: UITableViewCell {
     }
     
     func configure(result: SearchResponseModel.Result, displayName: String) {
-        if let poster_path = result.poster_path {
+        if let poster_path = result.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(poster_path)"))
         } else {
             posterImageView.image = UIImage(named: "default-poster")
         }
         
         nameLabel.text = displayName
-        dateLabel.text = result.release_date?.isEmpty == false ? result.release_date : "-"
-        mediaType.image = result.media_type == .movie ? Image.movieTypeSymbol : Image.tvTypeSymbol
+        dateLabel.text = result.releaseDate?.isEmpty == false ? result.releaseDate : "-"
+        mediaType.image = result.mediaType == .movie ? Image.movieTypeSymbol : Image.tvTypeSymbol
     }
     
     func config(model: StoreableMedia) {
