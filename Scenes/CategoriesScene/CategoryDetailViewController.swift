@@ -34,8 +34,6 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         return collectionView
     }()
 
-
-
     private var viewModel: CategoryDetailViewModel!
     
     convenience init(genreID: Int) {
@@ -83,7 +81,14 @@ extension CategoryDetailViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedId = viewModel.detailModel[indexPath.item].id
-        navigationController?.pushViewController(MovieDetailViewController(movieID: selectedId), animated: true)
+        let selectedItem = viewModel.detailModel[indexPath.item]
+        let selectedId = selectedItem.id
+        
+        if selectedItem.isMovie {
+            navigationController?.pushViewController(MovieDetailViewController(movieID: selectedId), animated: true)
+        } else if selectedItem.isTVShow {
+            navigationController?.pushViewController(TVShowDetailViewController(tvShowID: selectedId), animated: true)
+        }
+        
     }
 }
