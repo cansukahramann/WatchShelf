@@ -42,7 +42,7 @@ class CategoryDetailCell: UICollectionViewCell {
         trackLayer.path = circularPath.cgPath
         trackLayer.strokeColor = UIColor.lightGray.cgColor
         trackLayer.lineWidth = 5
-        trackLayer.fillColor = UIColor.clear.cgColor
+        trackLayer.fillColor = UIColor.black.cgColor
         trackLayer.lineCap = .round
         trackLayer.shadowColor = UIColor.black.cgColor
         trackLayer.shadowOpacity = 0.7
@@ -51,17 +51,17 @@ class CategoryDetailCell: UICollectionViewCell {
         contentView.layer.addSublayer(trackLayer)
         
         shapeLayer.path = circularPath.cgPath
-        shapeLayer.strokeColor = UIColor.purple.cgColor
+        shapeLayer.strokeColor = UIColor(named: "app_color")?.cgColor
         shapeLayer.lineCap = .round
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineWidth = 7.5
+        shapeLayer.lineWidth = 5
         shapeLayer.strokeEnd = 0
         shapeLayer.shadowColor = UIColor.purple.cgColor
         shapeLayer.shadowOpacity = 0.7
         shapeLayer.shadowOffset = CGSize(width: 4, height: 4)
         shapeLayer.shadowRadius = 6
         contentView.layer.addSublayer(shapeLayer)
-        
+        contentView.addSubview(percentagLabel)
         NSLayoutConstraint.activate([
             percentagLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor,constant: center.x - contentView.bounds.width / 2),
             percentagLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor,constant: center.y - contentView.bounds.height / 2),
@@ -74,9 +74,9 @@ class CategoryDetailCell: UICollectionViewCell {
     
     private func animateCircle(for rating: Double) {
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        let normalizedRating = CGFloat(rating / 10)
+        let normalizedRating = min(CGFloat(rating / 10), 1.0)
         basicAnimation.toValue = normalizedRating
-        basicAnimation.duration = 1
+        basicAnimation.duration = 1.0
         basicAnimation.fillMode = .forwards
         basicAnimation.isRemovedOnCompletion = false
         shapeLayer.add(basicAnimation, forKey: "rate")
@@ -89,7 +89,7 @@ class CategoryDetailCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubview(posterImage)
         posterImage.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(percentagLabel)
+  
         
         NSLayoutConstraint.activate([
             posterImage.topAnchor.constraint(equalTo: contentView.topAnchor),
