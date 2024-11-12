@@ -15,20 +15,39 @@ protocol GenreViewModelDelegate: AnyObject {
 final class GenreViewModel {
 
     weak var delegate: GenreViewModelDelegate?
-    private let genreProvider = MoyaProvider<GenreAPI>()
+    private let provider = MoyaProvider<GenreAPI>()
     var genreModel = [GenreResponse]()
+    private var group = DispatchGroup()
     
     func fetchDetail() {
-        genreProvider.request(.movie) { [weak self] result in
+        group.enter()
+        provider.request(.movie) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
-                genreModel = mapGenreResponse(from: response.data)
-                print(genreModel)
-                delegate?.updateCollectionView()
+                let movieGenres = mapGenreResponse(from: response.data)
+                self.genreModel.append(contentsOf: movieGenres)
             case .failure(let error):
                 print(error)
             }
+            group.leave()
+        }
+        
+        group.enter()
+        provider.request(.tv) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let response):
+                let tvGenres = mapGenreResponse(from: response.data)
+                self.genreModel.append(contentsOf: tvGenres)
+            case .failure(let error):
+                print(error)
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            self.delegate?.updateCollectionView()
         }
     }
     
