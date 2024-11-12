@@ -24,6 +24,14 @@ class CategoryDetailCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+   
+    let iconImageView: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.tintColor = .white
+        image.backgroundColor = .black
+        return image
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -89,13 +97,19 @@ class CategoryDetailCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubview(posterImage)
         posterImage.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(iconImageView)
   
         
         NSLayoutConstraint.activate([
             posterImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             posterImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             posterImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            posterImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            posterImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            iconImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            iconImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            iconImageView.widthAnchor.constraint(equalToConstant: 24),
+            iconImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
     
@@ -106,5 +120,11 @@ class CategoryDetailCell: UICollectionViewCell {
             posterImage.image = UIImage(named: "default-poster")
         }
         percentagLabel.text = String(format: "%.1f", model.voteAverage ?? 0.0)
+        
+        if model.isMovie {
+            iconImageView.image = Image.movieTypeSymbol
+        } else if model.isTVShow {
+            iconImageView.image = Image.tvTypeSymbol
+        }
     }
 }

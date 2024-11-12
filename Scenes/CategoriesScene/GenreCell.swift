@@ -27,12 +27,14 @@ final class GenreCell: UICollectionViewCell {
     let color1 = UIColor(red: 94/255, green: 62/255, blue: 143/255, alpha: 1.0)
     let color2 = UIColor(red: 122/255, green: 82/255, blue: 168/255, alpha: 1.0)
     let color3 = UIColor(red: 153/255, green: 101/255, blue: 199/255, alpha: 1.0)
-
+    let color4 = UIColor(red: 168/255, green: 82/255, blue: 220/255, alpha: 1.0)
+    
     private func applyGradient() {
         gradientLayer = CAGradientLayer()
-        gradientLayer?.colors =  [color1.cgColor, color2.cgColor, color3.cgColor]
-        gradientLayer?.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer?.endPoint = CGPoint(x: 0, y: 1)
+        gradientLayer?.colors =  [color1.cgColor, color2.cgColor, color3.cgColor,color4.cgColor]
+        gradientLayer?.startPoint = CGPoint(x: 0.5, y: 0)
+        gradientLayer?.endPoint = CGPoint(x: 0.5, y: 1)
+        gradientLayer?.locations = [0.0, 0.3, 0.6, 0.9]
         gradientLayer?.frame = contentView.bounds
         if let gradientLayer = gradientLayer {
             contentView.layer.insertSublayer(gradientLayer, at: 0)
