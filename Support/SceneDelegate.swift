@@ -16,11 +16,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = LaunchScreenViewController()
+        let launchScreenVC = LaunchScreenViewController()
+        let navigationController = UINavigationController(rootViewController: launchScreenVC)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
         configureNavigationBar()
     }
-    
     func configureNavigationBar() {
         if let appColor = UIColor(named: "app_color") {
             UINavigationBar.appearance().tintColor = appColor
