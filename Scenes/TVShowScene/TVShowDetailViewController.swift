@@ -71,7 +71,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     
     private func setRightBarButtonItem(with image: UIImage) {
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(addButtonTapped))
-        rightBarButtonItem.tintColor = UIColor(named: "app_color")
+        rightBarButtonItem.tintColor = .black
         navigationItem.setRightBarButton(rightBarButtonItem, animated: true)
     }
     
@@ -120,3 +120,4 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         }
     }
 }
+
