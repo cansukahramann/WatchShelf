@@ -34,6 +34,7 @@ class TrendListView: UIView, TrendListViewModelDelegate {
         collectionView.dataSource = self
         collectionView.delegate = self
         setupConstraint()
+        viewModel.fetchTrendingList()
     }
     
     required init?(coder: NSCoder) {
@@ -109,13 +110,7 @@ class TrendListView: UIView, TrendListViewModelDelegate {
     }
     
     func updateCollectionView() {
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
-    }
-    
-    func didFetchTrending() {
-        viewModel.fetchTrendigAll()
+        collectionView.reloadData()
     }
 }
 

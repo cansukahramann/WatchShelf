@@ -33,7 +33,6 @@ class TrendViewController: UIViewController {
         super.viewDidLoad()
         setUpUI()
         configureUI()
-        didFetchTrending()
         trendListView.delegate = self
     }
     
@@ -70,13 +69,8 @@ class TrendViewController: UIViewController {
     func configureUI() {
         stackView.addArrangedSubview(trendListView)
     }
-    
-    func didFetchTrending() {
-        trendListView.didFetchTrending()
-    }
-    
-    
 }
+
 extension TrendViewController: TrendListViewDelegate {
     func trendigAllSelected(id: Int, type: MediaType?) {
         if let mediaType = type {
