@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 final class MovieDetailViewController: UIViewController, MovieDetailViewModelDelegate, SimilarMoviesViewDelegate, CastViewDelegate {
     
     private let headerView = DetailHeaderView(frame: .zero)
@@ -33,14 +32,15 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         return stackView
     }()
     
-    convenience init(movieID: Int) {
+    convenience init(viewModel: MovieDetailViewModel) {
         self.init(nibName: nil, bundle: nil)
-        viewModel = MovieDetailViewModel(movieID: movieID)
+        self.viewModel = viewModel
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.fetchMovieDetail()
+        viewModel.delegate = self
         configureUI()
         setupView()
         configureDetailHeaderView()
@@ -48,8 +48,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         configureVideoView()
         configureCastView()
         configureCollectionView()
-        viewModel.fetchDetail()
-        viewModel.delegate = self
+      
         similarMoviesView.delegate = self
         castView.delegate = self
     }
@@ -57,7 +56,6 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     private func setupView() {
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
-        
         
         NSLayoutConstraint.activate( [
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -107,7 +105,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     }
     
     func similarMovieSelected(movieID: Int) {
-        let detailVC = MovieDetailViewController(movieID: movieID)
+        let detailVC = MovieDetailFactory.makeCastDetailVC(movieID: movieID)
         navigationController?.pushViewController(detailVC, animated: true)
     }
     

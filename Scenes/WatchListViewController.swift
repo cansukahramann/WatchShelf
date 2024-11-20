@@ -90,7 +90,7 @@ extension WatchListViewController: UITableViewDelegate {
         let selectedMedia = WatchListStore.shared.mediaList[indexPath.row]
         
         if selectedMedia.type == .movie {
-            let movieDetailVC = MovieDetailViewController(movieID: selectedMedia.id)
+            let movieDetailVC = MovieDetailFactory.makeCastDetailVC(movieID: selectedMedia.id)
             navigationController?.pushViewController(movieDetailVC, animated: true)
         } else if selectedMedia.type == .tv {
             let tvDetailVC = TVShowDetailFactory.makeCastDetailVC(seriesID: selectedMedia.id)

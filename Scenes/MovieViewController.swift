@@ -39,7 +39,7 @@ class MovieViewController: UIViewController {
         for configuration in configurations {
             let contentVC = ContentViewController(title: configuration.title, contentAPI: configuration.contentAPI)
             contentVC.didSelectItem = { [weak navigationController] id in
-                let viewController = MovieDetailViewController(movieID: id)
+                let viewController = MovieDetailFactory.makeCastDetailVC(movieID: id)
                 navigationController?.pushViewController(viewController, animated: true)
             }
             

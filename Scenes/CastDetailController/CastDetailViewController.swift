@@ -79,7 +79,7 @@ class CastDetailViewController: UIViewController, CastMovieCreditsDelegate, Cast
     }
     
     func movieCreditsSelected(movieID: Int) {
-        let detailVC = MovieDetailViewController(movieID: movieID)
+        let detailVC = MovieDetailFactory.makeCastDetailVC(movieID: movieID)
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
