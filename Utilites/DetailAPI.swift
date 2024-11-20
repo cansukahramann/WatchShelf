@@ -20,9 +20,9 @@ enum DetailAPI: TargetType {
     case tvShowSimilar(seriesID: Int)
     case tvShowVideo(seriesID: Int)
     
-    case peopleDetail(personID: Int)
-    case peopleMovieCredits(personID: Int)
-    case peopleTVCredits(personID: Int)
+    case peopleDetail(castID: Int)
+    case peopleMovieCredits(castID: Int)
+    case peopleTVCredits(castID: Int)
     
     var baseURL: URL {
         URL(string: "https://api.themoviedb.org/3")!
@@ -57,14 +57,14 @@ enum DetailAPI: TargetType {
             return "tv/\(seriesID)/videos"
             
             
-        case .peopleDetail(let personID):
-            return "person/\(personID)"
+        case .peopleDetail(let castID):
+            return "person/\(castID)"
             
-        case .peopleMovieCredits(let personID):
-            return "person/\(personID)/movie_credits"
+        case .peopleMovieCredits(let castID):
+            return "person/\(castID)/movie_credits"
             
-        case .peopleTVCredits(let personID):
-            return "person/\(personID)/tv_credits"
+        case .peopleTVCredits(let castID):
+            return "person/\(castID)/tv_credits"
         }
     }
     
