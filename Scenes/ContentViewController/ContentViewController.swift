@@ -37,7 +37,7 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
         
         self.title = title
         
-        viewModel = ContentViewModel(contentAPI: contentAPI)
+        viewModel = ContentViewModel(service: ContentService(endpoint: contentAPI))
         viewModel.delegate = self
     }
     
@@ -54,7 +54,7 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
         setupConstraints()
         categoryNameLabel.text = title
         
-        viewModel.fetchContent()
+        viewModel.fetchAllContent()
     }
     
     override func viewDidLayoutSubviews() {
@@ -90,19 +90,19 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
 
 extension ContentViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.contentResult.count
+        return viewModel.allContentResults.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
-        cell.configure(posterPath: viewModel.contentResult[indexPath.item].posterPath)
+        cell.configure(posterPath: viewModel.allContentResults[indexPath.item].posterPath)
         return cell
     }
 }
 
 extension ContentViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedItemID = viewModel.contentResult[indexPath.item].id
+        let selectedItemID = viewModel.allContentResults[indexPath.item].id
         didSelectItem?(selectedItemID)
     }
 }

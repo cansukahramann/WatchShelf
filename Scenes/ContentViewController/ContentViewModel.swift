@@ -12,35 +12,29 @@ protocol ContentViewModelDelegate: AnyObject {
     func updateCollectionView()
 }
 
-class ContentViewModel {
+final class ContentViewModel {
+    
     weak var delegate: ContentViewModelDelegate?
-    private let provider = MoyaProvider<ContentAPI>()
-   
-    var contentResult = [ContentResult]()
-
+    private let service: ContentService
     
-    private let contentAPI: ContentAPI
+    var allContentResults = [ContentResult]()
     
-    init(contentAPI: ContentAPI) {
-        self.contentAPI = contentAPI
+    init(service: ContentService) {
+        self.service = service
     }
     
-    func fetchContent() {
-        provider.request(contentAPI) { [weak self] result in
-            guard let self else { return }
+    func fetchAllContent() {
+        
+        service.loadContent { [weak self] result in
+            guard let self = self else { return }
             
             switch result {
-            case .success(let response):
-                contentResult = mapResponse(from: response.data)
-                delegate?.updateCollectionView()
+            case .success(let results):
+                self.allContentResults.append(contentsOf: results)
             case .failure(let error):
-                print(error)
+                print("Error: \(error)")
             }
+            delegate?.updateCollectionView()
         }
-    }
-
-    private func mapResponse(from data: Data) -> [ContentResult] {
-        let response = try! JSONDecoder().decode(ContentModel.self, from: data)
-        return response.results
     }
 }
