@@ -14,7 +14,6 @@ protocol TVShowDetailViewModelDelegate: AnyObject {
 
 class TVShowDetailViewModel {
     
-    private let tvDetailProvider = MoyaProvider<DetailAPI>() 
     var model: TVShowDetailModel!
     var tvCastModel = [SeriesCast]()
     var tvVideoModel = [Results]()
