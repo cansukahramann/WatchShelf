@@ -87,7 +87,7 @@ extension CategoryDetailViewController: UICollectionViewDelegate {
         if selectedItem.isMovie {
             navigationController?.pushViewController(MovieDetailViewController(movieID: selectedId), animated: true)
         } else if selectedItem.isTVShow {
-            navigationController?.pushViewController(TVShowDetailViewController(tvShowID: selectedId), animated: true)
+            navigationController?.pushViewController(TVShowDetailFactory.makeCastDetailVC(seriesID: selectedId), animated: true)
         }
         
     }

@@ -93,7 +93,7 @@ extension WatchListViewController: UITableViewDelegate {
             let movieDetailVC = MovieDetailViewController(movieID: selectedMedia.id)
             navigationController?.pushViewController(movieDetailVC, animated: true)
         } else if selectedMedia.type == .tv {
-            let tvDetailVC = TVShowDetailViewController(tvShowID: selectedMedia.id)
+            let tvDetailVC = TVShowDetailFactory.makeCastDetailVC(seriesID: selectedMedia.id)
             navigationController?.pushViewController(tvDetailVC, animated: true)
         }
     }

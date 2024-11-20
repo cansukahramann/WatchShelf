@@ -74,7 +74,7 @@ final class SearchViewController: UITableViewController {
         case .movie:
             navigationController?.pushViewController(MovieDetailViewController(movieID: selectedId), animated: true)
         case .tv:
-            navigationController?.pushViewController(TVShowDetailViewController(tvShowID: selectedId), animated: true)
+            navigationController?.pushViewController(TVShowDetailFactory.makeCastDetailVC(seriesID: selectedId), animated: true)
         case .person:
             break
         }

@@ -35,9 +35,9 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         return stackView
     }()
     
-    convenience init(tvShowID: Int) {
+    convenience init(viewModel: TVShowDetailViewModel) {
         self.init(nibName: nil, bundle: nil)
-        viewModel = TVShowDetailViewModel(tvShowID: tvShowID)
+        self.viewModel = viewModel
     }
     
     override func viewDidLoad() {
@@ -45,7 +45,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         view.backgroundColor = .purple
         setupUI()
         configureUI()
-        viewModel.fetchTVDetail()
+        viewModel.fetchTVShowDetail()
         viewModel.delegate = self
         castView.delegate = self
         similarView.delegate = self
@@ -97,12 +97,12 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     }
     
     func tvCastSelected(castID: Int) {
-        let castDetailVC = CastDetailViewController(viewModel: CastDetailViewModel(service: CastDetailService(), castID:castDetailViewModel.castID))
+        let castDetailVC = CastDetailFactory.makeCastDetailVC(castID: castID)
         navigationController?.pushViewController(castDetailVC, animated: true)
     }
     
     func similarTVShowSelected(tvShowID: Int) {
-        let tvShowDetail = TVShowDetailViewController(tvShowID: tvShowID)
+        let tvShowDetail = TVShowDetailFactory.makeCastDetailVC(seriesID: tvShowID)
         navigationController?.pushViewController(tvShowDetail, animated: true)
     }
     

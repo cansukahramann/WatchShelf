@@ -36,7 +36,7 @@ class TvShowViewController: UIViewController {
         for configuration in configurations {
             let contentVC = ContentViewController(title: configuration.title, contentAPI: configuration.contentAPI)
             contentVC.didSelectItem = { [weak navigationController] id in
-                let viewController = TVShowDetailViewController(tvShowID: id)
+                let viewController = TVShowDetailFactory.makeCastDetailVC(seriesID: id)
                 navigationController?.pushViewController(viewController, animated: true)
             }
             addChild(contentVC)
