@@ -36,9 +36,9 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
 
     private var viewModel: CategoryDetailViewModel!
     
-    convenience init(genreID: Int) {
+    convenience init(viewModel: CategoryDetailViewModel) {
         self.init(nibName: nil, bundle: nil)
-        viewModel = CategoryDetailViewModel(genreID: genreID)
+        self.viewModel = viewModel
     }
     
     override func viewDidLoad() {
@@ -47,7 +47,7 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         collectionView.delegate = self
         setupUI()
         viewModel.delegate = self
-        viewModel.fetchDetail()
+        viewModel.fetchCategoryDetail()
     }
 
     private func setupUI() {

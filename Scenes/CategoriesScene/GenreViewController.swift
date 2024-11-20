@@ -70,7 +70,7 @@ extension GenreViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? GenreCell else { return }
         cell.animateCellTap { [unowned self] in
-            let categoryDetailVC = CategoryDetailViewController(genreID: viewModel.genreModel[indexPath.item].id)
+            let categoryDetailVC = CategoryDetailFactory.makeCategoryDetailVC(genreID: viewModel.genreModel[indexPath.item].id)
             self.navigationController?.pushViewController(categoryDetailVC, animated: true)
         }
     }
