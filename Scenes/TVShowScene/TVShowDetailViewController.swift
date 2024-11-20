@@ -17,6 +17,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     private let similarView = SimilarTVShowView(frame: .zero)
     
     private var viewModel: TVShowDetailViewModel!
+    private var castDetailViewModel: CastDetailViewModel!
     
     
     private let scrollView: UIScrollView = {
@@ -96,7 +97,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     }
     
     func tvCastSelected(castID: Int) {
-        let castDetailVC = CastDetailViewController(castID: castID)
+        let castDetailVC = CastDetailViewController(viewModel: CastDetailViewModel(service: CastDetailService(), castID:castDetailViewModel.castID))
         navigationController?.pushViewController(castDetailVC, animated: true)
     }
     

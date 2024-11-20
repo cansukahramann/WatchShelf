@@ -112,10 +112,10 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     }
     
     func movieCastSelected(castID: Int) {
-        let castDetailVC = CastDetailViewController(castID: castID)
-        navigationController?.pushViewController(castDetailVC, animated: true)
+        let vc = CastDetailFactory.makeCastDetailVC(castID: castID)
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
+        
     func didFetchDetail() {
         setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark : .add)
         headerView.configure(model: viewModel.detailModel)

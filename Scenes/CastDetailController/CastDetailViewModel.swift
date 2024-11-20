@@ -14,69 +14,30 @@ protocol CastDetailViewModelDelegate: AnyObject {
 
 class CastDetailViewModel {
     
-    weak var delegate: CastDetailViewModelDelegate?
-    
-    var personID: Int
-    private let provider = MoyaProvider<DetailAPI>()
+    var castID: Int
     var castDetailModel: CastDetailModel!
     var movies = [CastCredit]()
     var tvShows = [CastCredit]()
-    let group = DispatchGroup()
-    
-    init(castID: Int) {
-        self.personID = castID
+    private let service: CastDetailService!
+    weak var delegate: CastDetailViewModelDelegate?
+
+    init(service: CastDetailService,castID: Int) {
+        self.service = service
+        self.castID = castID
     }
     
     func fetchCastDetail() {
-        group.enter()
-        provider.request(.peopleDetail(personID: personID)) { [weak self] result in
+        service.loadCastDetail(castID: castID) { [weak self] result in
             guard let self else { return }
-            
             switch result {
-            case .success(let response):
-                castDetailModel = mapResponse(from: response.data)
-            case.failure(let error):
-                print(error)
-            }
-            group.leave()
-        }
-        group.enter()
-        provider.request(.peopleMovieCredits(personID: personID)) { [weak self] result in
-            guard let self else { return }
-            
-            switch result {
-            case .success(let response):
-                movies = mapCreditResponse(from: response.data)
+            case .success(let (detailModel, movies, tvShows) ):
+                self.castDetailModel = detailModel
+                self.movies = movies
+                self.tvShows = tvShows
+                self.delegate?.didFetchCastDetail()
             case .failure(let error):
                 print(error)
             }
-            group.leave()
         }
-        group.enter()
-        provider.request(.peopleTVCredits(personID: personID)) { [weak self] result in
-            guard let self else { return }
-            
-            switch result {
-            case .success(let response):
-                tvShows = mapCreditResponse(from: response.data)
-            case .failure(let error):
-                print(error)
-            }
-            group.leave()
-        }
-        
-        group.notify(queue: .main) {
-            self.delegate?.didFetchCastDetail()
-        }
-    }
-    
-    private func mapResponse(from data: Data) -> CastDetailModel? {
-        let response = try! JSONDecoder().decode(CastDetailModel.self, from: data)
-        return response
-    }
-    
-    private func mapCreditResponse(from data: Data) -> [CastCredit] {
-        let response = try! JSONDecoder().decode(CastCredits.self, from: data)
-        return response.cast
     }
 }

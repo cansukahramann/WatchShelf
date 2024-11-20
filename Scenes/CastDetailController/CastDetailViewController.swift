@@ -7,8 +7,7 @@
 
 import UIKit
 
-
-class CastDetailViewController: UIViewController, CastDetailViewModelDelegate, CastMovieCreditsDelegate, CastTVCreditsDelegate{
+class CastDetailViewController: UIViewController, CastMovieCreditsDelegate, CastTVCreditsDelegate, CastDetailViewModelDelegate{
     
     private let headerView = DetailHeaderView(frame: .zero)
     private let descriptionView = DescriptionView(frame: .zero)
@@ -34,20 +33,17 @@ class CastDetailViewController: UIViewController, CastDetailViewModelDelegate, C
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        configureUI()
-        
-        viewModel.delegate = self
-        viewModel.fetchCastDetail()
-        
         castMovieCredits.delegate = self
         castTVCredits.delegate = self
-        
+        viewModel.delegate = self
+        setup()
+        configureUI()
+        viewModel.fetchCastDetail()
     }
     
-    convenience init(castID: Int) {
+    convenience init(viewModel: CastDetailViewModel) {
         self.init(nibName: nil, bundle: nil)
-        viewModel = CastDetailViewModel(castID: castID)
+        self.viewModel = viewModel
     }
     
     private func setup() {
