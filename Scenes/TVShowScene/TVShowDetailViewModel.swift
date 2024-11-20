@@ -19,7 +19,6 @@ class TVShowDetailViewModel {
     var tvCastModel = [SeriesCast]()
     var tvVideoModel = [Results]()
     var tvSimilarModel = [SimilarResult]()
-    let group = DispatchGroup()
     weak var delegate: TVShowDetailViewModelDelegate!
     private let service: TVShowDetailService!
     var seriesID: Int
@@ -28,7 +27,6 @@ class TVShowDetailViewModel {
         self.service = service
         self.seriesID = seriesID
     }
-    
     
     var isFavorite: Bool {
         WatchListStore.shared.isMediaSaved(id: model.id)
