@@ -13,11 +13,19 @@ protocol CategoryDetailViewModelDelegate: AnyObject {
 }
 
 final class CategoryDetailViewModel {
-    
+    private var allItems: [DiscoverResult] = []
     var detailModel = [DiscoverResult]()
     var genreID: Int
     weak var delegate: CategoryDetailViewModelDelegate?
     private let service: CategoryDetailService!
+    
+    func filteredMovies() {
+        detailModel = allItems.filter { $0.isMovie }
+    }
+    
+    func filteredTVShow() {
+        detailModel = allItems.filter { $0.isTVShow}
+    }
  
     init(service: CategoryDetailService,genreID: Int) {
         self.service = service
@@ -29,6 +37,7 @@ final class CategoryDetailViewModel {
             guard let self else { return }
             switch result {
             case .success(let (detailModel)):
+                self.allItems = detailModel
                 self.detailModel = detailModel
                 self.delegate?.updateCollectionView()
             case .failure(let error):

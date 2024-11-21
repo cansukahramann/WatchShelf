@@ -34,6 +34,7 @@ class SimilarMoviesView: UIView {
         titleLabel.text = "Similar Movies"
 
     }
+   
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

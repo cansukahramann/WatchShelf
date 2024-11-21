@@ -7,16 +7,18 @@
 
 import UIKit
 
+enum ContentType {
+    case movie
+    case tvShow
+}
+
 class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDelegate {
-    func updateCollectionView() {
-        collectionView.reloadData()
-    }
     
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
-        let padding: CGFloat = 8 
+        let padding: CGFloat = 8
         let numberOfItemsPerRow: CGFloat = 2
         let availableWidth = UIScreen.main.bounds.width - (padding * (numberOfItemsPerRow + 1))
         let itemWidth = availableWidth / numberOfItemsPerRow
@@ -25,7 +27,7 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         layout.minimumLineSpacing = padding
         layout.minimumInteritemSpacing = padding
         layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
-
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(CategoryDetailCell.self, forCellWithReuseIdentifier: CategoryDetailCell.reuseID)
         collectionView.backgroundColor = .systemBackground
@@ -33,8 +35,13 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-
+    
     private var viewModel: CategoryDetailViewModel!
+    let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"),
+                                        style: .plain,
+                                        target: nil ,
+                                        action: nil)
+    
     
     convenience init(viewModel: CategoryDetailViewModel) {
         self.init(nibName: nil, bundle: nil)
@@ -48,8 +55,29 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         setupUI()
         viewModel.delegate = self
         viewModel.fetchCategoryDetail()
+        setupBarButtonWithContextMenu()
     }
+    
+    private func setupBarButtonWithContextMenu() {
+        let barButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), menu: makeMenu())
+        navigationItem.rightBarButtonItem = barButton
 
+    }
+    
+    private func makeMenu() -> UIMenu {
+        
+        let filterOption1 = UIAction(title: "Movie", image: Image.movieTypeSymbol) { _ in
+            self.filterContent(type: .movie)
+        }
+        
+        let filterOption2 = UIAction(title: "TV Show", image: Image.tvTypeSymbol) { _ in
+            self.filterContent(type: .tvShow)
+        }
+        
+        return UIMenu(title: "Filter Options", children: [filterOption1, filterOption2])
+        
+    }
+    
     private func setupUI() {
         view.addSubview(collectionView)
         
@@ -60,6 +88,21 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    func updateCollectionView() {
+        collectionView.reloadData()
+    }
+    
+    private func filterContent(type: ContentType) {
+        switch type {
+        case .movie:
+            viewModel.filteredMovies()
+        case .tvShow:
+            viewModel.filteredTVShow()
+        }
+        collectionView.reloadData()
+    }
+    
 }
 
 extension CategoryDetailViewController: UICollectionViewDataSource {
