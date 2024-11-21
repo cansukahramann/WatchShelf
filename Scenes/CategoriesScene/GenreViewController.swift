@@ -27,7 +27,12 @@ class GenreViewController: UIViewController,GenreViewModelDelegate {
         return collectionView
     }()
     
-    var viewModel = GenreViewModel()
+    var viewModel: GenreViewModel!
+    
+    convenience init(viewModel: GenreViewModel!) {
+        self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +40,7 @@ class GenreViewController: UIViewController,GenreViewModelDelegate {
         collectionView.delegate = self
         setupUI()
         viewModel.delegate = self
-        viewModel.fetchDetail()
+        viewModel.fetchGenre()
     }
     
     private func setupUI() {
