@@ -14,6 +14,7 @@ enum ContentType {
 
 class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDelegate {
     
+    
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -34,6 +35,17 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
+    }()
+    
+    private let noContentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "There is no content available for this category."
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .gray
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
     }()
     
     private var viewModel: CategoryDetailViewModel!
@@ -61,7 +73,7 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
     private func setupBarButtonWithContextMenu() {
         let barButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), menu: makeMenu())
         navigationItem.rightBarButtonItem = barButton
-
+        
     }
     
     private func makeMenu() -> UIMenu {
@@ -80,17 +92,30 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
     
     private func setupUI() {
         view.addSubview(collectionView)
+        view.addSubview(noContentLabel)
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            noContentLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noContentLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            noContentLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            noContentLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            
         ])
     }
     
     func updateCollectionView() {
         collectionView.reloadData()
+        noContent()
+    }
+    
+    func noContent() {
+        noContentLabel.isHidden = !viewModel.detailModel.isEmpty
+        collectionView.isHidden = viewModel.detailModel.isEmpty
     }
     
     private func filterContent(type: ContentType) {

@@ -10,10 +10,11 @@ import Moya
 
 protocol CategoryDetailViewModelDelegate: AnyObject {
     func updateCollectionView()
+    func noContent()
 }
 
 final class CategoryDetailViewModel {
-    private var allItems: [DiscoverResult] = []
+    var allItems: [DiscoverResult] = []
     var detailModel = [DiscoverResult]()
     var genreID: Int
     weak var delegate: CategoryDetailViewModelDelegate?
@@ -21,12 +22,20 @@ final class CategoryDetailViewModel {
     
     func filteredMovies() {
         detailModel = allItems.filter { $0.isMovie }
+        delegate?.noContent()
     }
     
     func filteredTVShow() {
         detailModel = allItems.filter { $0.isTVShow}
+        delegate?.noContent()
     }
- 
+    
+    private func checkEmptyContent() {
+        if detailModel.isEmpty {
+            delegate?.updateCollectionView()
+        }
+    }
+    
     init(service: CategoryDetailService,genreID: Int) {
         self.service = service
         self.genreID = genreID
@@ -39,6 +48,7 @@ final class CategoryDetailViewModel {
             case .success(let (detailModel)):
                 self.allItems = detailModel
                 self.detailModel = detailModel
+                self.checkEmptyContent()
                 self.delegate?.updateCollectionView()
             case .failure(let error):
                 print(error)
