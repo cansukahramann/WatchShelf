@@ -121,6 +121,10 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         similarMoviesView.updateSimilarMovie(model: viewModel.similarModel)
         castView.updateCastView(model: viewModel.movieCastModel)
         videoView.getVideo(model: viewModel.movieVideoModel)
+        
+        similarMoviesView.isHidden = viewModel.similarModel.isEmpty
+        castView.isHidden = viewModel.movieCastModel.isEmpty
+        videoView.isHidden = viewModel.movieVideoModel.isEmpty
     }
     
     @objc
