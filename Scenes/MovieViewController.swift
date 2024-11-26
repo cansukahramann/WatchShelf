@@ -29,26 +29,29 @@ class MovieViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let configurations: [(title: String, contentAPI: ContentAPI)] = [
-            ("Popular", .popularMovie),
-            ("Now Playing",.nowPlayingMovie),
-            ("Upcoming", .upcomingMovie),
-            ("Top Rated", .topRatedMovie)
+        configureChildViewControllers()
+        setUpUI()
+    }
+    
+    // weak self vs unowned self 
+    private func configureChildViewControllers() {
+        let viewControllers: [UIViewController] = [
+            ContentVCFactory.makePopularContentVC(onItemSelection: onItemSelection(id:)),
+            ContentVCFactory.makeNowPlayingContentVC(onItemSelection: onItemSelection),
+            ContentVCFactory.makeUpcomingContentVC(onItemSelection: onItemSelection),
+            ContentVCFactory.makeTopRatedContentVC(onItemSelection: onItemSelection)
         ]
         
-        for configuration in configurations {
-            let contentVC = ContentViewController(title: configuration.title, contentAPI: configuration.contentAPI)
-            contentVC.didSelectItem = { [weak navigationController] id in
-                let viewController = MovieDetailFactory.makeCastDetailVC(movieID: id)
-                navigationController?.pushViewController(viewController, animated: true)
-            }
-            
-            addChild(contentVC)
-            stackView.addArrangedSubview(contentVC.view)
-            contentVC.didMove(toParent: self)
+        viewControllers.forEach { viewController in
+            addChild(viewController)
+            stackView.addArrangedSubview(viewController.view)
+            viewController.didMove(toParent: self)
         }
-        
-        setUpUI()
+    }
+    
+    private func onItemSelection(id: Int) -> Void {
+        let movieDetailVC = MovieDetailFactory.makeCastDetailVC(movieID: id)
+        navigationController?.pushViewController(movieDetailVC, animated: true)
     }
     
     private func setUpUI() {
