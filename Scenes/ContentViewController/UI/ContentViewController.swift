@@ -32,12 +32,10 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
     private var viewModel: ContentViewModel!
     var didSelectItem: ((_ id: Int) -> Void)? 
     
-    init(title: String, contentAPI: ContentAPI) {
+    init(title: String, viewModel: ContentViewModel) {
         super.init(nibName: nil, bundle: nil)
-        
         self.title = title
-        
-        viewModel = ContentViewModel(service: ContentService(endpoint: contentAPI))
+        self.viewModel = viewModel
         viewModel.delegate = self
     }
     
