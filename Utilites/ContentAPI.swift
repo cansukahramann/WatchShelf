@@ -8,11 +8,26 @@
 import Foundation
 import Moya
 
+struct CommonRequestModel: Encodable {
+    let page: Int
+    let includeAdult: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case page
+        case includeAdult = "include_adult"
+    }
+    
+    init(page: Int = 1, includeAdult: Bool = false) {
+        self.page = page
+        self.includeAdult = includeAdult
+    }
+}
+ 
 enum ContentAPI: TargetType {
-    case popularMovie
-    case nowPlayingMovie
-    case upcomingMovie
-    case topRatedMovie
+    case popularMovie(CommonRequestModel = .init())
+    case nowPlayingMovie(CommonRequestModel = .init())
+    case upcomingMovie(CommonRequestModel = .init())
+    case topRatedMovie(CommonRequestModel = .init())
     
     case airingTodayTVShow
     case onTheAirTVShow
@@ -26,22 +41,22 @@ enum ContentAPI: TargetType {
     var path: String {
         switch self {
         case .popularMovie:
-            "movie/popular"
+            return "movie/popular"
         case .nowPlayingMovie:
-            "movie/now_playing"
+            return "movie/now_playing"
         case .upcomingMovie:
-            "movie/upcoming"
+            return "movie/upcoming"
         case .topRatedMovie:
-            "movie/top_rated"
+            return "movie/top_rated"
             
         case .airingTodayTVShow:
-            "tv/airing_today"
+            return "tv/airing_today"
         case .onTheAirTVShow:
-            "tv/on_the_air"
+            return "tv/on_the_air"
         case .popularTVShow:
-            "tv/popular"
+            return "tv/popular"
         case .topRatedTVShow:
-            "tv/top_rated"
+            return "tv/top_rated"
         }
     }
     
@@ -50,11 +65,17 @@ enum ContentAPI: TargetType {
     }
     
     var task: Moya.Task {
-        return .requestPlain
+        switch self {
+        case let .popularMovie(requestModel), let .nowPlayingMovie(requestModel), let .upcomingMovie(requestModel), let .topRatedMovie(requestModel):
+            return .requestParameters(parameters: requestModel.asDictionary, encoding: URLEncoding.queryString)
+        default:
+            return .requestPlain
+        }
     }
     
     var headers: [String : String]? {
         ["Authorization" : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMmMzYjU1MzcyNGFhZjI2MDJiNGUwM2U4ODEzOTY2NSIsIm5iZiI6MTcyNjk5ODU5MS43NDIzMTcsInN1YiI6IjY0ZDFkZjA4ODUwOTBmMDEyNWJlMDY4MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Div_QbwH9Vn2eHJuVZ3vBGuVEYusBECGaqq1j_V4GD8"]
     }
 }
+
 
