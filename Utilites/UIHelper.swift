@@ -26,8 +26,10 @@ enum UIHelper {
     
     static func showHUD() {
         ProgressHUD.animate(symbol: "movieclapper",interaction: false)
-        ProgressHUD.colorAnimation = UIColor(named: "app_color") ?? .purple
+        ProgressHUD.colorAnimation = .white
         ProgressHUD.colorHUD = .lightText
+        ProgressHUD.colorHUD = .clear
+        
         
     }
 
@@ -36,9 +38,10 @@ enum UIHelper {
             ProgressHUD.dismiss()
         }
     }
+    
     static func showHUDerrorMessage() {
         ProgressHUD.succeed("Something went wrong")
-        ProgressHUD.colorAnimation = UIColor(named:"app_color") ?? .purple
+        ProgressHUD.colorAnimation = .white
         ProgressHUD.colorHUD = .lightText
     }
 }
