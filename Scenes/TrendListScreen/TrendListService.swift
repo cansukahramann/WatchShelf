@@ -11,8 +11,8 @@ import Moya
 final class TrendListService {
     private let provider = MoyaProvider<TrendingAPI>()
     
-    func loadTrendingAll(completion: @escaping (Swift.Result<[TrendingAll], Error>) -> Void) {
-        provider.request(.trendingAll) { result in
+    func loadTrendingAll(requestModel: CommonRequestModel,completion: @escaping (Swift.Result<[TrendingAll], Error>) -> Void) {
+        provider.request(.trendingAll(requestModel: requestModel)) { result in
             switch result {
             case .success(let response):
                 completion(TrendListService.map(response: response))

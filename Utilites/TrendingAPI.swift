@@ -10,7 +10,7 @@ import Moya
 
 enum TrendingAPI: TargetType {
     
-    case trendingAll
+    case trendingAll(requestModel:CommonRequestModel = .init())
     
     
     var baseURL: URL {
@@ -29,7 +29,10 @@ enum TrendingAPI: TargetType {
     }
     
     var task: Moya.Task {
-        .requestPlain
+        switch self {
+        case let .trendingAll(requestModel: requestModel):
+            return .requestParameters(parameters: requestModel.asDictionary, encoding: URLEncoding.queryString)
+        }
     }
     
     var headers: [String : String]? {

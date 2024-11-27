@@ -131,6 +131,17 @@ extension TrendListView: UICollectionViewDataSource {
         let selectedMediaType = selectedTrend.type
         delegate?.trendigAllSelected(id: selectedId, type: selectedMediaType)
     }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY  >= contentHeight - (2 * height) {
+            viewModel.fetchTrendingList()
+            self.updateCollectionView()
+        }
+    }
 }
 
 extension TrendListView: UICollectionViewDelegate {
