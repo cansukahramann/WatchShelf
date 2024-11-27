@@ -13,7 +13,6 @@ extension Encodable {
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             return [:]
         }
-        
         return json
     }
 }

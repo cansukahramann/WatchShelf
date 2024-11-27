@@ -9,7 +9,6 @@ import Foundation
 import Moya
 
 protocol MovieDetailViewModelDelegate: AnyObject {
-    
     func didFetchDetail()
 }
 

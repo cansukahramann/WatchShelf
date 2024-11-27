@@ -28,12 +28,10 @@ class MovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureChildViewControllers()
         setUpUI()
     }
     
-    // weak self vs unowned self 
     private func configureChildViewControllers() {
         let viewControllers: [UIViewController] = [
             ContentVCFactory.makePopularContentVC(onItemSelection: onItemSelection(id:)),
