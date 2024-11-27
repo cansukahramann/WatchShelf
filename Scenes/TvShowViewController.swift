@@ -26,24 +26,28 @@ class TvShowViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let configurations: [(title: String, contentAPI: ContentAPI)] = [
-            ("Airing Today", .airingTodayTVShow),
-            ("On The Air",.onTheAirTVShow),
-            ("Popular", .popularTVShow),
-            ("Top Rated", .topRatedTVShow)
+        setUpUI()
+        configureChildViewControllers()
+    }
+    
+    private func configureChildViewControllers() {
+        let viewControllers: [UIViewController] = [
+            ContentVCFactory.makeAiringTodayTVContentVC(onItemSelection: onItemSelection),
+            ContentVCFactory.makeOnTheAirTVContentVC(onItemSelection: onItemSelection),
+            ContentVCFactory.makePopularTVContentVC(onItemSelection: onItemSelection),
+            ContentVCFactory.makeTopRatedTVContentVC(onItemSelection: onItemSelection)
         ]
         
-        for configuration in configurations {
-            let contentVC = ContentViewController(title: configuration.title, contentAPI: configuration.contentAPI)
-            contentVC.didSelectItem = { [weak navigationController] id in
-                let viewController = TVShowDetailFactory.makeCastDetailVC(seriesID: id)
-                navigationController?.pushViewController(viewController, animated: true)
-            }
-            addChild(contentVC)
-            stackView.addArrangedSubview(contentVC.view)
-            contentVC.didMove(toParent: self)
+        viewControllers.forEach { viewController in
+            addChild(viewController)
+            stackView.addArrangedSubview(viewController.view)
+            viewController.didMove(toParent: self)
         }
-        setUpUI()
+    }
+    
+    private func onItemSelection(id: Int) -> Void {
+        let tvShowDetailVC = TVShowDetailFactory.makeCastDetailVC(seriesID: id)
+        navigationController?.pushViewController(tvShowDetailVC, animated: true)
     }
     
     private func setUpUI() {
