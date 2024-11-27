@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum SearchAPI: TargetType {
-    case multi(query: String)
+    case multi(query: String, requestModel: CommonRequestModel = .init())
     
     var baseURL: URL {
         URL(string: "https://api.themoviedb.org/3/search")!
@@ -25,8 +25,8 @@ enum SearchAPI: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .multi(let query):
-                .requestParameters(parameters: ["query": query], encoding: URLEncoding.queryString)
+        case let .multi(query, requestModel):
+            return .requestParameters(parameters: requestModel.asDictionary, encoding: URLEncoding.queryString)
         }
     }
     
