@@ -24,6 +24,22 @@ enum ContentVCFactory {
         makeContentVC(with: "Top Rated", service: TopRatedContentService(), onItemSelection: onItemSelection)
     }
     
+    static func makeAiringTodayTVContentVC(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
+        makeContentVC(with: "Airing Today", service: AiringTodayContentService(), onItemSelection: onItemSelection)
+    }
+    
+    static func makeOnTheAirTVContentVC(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
+        makeContentVC(with: "On The Air", service: OnTheAirContentService(), onItemSelection: onItemSelection)
+    }
+    
+    static func makePopularTVContentVC(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
+        makeContentVC(with: "Popular", service: PopularTVContentService(), onItemSelection: onItemSelection)
+    }
+    
+    static func makeTopRatedTVContentVC(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
+        makeContentVC(with: "Top Rated", service: TopRatedContentService(), onItemSelection: onItemSelection)
+    }
+    
     // Helper method
     private static func makeContentVC(with title: String, service: ContentServiceProtocol, onItemSelection: @escaping (Int) -> Void) -> UIViewController {
         let viewModel = ContentViewModel(service: service)
