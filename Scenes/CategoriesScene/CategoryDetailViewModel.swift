@@ -19,6 +19,7 @@ final class CategoryDetailViewModel {
     var genreID: Int
     weak var delegate: CategoryDetailViewModelDelegate?
     private let service: CategoryDetailService!
+    private var page = 1
     
     func filteredMovies() {
         detailModel = allItems.filter { $0.isMovie }
@@ -42,14 +43,15 @@ final class CategoryDetailViewModel {
     }
     
     func fetchCategoryDetail() {
-        service.loadCategoryDetail(genreID: genreID) { [weak self] result in
+        service.loadCategoryDetail(genreID: genreID,requestModel: CommonRequestModel(page: page)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let (detailModel)):
                 self.allItems = detailModel
-                self.detailModel = detailModel
+                self.detailModel.append(contentsOf: detailModel)
                 self.checkEmptyContent()
                 self.delegate?.updateCollectionView()
+                page += 1
             case .failure(let error):
                 print(error)
             }

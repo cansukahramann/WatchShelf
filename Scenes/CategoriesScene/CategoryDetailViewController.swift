@@ -157,6 +157,16 @@ extension CategoryDetailViewController: UICollectionViewDelegate {
         } else if selectedItem.isTVShow {
             navigationController?.pushViewController(TVShowDetailFactory.makeCastDetailVC(seriesID: selectedId), animated: true)
         }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
         
+        if offsetY >= contentHeight - (2 * height) {
+            viewModel.fetchCategoryDetail()
+            self.updateCollectionView()
+        }
     }
 }

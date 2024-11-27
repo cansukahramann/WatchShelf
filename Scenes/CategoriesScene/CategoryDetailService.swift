@@ -12,11 +12,11 @@ final class CategoryDetailService {
     private let provider = MoyaProvider<DiscoverAPI>()
     private var group = DispatchGroup()
     
-    func loadCategoryDetail(genreID: Int, completion: @escaping(Result<([DiscoverResult]),Error>) -> Void) {
+    func loadCategoryDetail(genreID: Int,requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]),Error>) -> Void) {
         var detailModel = [DiscoverResult]()
         
         group.enter()
-        provider.request(.movie(genres: [genreID] )) { [weak self] result in
+        provider.request(.movie(genres: [genreID],requestModel: requestModel)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):

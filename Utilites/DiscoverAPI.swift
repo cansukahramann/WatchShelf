@@ -10,8 +10,8 @@ import Moya
 
 enum DiscoverAPI: TargetType {
     
-    case movie(genres: [Int])
-    case tv(genres: [Int])
+    case movie(genres: [Int], requestModel: CommonRequestModel = .init())
+    case tv(genres: [Int], requestModel: CommonRequestModel = .init())
     
     var baseURL: URL {
         URL(string: "https://api.themoviedb.org/3/discover")!
@@ -32,9 +32,12 @@ enum DiscoverAPI: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .movie(let genreIds), .tv(let genreIds):
+        case let .movie(genreIds, requestModel),
+            let .tv(genreIds, requestModel):
+            var parameters = requestModel.asDictionary
             let genresString = genreIds.map { String($0) }.joined(separator: ",")
-            return .requestParameters(parameters: ["with_genres": genresString], encoding: URLEncoding.queryString)
+            parameters["with_genres"] = genresString
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
     
