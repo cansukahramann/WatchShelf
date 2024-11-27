@@ -96,6 +96,17 @@ extension ContentViewController: UICollectionViewDataSource {
         cell.configure(posterPath: viewModel.allContentResults[indexPath.item].posterPath)
         return cell
     }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offsetX = scrollView.contentOffset.x
+        let contentWidth = scrollView.contentSize.height
+        let width = scrollView.frame.size.width
+        
+        if offsetX >= contentWidth - (2 * width) {
+            viewModel.fetchAllContent()
+            self.updateCollectionView()
+        }
+    }
 }
 
 extension ContentViewController: UICollectionViewDelegate {

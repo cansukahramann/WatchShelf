@@ -29,10 +29,10 @@ enum ContentAPI: TargetType {
     case upcomingMovie(CommonRequestModel = .init())
     case topRatedMovie(CommonRequestModel = .init())
     
-    case airingTodayTVShow
-    case onTheAirTVShow
-    case popularTVShow
-    case topRatedTVShow
+    case airingTodayTVShow(CommonRequestModel = .init())
+    case onTheAirTVShow(CommonRequestModel = .init())
+    case popularTVShow(CommonRequestModel = .init())
+    case topRatedTVShow(CommonRequestModel = .init())
     
     var baseURL: URL {
         URL(string: "https://api.themoviedb.org/3")!
@@ -66,8 +66,15 @@ enum ContentAPI: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case let .popularMovie(requestModel), let .nowPlayingMovie(requestModel), let .upcomingMovie(requestModel), let .topRatedMovie(requestModel):
-            return .requestParameters(parameters: requestModel.asDictionary, encoding: URLEncoding.queryString)
+        case let .popularMovie(requestModel),
+                 let .nowPlayingMovie(requestModel),
+                 let .upcomingMovie(requestModel),
+                 let .topRatedMovie(requestModel),
+                 let .airingTodayTVShow(requestModel),
+                 let .onTheAirTVShow(requestModel),
+                 let .popularTVShow(requestModel),
+                 let .topRatedTVShow(requestModel):
+                return .requestParameters(parameters: requestModel.asDictionary, encoding: URLEncoding.queryString)
         default:
             return .requestPlain
         }
