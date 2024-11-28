@@ -26,7 +26,10 @@ enum SearchAPI: TargetType {
     var task: Moya.Task {
         switch self {
         case let .multi(query, requestModel):
-            return .requestParameters(parameters: requestModel.asDictionary, encoding: URLEncoding.queryString)
+            var parameters = requestModel.asDictionary
+            parameters["query"] = query
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+
         }
     }
     

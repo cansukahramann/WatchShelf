@@ -18,6 +18,7 @@ final class SearchViewModel {
     private let service = SearchService()
     var model: [SearchResponseModel.Result] = []
     private var page = 1
+    private(set) var isLoadingMore: Bool = false
     
     func search(_ searchText: String) {
         debounceTimer?.invalidate()
@@ -28,16 +29,20 @@ final class SearchViewModel {
         }
     }
     
-    private func performSearchRequest(searchText: String) {
+    func performSearchRequest(searchText: String) {
+        guard !isLoadingMore else { return }
+               isLoadingMore = true
         service.search(searchText: searchText, requestModel: CommonRequestModel(page: page)) { [weak self] result in
             switch result {
             case .success(let response):
                 let filteredResults = response.results.filter { $0.mediaType != .person }
-                self?.delegate?.didCompleteWith(results: filteredResults)
+                self?.model.append(contentsOf: filteredResults)
+                self?.delegate?.didCompleteWith(results: self?.model ?? [])
                 self?.page += 1
             case .failure:
                 self?.delegate?.didCompleteWithError()
             }
+            self?.isLoadingMore = false
         }
     }
 }

@@ -13,9 +13,8 @@ protocol SearchViewControllerDelegate: AnyObject {
 
 final class SearchViewController: UITableViewController {
     private let viewModel = SearchViewModel()
-    
-    
     weak var delegate: SearchViewControllerDelegate?
+    private var lastSearchText: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +44,7 @@ final class SearchViewController: UITableViewController {
     func processResult(_ result: SearchResponseModel.Result) -> String {
         let title = result.title?.trimmingCharacters(in: .whitespacesAndNewlines)
         let name = result.name?.trimmingCharacters(in: .whitespacesAndNewlines)
-
+        
         if let title = title, !title.isEmpty {
             return title
         } else if let name = name, !name.isEmpty {
@@ -79,18 +78,42 @@ final class SearchViewController: UITableViewController {
             break
         }
     }
+    
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY >= contentHeight - (2 * height), !viewModel.model.isEmpty {
+            viewModel.performSearchRequest(searchText: lastSearchText)
+            self.tableView.reloadData()
+        }
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        viewModel.search(searchText)
+        lastSearchText = searchText
+        if searchText.isEmpty {
+            viewModel.model.removeAll()
+            tableView.reloadData()
+        } else {
+            viewModel.search(searchText)
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.model.removeAll()
+        tableView.reloadData()
     }
 }
 
 extension SearchViewController: SearchViewModelDelegate {
     func didCompleteWith(results: [SearchResponseModel.Result]) {
         viewModel.model = results
-        tableView.reloadData()
+        if !viewModel.model.isEmpty {
+            tableView.reloadData()
+        }
     }
     
     func didCompleteWithError() {
