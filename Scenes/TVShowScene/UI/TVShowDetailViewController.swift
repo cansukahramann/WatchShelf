@@ -94,6 +94,10 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         videoView.getTVVideo(model: viewModel.tvVideoModel)
         castView.updateCastView(model: viewModel.tvCastModel)
         similarView.updateSimilarTVShow(model: viewModel.tvSimilarModel)
+        
+        similarView.isHidden = viewModel.tvSimilarModel.isEmpty
+        castView.isHidden = viewModel.tvCastModel.isEmpty
+        videoView.isHidden = viewModel.tvVideoModel.isEmpty
     }
     
     func tvCastSelected(castID: Int) {

@@ -57,6 +57,11 @@ class DescriptionView: UIView {
     
     func configure(text: String) {
         label.text = text
+        if text.isEmpty {
+            button.isHidden = true 
+        } else {
+            button.isHidden = false
+        }
     }
     
     @objc
