@@ -20,6 +20,7 @@ final class CategoryDetailService {
             guard let self else { return }
             switch result {
             case .success(let response):
+                print("Response Data: \(String(data: response.data, encoding: .utf8) ?? "")")
                 let movies = mapDetailResponse(from: response.data)
                 detailModel.append(contentsOf: movies)
             case .failure(let error):

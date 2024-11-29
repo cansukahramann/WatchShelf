@@ -64,7 +64,7 @@ class DetailHeaderView: UIView {
     }
     
     
-    func configure(model: DetailModel) {
+    func configure(model: MovieDetailModel) {
         titleLabel.text = model.title
         if let posterPath = model.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"))

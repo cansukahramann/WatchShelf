@@ -48,7 +48,7 @@ private extension WatchListStore {
     }
 }
 
-extension DetailModel {
+extension MovieDetailModel {
     var storeableMedia: StoreableMedia {
         StoreableMedia(id: id, title: title, posterPath: posterPath, type: .movie, release_date: releaseDate)
     }

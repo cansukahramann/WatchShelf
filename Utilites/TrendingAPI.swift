@@ -12,7 +12,6 @@ enum TrendingAPI: TargetType {
     
     case trendingAll(requestModel:CommonRequestModel = .init())
     
-    
     var baseURL: URL {
         URL(string: "https://api.themoviedb.org/3/trending")!
     }

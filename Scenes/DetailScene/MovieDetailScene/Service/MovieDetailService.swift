@@ -13,8 +13,8 @@ final class MovieDetailService {
     private let detailProvider = MoyaProvider<DetailAPI>()
     private let group = DispatchGroup()
     
-    func loadMovieDetail(movieID: Int, completion: @escaping(Result<(DetailModel,[SimilarResult],[Cast],[Results]),Error>) -> Void) {
-        var detailModel: DetailModel!
+    func loadMovieDetail(movieID: Int, completion: @escaping(Result<(MovieDetailModel,[SimilarResult],[Cast],[Results]),Error>) -> Void) {
+        var detailModel: MovieDetailModel!
         var similarModel = [SimilarResult]()
         var movieCastModel = [Cast]()
         var movieVideoModel = [Results]()
@@ -77,8 +77,8 @@ final class MovieDetailService {
         }
     }
     
-    private func mapResponse(from data: Data) -> DetailModel? {
-        let response = try! JSONDecoder().decode(DetailModel.self, from: data)
+    private func mapResponse(from data: Data) -> MovieDetailModel? {
+        let response = try! JSONDecoder().decode(MovieDetailModel.self, from: data)
         return response
     }
     

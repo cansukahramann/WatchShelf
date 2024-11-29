@@ -14,7 +14,7 @@ protocol MovieDetailViewModelDelegate: AnyObject {
 
 final class MovieDetailViewModel {
     
-    var detailModel: DetailModel!
+    var detailModel: MovieDetailModel!
     var similarModel = [SimilarResult]()
     var movieCastModel = [Cast]()
     var movieVideoModel = [Results]()

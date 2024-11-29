@@ -1,5 +1,5 @@
 //
-//  DetailModel.swift
+//  MovieDetailModel.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 23.09.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DetailModel: Codable {
+struct MovieDetailModel: Codable {
     let genres: [Genres]
     let id: Int
     let title: String
