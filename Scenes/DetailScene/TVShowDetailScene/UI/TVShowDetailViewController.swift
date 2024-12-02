@@ -8,14 +8,14 @@
 import UIKit
 
 
-class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate,TVShowCastViewDelegate, SimilarTVShowViewDelegate {
+class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate,TVShowCastViewDelegate,SimilarTVShowViewDelegate {
     
     private let headerView = DetailHeaderView(frame: .zero)
     private let descriptionView = DescriptionView(frame: .zero)
     private let videoView = VideoView(frame: .zero)
     private let castView = TVShowCastView(frame: .zero)
-    private let similarView = SimilarTVShowView(frame: .zero)
     
+    private var similarView: SimilarTVShowView!
     private var viewModel: TVShowDetailViewModel!
     private var castDetailViewModel: CastDetailViewModel!
     
@@ -47,9 +47,9 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         configureUI()
         viewModel.fetchTVShowDetail()
         viewModel.delegate = self
-        castView.delegate = self
+        similarTVShowView()
         similarView.delegate = self
-        
+        castView.delegate = self
     }
     
     private func setupUI() {
@@ -70,6 +70,14 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         ])
     }
     
+    private func similarTVShowView() {
+        let similarView = SimilarTVShowContentFactory.makeView(with: viewModel.tvShowID) { tvShowID in
+            self.similarTVShowSelected(tvShowID: tvShowID)
+        }
+        self.similarView = similarView as? SimilarTVShowView
+        stackView.addArrangedSubview(similarView)
+    }
+    
     private func setRightBarButtonItem(with image: UIImage) {
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(addButtonTapped))
         rightBarButtonItem.tintColor = .black
@@ -84,7 +92,6 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
             videoView.heightAnchor.constraint(equalToConstant: 200)
         ])
         stackView.addArrangedSubview(castView)
-        stackView.addArrangedSubview(similarView)
     }
     
     func didFetchDetail() {
@@ -93,9 +100,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         descriptionView.configure(text: viewModel.model.overview)
         videoView.getTVVideo(model: viewModel.tvVideoModel)
         castView.updateCastView(model: viewModel.tvCastModel)
-        similarView.updateSimilarTVShow(model: viewModel.tvSimilarModel)
         
-        similarView.isHidden = viewModel.tvSimilarModel.isEmpty
         castView.isHidden = viewModel.tvCastModel.isEmpty
         videoView.isHidden = viewModel.tvVideoModel.isEmpty
     }

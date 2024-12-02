@@ -11,8 +11,7 @@ protocol SimilarTVShowViewDelegate: AnyObject {
     func similarTVShowSelected(tvShowID: Int)
 }
 
-class SimilarTVShowView: UIView {
-
+class SimilarTVShowView: UIView,SimilarTVShowViewModelDelegate {
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -24,17 +23,17 @@ class SimilarTVShowView: UIView {
     }()
     
     let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
-    private var model =  [SimilarResult]()
+    private var viewModel: SimilarTVShowViewModel!
     weak var delegate: SimilarTVShowViewDelegate?
+    var didSelectItem: ((_ id: Int) -> Void)? 
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    convenience init(viewModel: SimilarTVShowViewModel) {
+        self.init(frame: .zero)
+        self.viewModel = viewModel
+        viewModel.fetchTVShowSimilarModel()
+        viewModel.delegate = self
         setupCollectionView()
         titleLabel.text = "Similar Shows"
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     func setupCollectionView() {
@@ -58,26 +57,24 @@ class SimilarTVShowView: UIView {
             collectionView.heightAnchor.constraint(equalToConstant: 250)
         ])
     }
-
-    func updateSimilarTVShow(model: [SimilarResult]) {
-        self.model = model
+    func updateCollectionView() {
         collectionView.reloadData()
     }
 }
 
 extension SimilarTVShowView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        model.count
+        viewModel.similarModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
-        cell.configure(posterPath: model[indexPath.item].posterPath)
+        cell.configure(posterPath: viewModel.similarModel[indexPath.item].posterPath)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedSimilarMovieID = model[indexPath.item].id
+        let selectedSimilarMovieID = viewModel.similarModel[indexPath.item].id
         delegate?.similarTVShowSelected(tvShowID: selectedSimilarMovieID)
     }
 }
@@ -85,6 +82,16 @@ extension SimilarTVShowView: UICollectionViewDataSource {
 extension SimilarTVShowView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 190, height: collectionView.bounds.height)
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offsetX = scrollView.contentOffset.x
+        let contentWidth = scrollView.contentSize.height
+        let width = scrollView.frame.size.width
+        
+        if offsetX >= contentWidth - (2 * width) {
+            viewModel.fetchTVShowSimilarModel()
+            self.updateCollectionView()
+        }
     }
 }
 

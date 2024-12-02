@@ -54,7 +54,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     }
     
     private func similarView() {
-        let similarMoviesView = SimilarContentFactory.makeView(with: viewModel.movieID, service: SimilarService()) { movieID in
+        let similarMoviesView = SimilarMovieContentFactory.makeView(with: viewModel.movieID) { movieID in
             self.similarMovieSelected(movieID: movieID)
         }
         self.similarMoviesView = similarMoviesView as? SimilarMoviesView
