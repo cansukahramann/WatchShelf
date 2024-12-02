@@ -14,7 +14,6 @@ protocol SearchViewControllerDelegate: AnyObject {
 final class SearchViewController: UITableViewController {
     private let viewModel = SearchViewModel()
     weak var delegate: SearchViewControllerDelegate?
-    private var lastSearchText: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,17 +84,15 @@ final class SearchViewController: UITableViewController {
         let height = scrollView.frame.size.height
         
         if offsetY >= contentHeight - (2 * height), !viewModel.model.isEmpty {
-            viewModel.performSearchRequest(searchText: lastSearchText)
-            self.tableView.reloadData()
+            viewModel.performSearchRequest()
         }
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        lastSearchText = searchText
         if searchText.isEmpty {
-            viewModel.model.removeAll()
+            viewModel.resetSearch()
             tableView.reloadData()
         } else {
             viewModel.search(searchText)

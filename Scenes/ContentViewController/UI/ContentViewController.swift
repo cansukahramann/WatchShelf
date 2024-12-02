@@ -49,6 +49,7 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
+        collectionView.register(IndicatorCell.self, forCellWithReuseIdentifier: IndicatorCell.reuseID)
         setupConstraints()
         categoryNameLabel.text = title
         
@@ -88,13 +89,19 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
 
 extension ContentViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.allContentResults.count
+        return (viewModel.allContentResults.count > 0) ? (viewModel.allContentResults.count + 1) : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
-        cell.configure(posterPath: viewModel.allContentResults[indexPath.item].posterPath)
-        return cell
+        if indexPath.item != viewModel.allContentResults.count {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
+            cell.configure(posterPath: viewModel.allContentResults[indexPath.item].posterPath)
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IndicatorCell.reuseID, for: indexPath) as! IndicatorCell
+            cell.indicator.startAnimating()
+            return cell
+        }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -107,6 +114,18 @@ extension ContentViewController: UICollectionViewDataSource {
             self.updateCollectionView()
         }
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+           let size = collectionView.frame.size
+        let cellHeight =  (indexPath.row == viewModel.allContentResults.count && viewModel.isFetchingContent ) ? 40 : (size.height / 3)
+           return CGSize(width: size.width , height: cellHeight)
+       }
+       
+       func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+           if (indexPath.row == viewModel.allContentResults.count ) && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage{
+               let page = (Int(viewModel.allContentResults.count) / 20) + 1
+               viewModel.fetchAllContent()
+           }
+       }
 }
 
 extension ContentViewController: UICollectionViewDelegate {

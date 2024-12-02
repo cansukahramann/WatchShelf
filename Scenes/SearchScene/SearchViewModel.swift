@@ -19,17 +19,25 @@ final class SearchViewModel {
     var model: [SearchResponseModel.Result] = []
     private var page = 1
     private(set) var isLoadingMore: Bool = false
+    private var searchText: String = ""
     
     func search(_ searchText: String) {
+        self.searchText = searchText
         debounceTimer?.invalidate()
         debounceTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { [weak self] _ in
             guard let self else { return }
             debounceTimer = nil
-            performSearchRequest(searchText: searchText)
+            performSearchRequest()
         }
     }
     
-    func performSearchRequest(searchText: String) {
+    func resetSearch() {
+        model = []
+        page = 1
+        searchText = ""
+    }
+    
+    func performSearchRequest() {
         guard !isLoadingMore else { return }
                isLoadingMore = true
         service.search(searchText: searchText, requestModel: CommonRequestModel(page: page)) { [weak self] result in
