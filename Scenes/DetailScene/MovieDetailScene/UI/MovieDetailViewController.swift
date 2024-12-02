@@ -12,10 +12,10 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     private let headerView = DetailHeaderView(frame: .zero)
     private let descriptionView = DescriptionView(frame: .zero)
     private let videoView = VideoView(frame: .zero)
-    private let similarMoviesView = SimilarMoviesView(frame: .zero)
     private let castView = MovieCastView(frame: .zero)
     
     private var viewModel: MovieDetailViewModel!
+    private var similarMoviesView: SimilarMoviesView!
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -47,10 +47,18 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         configureDescriptionView()
         configureVideoView()
         configureCastView()
-        configureCollectionView()
-      
+        similarView()
         similarMoviesView.delegate = self
         castView.delegate = self
+       
+    }
+    
+    private func similarView() {
+        let similarMoviesView = SimilarContentFactory.makeView(with: viewModel.movieID, service: SimilarService()) { movieID in
+            self.similarMovieSelected(movieID: movieID)
+        }
+        self.similarMoviesView = similarMoviesView as? SimilarMoviesView
+        stackView.addArrangedSubview(similarMoviesView)
     }
     
     private func setupView() {
@@ -96,10 +104,6 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         ])
     }
     
-    private func configureCollectionView() {
-        stackView.addArrangedSubview(similarMoviesView)
-    }
-    
     private func configureCastView() {
         stackView.addArrangedSubview(castView)
     }
@@ -118,11 +122,9 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark : .add)
         headerView.configure(model: viewModel.detailModel)
         descriptionView.configure(text: viewModel.detailModel.overview)
-        similarMoviesView.updateSimilarMovie(model: viewModel.similarModel)
         castView.updateCastView(model: viewModel.movieCastModel)
         videoView.getVideo(model: viewModel.movieVideoModel)
         
-        similarMoviesView.isHidden = viewModel.similarModel.isEmpty
         castView.isHidden = viewModel.movieCastModel.isEmpty
         videoView.isHidden = viewModel.movieVideoModel.isEmpty
     }

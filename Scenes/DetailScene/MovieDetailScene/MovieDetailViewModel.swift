@@ -13,9 +13,7 @@ protocol MovieDetailViewModelDelegate: AnyObject {
 }
 
 final class MovieDetailViewModel {
-    
     var detailModel: MovieDetailModel!
-    var similarModel = [SimilarResult]()
     var movieCastModel = [Cast]()
     var movieVideoModel = [Results]()
     var movieID: Int
@@ -39,9 +37,8 @@ final class MovieDetailViewModel {
         service.loadMovieDetail(movieID: movieID) { [weak self] result in
             guard let self else { return }
             switch result {
-            case .success(let (detailModel, similarModel, movieCastModel, movieVideoModel)):
+            case .success(let (detailModel, movieCastModel, movieVideoModel)):
                 self.detailModel = detailModel
-                self.similarModel = similarModel
                 self.movieCastModel = movieCastModel
                 self.movieVideoModel = movieVideoModel
                 self.delegate?.didFetchDetail()

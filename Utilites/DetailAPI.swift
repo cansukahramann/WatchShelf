@@ -8,16 +8,14 @@
 import Foundation
 import Moya
 
+
 enum DetailAPI: TargetType {
-    
     case movieDetail(movieID: Int)
     case movieCredits(movieID: Int)
-    case movieSimilar(movieID: Int)
     case movieVideo(movieID: Int)
     
     case tvShowDetail(seriesID: Int)
     case tvShowCredits(seriesID: Int)
-    case tvShowSimilar(seriesID: Int)
     case tvShowVideo(seriesID: Int)
     
     case peopleDetail(castID: Int)
@@ -36,9 +34,6 @@ enum DetailAPI: TargetType {
         case .movieCredits(let movieID):
             return "movie/\(movieID)/credits"
             
-        case .movieSimilar(let movieID):
-            return "movie/\(movieID)/similar"
-            
         case .movieVideo(let movieID):
             return "movie/\(movieID)/videos"
             
@@ -49,9 +44,6 @@ enum DetailAPI: TargetType {
             
         case .tvShowCredits(let seriesID):
             return "tv/\(seriesID)/credits"
-            
-        case .tvShowSimilar(let seriesID):
-            return "tv/\(seriesID)/similar"
             
         case .tvShowVideo(let seriesID):
             return "tv/\(seriesID)/videos"
@@ -73,7 +65,7 @@ enum DetailAPI: TargetType {
     }
     
     var task: Moya.Task {
-        return .requestPlain
+        .requestPlain
     }
     
     var headers: [String : String]? {

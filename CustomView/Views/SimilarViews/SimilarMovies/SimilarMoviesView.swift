@@ -11,7 +11,7 @@ protocol SimilarMoviesViewDelegate: AnyObject {
     func similarMovieSelected(movieID: Int)
 }
 
-class SimilarMoviesView: UIView {
+class SimilarMoviesView: UIView, SimilarMovieViewModelDelegate {
 
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -24,20 +24,17 @@ class SimilarMoviesView: UIView {
     }()
     
     let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
-    private var model =  [SimilarResult]()
-    weak var delegate: SimilarMoviesViewDelegate?
+    private var viewModel: SimilarMovieViewModel!
+    weak var delegate: SimilarMoviesViewDelegate!
+    var didSelectItem: ((_ id: Int) -> Void)? 
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupCollectionView()
-        
+    convenience init(viewModel: SimilarMovieViewModel) {
+        self.init(frame: .zero)
+        self.viewModel = viewModel
+        viewModel.delegate = self
         titleLabel.text = "Similar Movies"
-
-    }
-   
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        setupCollectionView()
+        viewModel.fetchSimilarModel()
     }
     
     func setupCollectionView() {
@@ -47,7 +44,6 @@ class SimilarMoviesView: UIView {
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
@@ -62,26 +58,25 @@ class SimilarMoviesView: UIView {
             collectionView.heightAnchor.constraint(equalToConstant: 250)
         ])
     }
-
-    func updateSimilarMovie(model: [SimilarResult]) {
-        self.model = model
+    
+    func updateCollectionView() {
         collectionView.reloadData()
     }
 }
 
 extension SimilarMoviesView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        model.count
+        viewModel.similarModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
-        cell.configure(posterPath: model[indexPath.item].posterPath)
+        cell.configure(posterPath: viewModel.similarModel[indexPath.item].posterPath)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedSimilarMovieID = model[indexPath.item].id
+        let selectedSimilarMovieID = viewModel.similarModel[indexPath.item].id
         delegate?.similarMovieSelected(movieID: selectedSimilarMovieID)
     }
 }
@@ -89,5 +84,15 @@ extension SimilarMoviesView: UICollectionViewDataSource {
 extension SimilarMoviesView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 190, height: collectionView.bounds.height)
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offsetX = scrollView.contentOffset.x
+        let contentWidth = scrollView.contentSize.height
+        let width = scrollView.frame.size.width
+        
+        if offsetX >= contentWidth - (2 * width) {
+            viewModel.fetchSimilarModel()
+            self.updateCollectionView()
+        }
     }
 }

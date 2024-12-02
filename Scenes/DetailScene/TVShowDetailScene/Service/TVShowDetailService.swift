@@ -50,17 +50,17 @@ final class TVShowDetailService {
             }
             group.leave()
         }
-        group.enter()
-        tvDetailProvider.request(.tvShowSimilar(seriesID: seriesID)) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case.success(let response):
-                tvSimilarModel = mapSimilarResponse(from: response.data)!
-            case .failure(let error):
-                print(error)
-            }
-            group.leave()
-        }
+//        group.enter()
+//        tvDetailProvider.request(.tvShowSimilar(seriesID: seriesID)) { [weak self] result in
+//            guard let self else { return }
+//            switch result {
+//            case.success(let response):
+//                tvSimilarModel = mapSimilarResponse(from: response.data)!
+//            case .failure(let error):
+//                print(error)
+//            }
+//            group.leave()
+//        }
         
         group.notify(queue: .main) {
             if let tvShowdetail = model {

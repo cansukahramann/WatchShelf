@@ -13,7 +13,7 @@ final class MovieDetailService {
     private let detailProvider = MoyaProvider<DetailAPI>()
     private let group = DispatchGroup()
     
-    func loadMovieDetail(movieID: Int, completion: @escaping(Result<(MovieDetailModel,[SimilarResult],[Cast],[Results]),Error>) -> Void) {
+    func loadMovieDetail(movieID: Int, completion: @escaping(Result<(MovieDetailModel,[Cast],[Results]),Error>) -> Void) {
         var detailModel: MovieDetailModel!
         var similarModel = [SimilarResult]()
         var movieCastModel = [Cast]()
@@ -26,17 +26,6 @@ final class MovieDetailService {
             switch result {
             case.success(let response):
                 detailModel = mapResponse(from: response.data)
-            case.failure(let error):
-                print(error)
-            }
-            group.leave()
-        }
-        group.enter()
-        detailProvider.request(.movieSimilar(movieID: movieID)) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case.success(let response):
-                similarModel = mapResponseDetail(from: response.data)!
             case.failure(let error):
                 print(error)
             }
@@ -69,7 +58,7 @@ final class MovieDetailService {
         
         group.notify(queue: .main) {
             if let movieDetailModel = detailModel {
-                completion(.success((detailModel,similarModel,movieCastModel,movieVideoModel)))
+                completion(.success((detailModel,movieCastModel,movieVideoModel)))
             } else {
                 let error = NSError(domain: "MovieDetailService", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to load movie service"])
                 completion(.failure(error))
@@ -80,11 +69,6 @@ final class MovieDetailService {
     private func mapResponse(from data: Data) -> MovieDetailModel? {
         let response = try! JSONDecoder().decode(MovieDetailModel.self, from: data)
         return response
-    }
-    
-    private func mapResponseDetail(from data: Data) -> [SimilarResult]? {
-        let response = try! JSONDecoder().decode(SimilarModel.self, from: data)
-        return response.results
     }
     
     private func mapResponseMovieCast(from data: Data) -> [Cast]? {
