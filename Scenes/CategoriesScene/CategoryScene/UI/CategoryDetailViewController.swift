@@ -14,7 +14,6 @@ enum ContentType {
 
 class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDelegate {
     
-    
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -64,6 +63,7 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.register(IndicatorCell.self, forCellWithReuseIdentifier: IndicatorCell.reuseID)
         setupUI()
         viewModel.delegate = self
         viewModel.fetchCategoryDetail()
@@ -132,13 +132,19 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
 
 extension CategoryDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.detailModel.count
+        return (viewModel.detailModel.count > 0) ? (viewModel.detailModel.count + 1) : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryDetailCell.reuseID, for: indexPath) as! CategoryDetailCell
-        cell.configure(model: viewModel.detailModel[indexPath.item])
-        return cell
+        if indexPath.item != viewModel.detailModel.count {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryDetailCell.reuseID, for: indexPath) as! CategoryDetailCell
+            cell.configure(model: viewModel.detailModel[indexPath.item])
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IndicatorCell.reuseID, for: indexPath) as! IndicatorCell
+            cell.indicator.startAnimating()
+            return cell
+        }
     }
 }
 
@@ -146,7 +152,19 @@ extension CategoryDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? CategoryDetailCell else { return }
         cell.configureRatingCircle(rating: viewModel.detailModel[indexPath.item].voteAverage ?? 0)
+        
+        if (indexPath.item == viewModel.detailModel.count ) && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage {
+            _ = (Int(viewModel.detailModel.count) / 20) + 1
+            viewModel.fetchCategoryDetail()
+        }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+           let size = collectionView.frame.size
+        let cellHeight =  (indexPath.row == viewModel.detailModel.count && viewModel.isFetchingContent ) ? 20 : (size.height / 4)
+           return CGSize(width: size.width , height: cellHeight)
+       }
+       
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItem = viewModel.detailModel[indexPath.item]

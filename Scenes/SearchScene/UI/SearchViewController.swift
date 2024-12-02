@@ -26,6 +26,7 @@ final class SearchViewController: UITableViewController {
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         tableView.register(SearchCell.self, forCellReuseIdentifier: "SearchCell")
+        tableView.register(IndicatorTableViewCell.self, forCellReuseIdentifier: IndicatorTableViewCell.reuseID)
         viewModel.delegate = self
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
@@ -37,7 +38,7 @@ final class SearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.model.count
+        (viewModel.model.count > 0) ? (viewModel.model.count + 1) : 0
     }
     
     func processResult(_ result: SearchResponseModel.Result) -> String {
@@ -54,12 +55,17 @@ final class SearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as! SearchCell
-        let result = viewModel.model[indexPath.row]
-        let displayName = processResult(result)
-        cell.configure(result: result, displayName: displayName)
-        
-        return cell
+        if indexPath.row != viewModel.model.count {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as! SearchCell
+            let result = viewModel.model[indexPath.row]
+            let displayName = processResult(result)
+            cell.configure(result: result, displayName: displayName)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: IndicatorTableViewCell.reuseID, for: indexPath) as! IndicatorTableViewCell
+            cell.indicator.startAnimating()
+            return cell
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -75,6 +81,22 @@ final class SearchViewController: UITableViewController {
             navigationController?.pushViewController(TVShowDetailFactory.makeCastDetailVC(seriesID: selectedId), animated: true)
         case .person:
             break
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == viewModel.model.count && viewModel.isFetchingContent {
+            return 20
+        } else {
+            let heightRatio: CGFloat = 0.16
+            return tableView.frame.size.height * heightRatio
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.model.count && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage {
+            _ = (Int(viewModel.model.count) / 20) + 1
+            viewModel.performSearchRequest()
         }
     }
     

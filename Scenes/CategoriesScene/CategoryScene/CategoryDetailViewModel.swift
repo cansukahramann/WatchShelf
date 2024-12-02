@@ -19,6 +19,8 @@ final class CategoryDetailViewModel {
     var genreID: Int
     weak var delegate: CategoryDetailViewModelDelegate?
     private let service: CategoryDetailService!
+    var shouldRequestNextPage = true
+    var isFetchingContent = false
     private var page = 1
     
     func filteredMovies() {

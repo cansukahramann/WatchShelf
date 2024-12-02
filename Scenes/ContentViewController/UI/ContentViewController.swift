@@ -122,7 +122,7 @@ extension ContentViewController: UICollectionViewDataSource {
        
        func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
            if (indexPath.row == viewModel.allContentResults.count ) && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage{
-               let page = (Int(viewModel.allContentResults.count) / 20) + 1
+               _ = (Int(viewModel.allContentResults.count) / 20) + 1
                viewModel.fetchAllContent()
            }
        }

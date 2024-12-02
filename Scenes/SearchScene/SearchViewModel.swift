@@ -19,6 +19,8 @@ final class SearchViewModel {
     var model: [SearchResponseModel.Result] = []
     private var page = 1
     private(set) var isLoadingMore: Bool = false
+    var shouldRequestNextPage = true
+    var isFetchingContent = false
     private var searchText: String = ""
     
     func search(_ searchText: String) {
@@ -39,7 +41,7 @@ final class SearchViewModel {
     
     func performSearchRequest() {
         guard !isLoadingMore else { return }
-               isLoadingMore = true
+        isLoadingMore = true
         service.search(searchText: searchText, requestModel: CommonRequestModel(page: page)) { [weak self] result in
             switch result {
             case .success(let response):
