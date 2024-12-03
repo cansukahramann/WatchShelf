@@ -8,10 +8,9 @@
 import Moya
 
 struct PopularContentService: ContentServiceProtocol {
-    private let provider = MoyaProvider<ContentAPI>()
     
     func fetchContent(requestModel: CommonRequestModel, completion: @escaping (Result<[ContentResult], any Error>) -> Void) {
-        provider.request(.popularMovie(requestModel)) { result in
+        NetworkManager.shared.request(ContentAPI.popularMovie(requestModel)) { result in
             switch result {
             case let .success(response):
                 completion(map(data: response.data))

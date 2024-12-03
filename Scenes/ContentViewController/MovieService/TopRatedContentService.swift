@@ -9,10 +9,9 @@ import Foundation
 import Moya
 
 struct TopRatedContentService: ContentServiceProtocol {
-    private let provider = MoyaProvider<ContentAPI>()
     
     func fetchContent(requestModel: CommonRequestModel, completion: @escaping (Result<[ContentResult], any Error>) -> Void) {
-        provider.request(.topRatedMovie(requestModel)) { result in
+        NetworkManager.shared.request(ContentAPI.topRatedMovie(requestModel)) { result in
             switch result {
             case let .success(response):
                 completion(map(data: response.data))

@@ -9,13 +9,12 @@ import Foundation
 import Moya
 
 final class GenreService {
-    private let provider = MoyaProvider<GenreAPI>()
     private var group = DispatchGroup()
     
     func loadGenre(completion: @escaping(Result<([GenreResponse]),Error>) -> Void) {
         var genreModel = [GenreResponse]()
         group.enter()
-        provider.request(.movie) { [weak self] result in
+        NetworkManager.shared.request(GenreAPI.movie) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
@@ -28,7 +27,7 @@ final class GenreService {
         }
         
         group.enter()
-        provider.request(.tv) { [weak self] result in
+        NetworkManager.shared.request(GenreAPI.tv) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):

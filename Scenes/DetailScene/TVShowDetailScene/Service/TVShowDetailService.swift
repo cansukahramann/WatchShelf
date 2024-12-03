@@ -9,7 +9,6 @@ import Foundation
 import Moya
 
 final class TVShowDetailService {
-    private let tvDetailProvider = MoyaProvider<DetailAPI>()
     private let group = DispatchGroup()
     
     func loadTVDetail(seriesID: Int, completion: @escaping(Result<(TVShowDetailModel,[SeriesCast],[Results], [SimilarResult] ),Error>) -> Void) {
@@ -18,7 +17,7 @@ final class TVShowDetailService {
         var tvVideoModel = [Results]()
         var tvSimilarModel = [SimilarResult]()
         group.enter()
-        tvDetailProvider.request(.tvShowDetail(seriesID:seriesID)) { [weak self] result in
+        NetworkManager.shared.request(DetailAPI.tvShowDetail(seriesID:seriesID)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
@@ -29,7 +28,7 @@ final class TVShowDetailService {
             group.leave()
         }
         group.enter()
-        tvDetailProvider.request(.tvShowVideo(seriesID: seriesID)) { [weak self] result in
+        NetworkManager.shared.request(DetailAPI.tvShowVideo(seriesID: seriesID)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
@@ -40,7 +39,7 @@ final class TVShowDetailService {
             group.leave()
         }
         group.enter()
-        tvDetailProvider.request(.tvShowCredits(seriesID: seriesID)) { [weak self] result in
+        NetworkManager.shared.request(DetailAPI.tvShowCredits(seriesID: seriesID)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):

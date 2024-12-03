@@ -10,7 +10,6 @@ import Moya
 
 final class MovieDetailService {
     
-    private let detailProvider = MoyaProvider<DetailAPI>()
     private let group = DispatchGroup()
     
     func loadMovieDetail(movieID: Int, completion: @escaping(Result<(MovieDetailModel,[Cast],[Results]),Error>) -> Void) {
@@ -20,7 +19,7 @@ final class MovieDetailService {
         var movieVideoModel = [Results]()
         
         group.enter()
-        detailProvider.request(.movieDetail(movieID: movieID)) { [weak self] result in
+        NetworkManager.shared.request(DetailAPI.movieDetail(movieID: movieID)) { [weak self] result in
             guard let self else { return }
             
             switch result {
@@ -33,7 +32,7 @@ final class MovieDetailService {
         }
         
         group.enter()
-        detailProvider.request(.movieCredits(movieID: movieID)) { [weak self] result in
+        NetworkManager.shared.request(DetailAPI.movieCredits(movieID: movieID)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
@@ -45,7 +44,7 @@ final class MovieDetailService {
         }
         
         group.enter()
-        detailProvider.request(.movieVideo(movieID: movieID)) { [weak self] result in
+        NetworkManager.shared.request(DetailAPI.movieVideo(movieID: movieID)) { [weak self] result in
             guard let self else { return }
             switch result {
             case.success(let response):

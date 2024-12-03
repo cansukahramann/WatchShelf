@@ -27,7 +27,7 @@ class CastDetailViewModel {
     }
     
     func fetchCastDetail() {
-        service.loadCastDetail(castID: castID) { [weak self] result in
+        service.loadCastDetail  { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let (detailModel, movies, tvShows) ):
