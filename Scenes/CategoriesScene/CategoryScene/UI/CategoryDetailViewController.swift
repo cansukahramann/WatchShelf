@@ -160,11 +160,11 @@ extension CategoryDetailViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-           let size = collectionView.frame.size
+        let size = collectionView.frame.size
         let cellHeight =  (indexPath.row == viewModel.detailModel.count && viewModel.isFetchingContent ) ? 20 : (size.height / 4)
-           return CGSize(width: size.width , height: cellHeight)
-       }
-       
+        return CGSize(width: size.width , height: cellHeight)
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItem = viewModel.detailModel[indexPath.item]

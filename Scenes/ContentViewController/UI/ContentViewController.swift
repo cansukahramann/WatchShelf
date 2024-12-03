@@ -30,7 +30,7 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
     }()
     
     private var viewModel: ContentViewModel!
-    var didSelectItem: ((_ id: Int) -> Void)? 
+    var didSelectItem: ((_ id: Int) -> Void)?
     
     init(title: String, viewModel: ContentViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -115,17 +115,17 @@ extension ContentViewController: UICollectionViewDataSource {
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-           let size = collectionView.frame.size
+        let size = collectionView.frame.size
         let cellHeight =  (indexPath.row == viewModel.allContentResults.count && viewModel.isFetchingContent ) ? 40 : (size.height / 3)
-           return CGSize(width: size.width , height: cellHeight)
-       }
-       
-       func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-           if (indexPath.row == viewModel.allContentResults.count ) && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage{
-               _ = (Int(viewModel.allContentResults.count) / 20) + 1
-               viewModel.fetchAllContent()
-           }
-       }
+        return CGSize(width: size.width , height: cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if (indexPath.row == viewModel.allContentResults.count ) && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage{
+            _ = (Int(viewModel.allContentResults.count) / 20) + 1
+            viewModel.fetchAllContent()
+        }
+    }
 }
 
 extension ContentViewController: UICollectionViewDelegate {

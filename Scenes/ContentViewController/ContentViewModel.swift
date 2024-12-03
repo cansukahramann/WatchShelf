@@ -18,8 +18,8 @@ final class ContentViewModel {
     
     var allContentResults = [ContentResult]()
     private var page = 1
-     var shouldRequestNextPage = true
-     var isFetchingContent = false
+    var shouldRequestNextPage = true
+    var isFetchingContent = false
     
     init(service: ContentServiceProtocol) {
         self.service = service

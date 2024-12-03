@@ -17,6 +17,8 @@ final class SimilarMovieViewModel {
     private var page = 1
     var similarModel: [SimilarResult] = []
     weak var delegate: SimilarMovieViewModelDelegate?
+    var shouldRequestNextPage = true
+    var isFetchingContent = false
     
     init(service: SimilarServiceProtocol ,movieID: Int) {
         self.service = service
