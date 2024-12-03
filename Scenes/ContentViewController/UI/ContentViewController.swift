@@ -11,7 +11,10 @@ import Kingfisher
 class ContentViewController: UIViewController, ContentViewModelDelegate {
     
     private var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: .zero, left: 16, bottom: .zero, right: 16)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .systemBackground
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -56,21 +59,13 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
         viewModel.fetchAllContent()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        let layout = UIHelper.twoColumnHorizontalLayout(in: collectionView)
-        collectionView.setCollectionViewLayout(layout, animated: false)
-    }
-    
     func updateCollectionView() {
         collectionView.reloadData()
     }
     
     
     private func setupConstraints() {
-        view.addSubview(collectionView)
-        view.addSubview(categoryNameLabel)
+        view.addSubviews(collectionView,categoryNameLabel)
         
         NSLayoutConstraint.activate([
             categoryNameLabel.topAnchor.constraint(equalTo: view.topAnchor),
@@ -82,7 +77,6 @@ class ContentViewController: UIViewController, ContentViewModelDelegate {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 250)
-            
         ])
     }
 }
@@ -104,6 +98,15 @@ extension ContentViewController: UICollectionViewDataSource {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if (indexPath.item == viewModel.allContentResults.count ) && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage{
+            _ = (Int(viewModel.allContentResults.count) / 20) + 1
+            viewModel.fetchAllContent()
+        }
+    }
+}
+
+extension ContentViewController: UICollectionViewDelegateFlowLayout {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let offsetX = scrollView.contentOffset.x
         let contentWidth = scrollView.contentSize.height
@@ -114,23 +117,17 @@ extension ContentViewController: UICollectionViewDataSource {
             self.updateCollectionView()
         }
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = collectionView.frame.size
-        let cellHeight =  (indexPath.row == viewModel.allContentResults.count && viewModel.isFetchingContent ) ? 40 : (size.height / 3)
-        return CGSize(width: size.width , height: cellHeight)
+        CGSize(width: (collectionView.bounds.width - 16) / 2 , height: collectionView.bounds.height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if (indexPath.row == viewModel.allContentResults.count ) && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage{
-            _ = (Int(viewModel.allContentResults.count) / 20) + 1
-            viewModel.fetchAllContent()
-        }
-    }
-}
-
-extension ContentViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItemID = viewModel.allContentResults[indexPath.item].id
         didSelectItem?(selectedItemID)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        8
     }
 }

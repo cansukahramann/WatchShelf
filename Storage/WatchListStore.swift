@@ -8,6 +8,7 @@
 import Foundation
 
 final class WatchListStore {
+    
     private(set) var mediaList: [StoreableMedia] = []
     
     static let shared = WatchListStore()
@@ -34,6 +35,7 @@ final class WatchListStore {
 }
 
 private extension WatchListStore {
+    
     func retrieveSavedMedia() {
         guard let data = defaults.data(forKey: storeKey),
               let storeableMedia = try? JSONDecoder().decode([StoreableMedia].self, from: data) else { return }
@@ -49,12 +51,14 @@ private extension WatchListStore {
 }
 
 extension MovieDetailModel {
+    
     var storeableMedia: StoreableMedia {
         StoreableMedia(id: id, title: title, posterPath: posterPath, type: .movie, release_date: releaseDate)
     }
 }
 
 extension TVShowDetailModel {
+    
     var storeableMedia: StoreableMedia {
         StoreableMedia(id: id, title: name, posterPath: posterPath, type: .tv, release_date: firstAirDate)
     }
