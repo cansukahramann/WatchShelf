@@ -11,13 +11,36 @@ import Moya
 final class TVShowDetailService {
     private let group = DispatchGroup()
     
-    func loadTVDetail(seriesID: Int, completion: @escaping(Result<(TVShowDetailModel,[SeriesCast],[Results], [SimilarResult] ),Error>) -> Void) {
-        var model: TVShowDetailModel!
-        var tvCastModel = [SeriesCast]()
-        var tvVideoModel = [Results]()
-        var tvSimilarModel = [SimilarResult]()
+    private var model: TVShowDetailModel!
+    private var tvCastModel = [SeriesCast]()
+    private var tvVideoModel = [Results]()
+    private var tvSimilarModel = [SimilarResult]()
+    private var tvShowID: Int
+    
+    init(tvShowID: Int) {
+        self.tvShowID = tvShowID
+    }
+    
+    func loadTVDetail(completion: @escaping(Result<(TVShowDetailModel,[SeriesCast],[Results], [SimilarResult] ),Error>) -> Void) {
+        
+        loadTVDetail()
+        loadTVVideo()
+        loadTVCredits()
+
+        group.notify(queue: .main) { [weak self] in
+            guard let self else { return }
+            if let tvShowdetail = model {
+                completion(.success((model, tvCastModel, tvVideoModel, tvSimilarModel)))
+            } else {
+                let error = NSError(domain: "TVShowDetailService", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to load tv show detail"])
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    private func loadTVDetail() {
         group.enter()
-        NetworkManager.shared.request(DetailAPI.tvShowDetail(seriesID:seriesID)) { [weak self] result in
+        NetworkManager.shared.request(DetailAPI.tvShowDetail(tvShowID:tvShowID)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
@@ -27,8 +50,11 @@ final class TVShowDetailService {
             }
             group.leave()
         }
+    }
+    
+    private func loadTVVideo() {
         group.enter()
-        NetworkManager.shared.request(DetailAPI.tvShowVideo(seriesID: seriesID)) { [weak self] result in
+        NetworkManager.shared.request(DetailAPI.tvShowVideo(tvShowID: tvShowID)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
@@ -38,8 +64,11 @@ final class TVShowDetailService {
             }
             group.leave()
         }
+    }
+    
+    private func loadTVCredits() {
         group.enter()
-        NetworkManager.shared.request(DetailAPI.tvShowCredits(seriesID: seriesID)) { [weak self] result in
+        NetworkManager.shared.request(DetailAPI.tvShowCredits(tvShowID: tvShowID)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
@@ -48,26 +77,6 @@ final class TVShowDetailService {
                 print(error)
             }
             group.leave()
-        }
-//        group.enter()
-//        tvDetailProvider.request(.tvShowSimilar(seriesID: seriesID)) { [weak self] result in
-//            guard let self else { return }
-//            switch result {
-//            case.success(let response):
-//                tvSimilarModel = mapSimilarResponse(from: response.data)!
-//            case .failure(let error):
-//                print(error)
-//            }
-//            group.leave()
-//        }
-        
-        group.notify(queue: .main) {
-            if let tvShowdetail = model {
-                completion(.success((model, tvCastModel, tvVideoModel, tvSimilarModel)))
-            } else {
-                let error = NSError(domain: "TVShowDetailService", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to load tv show detail"])
-                completion(.failure(error))
-            }
         }
     }
     

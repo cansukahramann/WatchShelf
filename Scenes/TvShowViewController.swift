@@ -46,7 +46,7 @@ class TvShowViewController: UIViewController {
     }
     
     private func onItemSelection(id: Int) -> Void {
-        let tvShowDetailVC = TVShowDetailFactory.makeCastDetailVC(seriesID: id)
+        let tvShowDetailVC = TVShowDetailFactory.makeCastDetailVC(tvShowID: id)
         navigationController?.pushViewController(tvShowDetailVC, animated: true)
     }
     

@@ -111,7 +111,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     }
     
     func similarTVShowSelected(tvShowID: Int) {
-        let tvShowDetail = TVShowDetailFactory.makeCastDetailVC(seriesID: tvShowID)
+        let tvShowDetail = TVShowDetailFactory.makeCastDetailVC(tvShowID: tvShowID)
         navigationController?.pushViewController(tvShowDetail, animated: true)
     }
     

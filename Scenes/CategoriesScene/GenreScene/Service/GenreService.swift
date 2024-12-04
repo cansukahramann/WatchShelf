@@ -10,9 +10,20 @@ import Moya
 
 final class GenreService {
     private var group = DispatchGroup()
+    var genreModel = [GenreResponse]()
+    
     
     func loadGenre(completion: @escaping(Result<([GenreResponse]),Error>) -> Void) {
-        var genreModel = [GenreResponse]()
+        loadGenreMovie()
+        loadGenreTV()
+        
+        group.notify(queue: .main) { [weak self] in
+            guard let self else { return }
+            completion(.success(genreModel))
+        }
+    }
+    
+    private func loadGenreMovie() {
         group.enter()
         NetworkManager.shared.request(GenreAPI.movie) { [weak self] result in
             guard let self else { return }
@@ -25,7 +36,9 @@ final class GenreService {
             }
             group.leave()
         }
-        
+    }
+    
+    private func loadGenreTV() {
         group.enter()
         NetworkManager.shared.request(GenreAPI.tv) { [weak self] result in
             guard let self else { return }
@@ -37,10 +50,6 @@ final class GenreService {
                 print(error)
             }
             group.leave()
-        }
-        
-        group.notify(queue: .main) {
-            completion(.success(genreModel))
         }
     }
     

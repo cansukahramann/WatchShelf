@@ -22,9 +22,9 @@ class TVShowDetailViewModel {
     private let service: TVShowDetailService!
     var tvShowID: Int
     
-    init(service: TVShowDetailService,seriesID: Int) {
+    init(service: TVShowDetailService,tvShowID: Int) {
         self.service = service
-        self.tvShowID = seriesID
+        self.tvShowID = tvShowID
     }
     
     var isFavorite: Bool {
@@ -36,7 +36,7 @@ class TVShowDetailViewModel {
     }
     
     func fetchTVShowDetail() {
-        service.loadTVDetail(seriesID:tvShowID) { [weak self] result in
+        service.loadTVDetail() { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let (model,tvCastModel,tvVideoModel, tvSimilarModel)):

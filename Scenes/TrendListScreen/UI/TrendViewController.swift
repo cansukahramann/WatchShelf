@@ -79,7 +79,7 @@ extension TrendViewController: TrendListViewDelegate {
                 let movieDetailViewController = MovieDetailFactory.makeCastDetailVC(movieID: id)
                 navigationController?.pushViewController(movieDetailViewController, animated: true)
             case .tv:
-                let tvDetailViewController = TVShowDetailFactory.makeCastDetailVC(seriesID: id)
+                let tvDetailViewController = TVShowDetailFactory.makeCastDetailVC(tvShowID: id)
                 navigationController?.pushViewController(tvDetailViewController, animated: true)
             }
         }

@@ -24,7 +24,7 @@ final class CastDetailService {
         loadPeopleDetail()
         loadPeopleMovieCredits()
         loadPeopleTVCredits()
-    
+       
         group.notify(queue: .main) { [weak self] in
             guard let self else { return }
             if let castDetail = castDetailModel {

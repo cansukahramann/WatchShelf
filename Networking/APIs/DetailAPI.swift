@@ -14,9 +14,9 @@ enum DetailAPI: TargetType {
     case movieCredits(movieID: Int)
     case movieVideo(movieID: Int)
     
-    case tvShowDetail(seriesID: Int)
-    case tvShowCredits(seriesID: Int)
-    case tvShowVideo(seriesID: Int)
+    case tvShowDetail(tvShowID: Int)
+    case tvShowCredits(tvShowID: Int)
+    case tvShowVideo(tvShowID: Int)
     
     case peopleDetail(castID: Int)
     case peopleMovieCredits(castID: Int)
@@ -39,14 +39,14 @@ enum DetailAPI: TargetType {
             
             
             
-        case .tvShowDetail(let seriesID):
-            return "tv/\(seriesID)"
+        case .tvShowDetail(let tvShowID):
+            return "tv/\(tvShowID)"
             
-        case .tvShowCredits(let seriesID):
-            return "tv/\(seriesID)/credits"
+        case .tvShowCredits(let tvShowID):
+            return "tv/\(tvShowID)/credits"
             
-        case .tvShowVideo(let seriesID):
-            return "tv/\(seriesID)/videos"
+        case .tvShowVideo(let tvShowID):
+            return "tv/\(tvShowID)/videos"
             
             
         case .peopleDetail(let castID):

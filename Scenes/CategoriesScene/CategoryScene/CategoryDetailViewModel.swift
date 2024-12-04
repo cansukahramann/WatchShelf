@@ -45,7 +45,7 @@ final class CategoryDetailViewModel {
     }
     
     func fetchCategoryDetail() {
-        service.loadCategoryDetail(genreID: genreID,requestModel: CommonRequestModel(page: page)) { [weak self] result in
+        service.loadCategoryDetail(requestModel: CommonRequestModel(page: page)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let (detailModel)):

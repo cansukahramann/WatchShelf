@@ -9,7 +9,7 @@ import UIKit
 
 enum CategoryDetailFactory {
     static func makeCategoryDetailVC(genreID: Int) -> UIViewController {
-        let service = CategoryDetailService()
+        let service = CategoryDetailService(genreID: genreID)
         let viewModel = CategoryDetailViewModel(service: service, genreID: genreID)
         let viewController = CategoryDetailViewController(viewModel: viewModel)
         return viewController

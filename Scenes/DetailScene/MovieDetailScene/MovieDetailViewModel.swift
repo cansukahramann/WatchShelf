@@ -34,7 +34,7 @@ final class MovieDetailViewModel {
     }
     
     func fetchMovieDetail() {
-        service.loadMovieDetail(movieID: movieID) { [weak self] result in
+        service.loadMovieDetail() { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let (detailModel, movieCastModel, movieVideoModel)):

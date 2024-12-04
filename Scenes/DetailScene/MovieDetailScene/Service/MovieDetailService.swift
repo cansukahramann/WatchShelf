@@ -11,13 +11,35 @@ import Moya
 final class MovieDetailService {
     
     private let group = DispatchGroup()
+    private var detailModel: MovieDetailModel!
+    private var similarModel = [SimilarResult]()
+    private var movieCastModel = [Cast]()
+    private var movieVideoModel = [Results]()
+    private var movieID: Int
     
-    func loadMovieDetail(movieID: Int, completion: @escaping(Result<(MovieDetailModel,[Cast],[Results]),Error>) -> Void) {
-        var detailModel: MovieDetailModel!
-        var similarModel = [SimilarResult]()
-        var movieCastModel = [Cast]()
-        var movieVideoModel = [Results]()
+    init(movieID: Int) {
+        self.movieID = movieID
+    }
+    
+    
+    func loadMovieDetail(completion: @escaping(Result<(MovieDetailModel,[Cast],[Results]),Error>) -> Void) {
         
+        loadMovieDetail()
+        loadMovieCredits()
+        loadMovieVideo()
+        
+        group.notify(queue: .main) { [weak self] in
+            guard let self else { return }
+            if let movieDetailModel = detailModel {
+                completion(.success((detailModel,movieCastModel,movieVideoModel)))
+            } else {
+                let error = NSError(domain: "MovieDetailService", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to load movie service"])
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    private func loadMovieDetail() {
         group.enter()
         NetworkManager.shared.request(DetailAPI.movieDetail(movieID: movieID)) { [weak self] result in
             guard let self else { return }
@@ -30,7 +52,9 @@ final class MovieDetailService {
             }
             group.leave()
         }
-        
+    }
+    
+    private func loadMovieCredits() {
         group.enter()
         NetworkManager.shared.request(DetailAPI.movieCredits(movieID: movieID)) { [weak self] result in
             guard let self else { return }
@@ -42,7 +66,9 @@ final class MovieDetailService {
             }
             group.leave()
         }
-        
+    }
+    
+    private func loadMovieVideo() {
         group.enter()
         NetworkManager.shared.request(DetailAPI.movieVideo(movieID: movieID)) { [weak self] result in
             guard let self else { return }
@@ -53,15 +79,6 @@ final class MovieDetailService {
                 print(error)
             }
             group.leave()
-        }
-        
-        group.notify(queue: .main) {
-            if let movieDetailModel = detailModel {
-                completion(.success((detailModel,movieCastModel,movieVideoModel)))
-            } else {
-                let error = NSError(domain: "MovieDetailService", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to load movie service"])
-                completion(.failure(error))
-            }
         }
     }
     

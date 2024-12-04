@@ -165,7 +165,6 @@ extension CategoryDetailViewController: UICollectionViewDelegate {
         return CGSize(width: size.width , height: cellHeight)
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItem = viewModel.detailModel[indexPath.item]
         let selectedId = selectedItem.id
@@ -173,7 +172,7 @@ extension CategoryDetailViewController: UICollectionViewDelegate {
         if selectedItem.isMovie {
             navigationController?.pushViewController(MovieDetailFactory.makeCastDetailVC(movieID: selectedId), animated: true)
         } else if selectedItem.isTVShow {
-            navigationController?.pushViewController(TVShowDetailFactory.makeCastDetailVC(seriesID: selectedId), animated: true)
+            navigationController?.pushViewController(TVShowDetailFactory.makeCastDetailVC(tvShowID: selectedId), animated: true)
         }
     }
     

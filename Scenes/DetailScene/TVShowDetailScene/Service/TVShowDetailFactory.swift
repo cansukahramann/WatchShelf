@@ -8,9 +8,9 @@
 import UIKit
 
 enum TVShowDetailFactory {
-    static func makeCastDetailVC(seriesID: Int) -> UIViewController {
-        let service = TVShowDetailService()
-        let viewModel = TVShowDetailViewModel(service: service, seriesID: seriesID)
+    static func makeCastDetailVC(tvShowID: Int) -> UIViewController {
+        let service = TVShowDetailService(tvShowID: tvShowID)
+        let viewModel = TVShowDetailViewModel(service: service, tvShowID: tvShowID)
         let viewController = TVShowDetailViewController(viewModel: viewModel)
         return viewController
     }

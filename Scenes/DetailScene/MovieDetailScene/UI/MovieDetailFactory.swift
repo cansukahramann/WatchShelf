@@ -9,7 +9,7 @@ import UIKit
 
 enum MovieDetailFactory {
     static func makeCastDetailVC(movieID: Int) -> UIViewController {
-        let service = MovieDetailService()
+        let service = MovieDetailService(movieID: movieID)
         let viewModel = MovieDetailViewModel(service: service, movieID: movieID)
         let viewController = MovieDetailViewController(viewModel: viewModel)
         return viewController
