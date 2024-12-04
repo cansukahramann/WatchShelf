@@ -93,7 +93,7 @@ class TrendListView: UIView, TrendListViewModelDelegate {
         
         return UICollectionViewCompositionalLayout(section: section)
     }
-ad
+
     func setupConstraint() {
         addSubview(collectionView)
         
