@@ -103,6 +103,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         
         castView.isHidden = viewModel.tvCastModel.isEmpty
         videoView.isHidden = viewModel.tvVideoModel.isEmpty
+        similarView.hiddenIfNoData()
     }
     
     func tvCastSelected(castID: Int) {

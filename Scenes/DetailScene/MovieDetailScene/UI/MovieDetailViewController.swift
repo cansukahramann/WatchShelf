@@ -112,6 +112,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         
         castView.isHidden = viewModel.movieCastModel.isEmpty
         videoView.isHidden = viewModel.movieVideoModel.isEmpty
+        similarMoviesView.hiddenIfNoData()
     }
     
     @objc

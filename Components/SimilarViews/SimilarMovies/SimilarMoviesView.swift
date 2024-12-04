@@ -62,6 +62,10 @@ final class SimilarMoviesView: UIView, SimilarMovieViewModelDelegate {
     func updateCollectionView() {
         collectionView.reloadData()
     }
+    
+    func hiddenIfNoData() {
+        self.isHidden = viewModel.similarModel.isEmpty
+    }
 }
 
 extension SimilarMoviesView: UICollectionViewDataSource {

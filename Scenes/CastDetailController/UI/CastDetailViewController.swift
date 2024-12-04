@@ -76,6 +76,10 @@ class CastDetailViewController: UIViewController, CastMovieCreditsDelegate, Cast
         descriptionView.configure(text: viewModel.castDetailModel.biography ?? "N/A")
         castMovieCredits.updateCreditsMovie(model: viewModel.movies)
         castTVCredits.updateTVCredits(model: viewModel.tvShows)
+        
+        descriptionView.isHidden = viewModel.castDetailModel.biography!.isEmpty
+        castMovieCredits.isHidden = viewModel.movies.isEmpty
+        castTVCredits.isHidden = viewModel.tvShows.isEmpty
     }
     
     func movieCreditsSelected(movieID: Int) {

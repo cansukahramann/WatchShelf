@@ -60,6 +60,10 @@ final class SimilarTVShowView: UIView,SimilarTVShowViewModelDelegate {
     func updateCollectionView() {
         collectionView.reloadData()
     }
+    
+    func hiddenIfNoData() {
+        self.isHidden = viewModel.similarModel.isEmpty
+    }
 }
 
 extension SimilarTVShowView: UICollectionViewDataSource {
