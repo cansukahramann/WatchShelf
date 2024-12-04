@@ -41,12 +41,8 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         super.viewDidLoad()
         viewModel.fetchMovieDetail()
         viewModel.delegate = self
-        configureUI()
         setupView()
-        configureDetailHeaderView()
-        configureDescriptionView()
-        configureVideoView()
-        configureCastView()
+        configureUI()
         similarView()
         similarMoviesView.delegate = self
         castView.delegate = self
@@ -81,6 +77,14 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     
     func configureUI() {
         view.backgroundColor = .systemBackground
+        stackView.addArrangedSubview(headerView)
+        stackView.addArrangedSubview(descriptionView)
+        stackView.addArrangedSubview(videoView)
+        stackView.addArrangedSubview(castView)
+        
+        NSLayoutConstraint.activate([
+            videoView.heightAnchor.constraint(equalToConstant: 200)
+        ])
     }
     
     private func setRightBarButtonItem(with image: UIImage) {
@@ -88,26 +92,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         rightBarButtonItem.tintColor = UIColor(named: "app_color")
         navigationItem.setRightBarButton(rightBarButtonItem, animated: true)
     }
-    
-    private func configureDetailHeaderView() {
-        stackView.addArrangedSubview(headerView)
-    }
-    
-    private func configureDescriptionView() {
-        stackView.addArrangedSubview(descriptionView)
-    }
-    
-    private func configureVideoView() {
-        stackView.addArrangedSubview(videoView)
-        NSLayoutConstraint.activate([
-            videoView.heightAnchor.constraint(equalToConstant: 200)
-        ])
-    }
-    
-    private func configureCastView() {
-        stackView.addArrangedSubview(castView)
-    }
-    
+        
     func similarMovieSelected(movieID: Int) {
         let detailVC = MovieDetailFactory.makeCastDetailVC(movieID: movieID)
         navigationController?.pushViewController(detailVC, animated: true)

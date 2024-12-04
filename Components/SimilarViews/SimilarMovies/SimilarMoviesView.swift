@@ -38,8 +38,7 @@ final class SimilarMoviesView: UIView, SimilarMovieViewModelDelegate {
     }
     
     func setupCollectionView() {
-        addSubview(titleLabel)
-        addSubview(collectionView)
+        addSubviews(titleLabel,collectionView)
         
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         collectionView.register(IndicatorCell.self, forCellWithReuseIdentifier: IndicatorCell.reuseID)

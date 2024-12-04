@@ -95,11 +95,9 @@ class CategoryDetailCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(posterImage)
+        contentView.addSubviews(posterImage,iconImageView)
         posterImage.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(iconImageView)
   
-        
         NSLayoutConstraint.activate([
             posterImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             posterImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

@@ -38,8 +38,7 @@ final class SimilarTVShowView: UIView,SimilarTVShowViewModelDelegate {
     }
     
     func setupCollectionView() {
-        addSubview(titleLabel)
-        addSubview(collectionView)
+        addSubviews(titleLabel,collectionView)
         
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         collectionView.dataSource = self
@@ -49,7 +48,6 @@ final class SimilarTVShowView: UIView,SimilarTVShowViewModelDelegate {
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -12),
-            
             
             collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 8),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),

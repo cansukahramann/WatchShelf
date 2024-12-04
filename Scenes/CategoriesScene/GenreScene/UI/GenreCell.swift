@@ -16,7 +16,6 @@ final class GenreCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         setupUI()
     }
     
@@ -46,12 +45,10 @@ final class GenreCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             categoryName.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             categoryName.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-            
         ])
     }
     
     func configure(model: GenreResponse) {
         categoryName.text = model.name
     }
-    
 }

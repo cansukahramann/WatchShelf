@@ -43,13 +43,9 @@ class SearchCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(posterImageView)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(stackView)
+        contentView.addSubviews(posterImageView,nameLabel,stackView)
         stackView.addArrangedSubview(dateLabel)
         stackView.addArrangedSubview(mediaType)
-        
-        
         
         NSLayoutConstraint.activate([
             posterImageView.heightAnchor.constraint(equalToConstant: 100),

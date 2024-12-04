@@ -43,8 +43,7 @@ class WatchListViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.addSubview(tableView)
-        view.addSubview(emptyStateAnimationView)
+        view.addSubviews(tableView,emptyStateAnimationView)
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -58,6 +57,7 @@ class WatchListViewController: UIViewController {
             emptyStateAnimationView.heightAnchor.constraint(equalToConstant: 300)
         ])
     }
+    
     private func checkEmptyState() {
         if WatchListStore.shared.mediaList.isEmpty {
             emptyStateAnimationView.isHidden = false
@@ -66,7 +66,6 @@ class WatchListViewController: UIViewController {
         } else {
             emptyStateAnimationView.isHidden = true
             tableView.isHidden = false
-        
         }
     }
 }
@@ -112,7 +111,6 @@ extension WatchListViewController: UITableViewDelegate {
             
             completionHandler(true)
         }
-        
         deleteAction.backgroundColor = .darkGray
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         configuration.performsFirstActionWithFullSwipe = true

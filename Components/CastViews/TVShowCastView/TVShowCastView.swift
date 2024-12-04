@@ -42,8 +42,7 @@ final class TVShowCastView: UIView {
     }
     
     func setupConstraints() {
-        addSubview(titleLabel)
-        addSubview(collectionView)
+        addSubviews(titleLabel,collectionView)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor,constant: 8),

@@ -91,8 +91,7 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
     }
     
     private func setupUI() {
-        view.addSubview(collectionView)
-        view.addSubview(noContentLabel)
+        view.addSubviews(collectionView,noContentLabel)
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -104,7 +103,6 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
             noContentLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             noContentLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             noContentLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            
         ])
     }
     
@@ -127,7 +125,6 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         }
         collectionView.reloadData()
     }
-    
 }
 
 extension CategoryDetailViewController: UICollectionViewDataSource {

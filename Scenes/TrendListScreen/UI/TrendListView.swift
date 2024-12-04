@@ -32,7 +32,6 @@ class TrendListView: UIView, TrendListViewModelDelegate {
         viewModel.delegate = self
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         collectionView.dataSource = self
-        collectionView.delegate = self
         setupConstraint()
         viewModel.fetchTrendingList()
     }
@@ -90,14 +89,11 @@ class TrendListView: UIView, TrendListViewModelDelegate {
                 heightDimension: .fractionalHeight(1.0)),
             subitems: [horizontalGroup, tripleHorizontalGroup])
         
-        // Section
         let section = NSCollectionLayoutSection(group: verticalGroup)
         
-        // Return Layout
         return UICollectionViewCompositionalLayout(section: section)
     }
-
-    
+ad
     func setupConstraint() {
         addSubview(collectionView)
         
@@ -144,6 +140,3 @@ extension TrendListView: UICollectionViewDataSource {
     }
 }
 
-extension TrendListView: UICollectionViewDelegate {
-    
-}

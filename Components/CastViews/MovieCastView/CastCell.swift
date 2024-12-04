@@ -20,7 +20,6 @@ final class CastCell: UICollectionViewCell {
         setupConstraint()
         
         posterImageView.contentMode = .scaleAspectFill
-        
         castRealName.setContentCompressionResistancePriority(.required, for: .vertical)
         castMovieName.setContentCompressionResistancePriority(.required, for: .vertical)
     }
@@ -36,9 +35,7 @@ final class CastCell: UICollectionViewCell {
     }
     
     private func setupConstraint() {
-        contentView.addSubview(posterImageView)
-        contentView.addSubview(castRealName)
-        contentView.addSubview(castMovieName)
+        contentView.addSubviews(posterImageView,castRealName,castMovieName)
         posterImageView.contentMode = .scaleAspectFill
         
         NSLayoutConstraint.activate( [

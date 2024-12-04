@@ -57,6 +57,7 @@ final class VideoView: UIView, WKNavigationDelegate {
     
     func setupVideoView() {
         addSubview(webView)
+        
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: topAnchor),
             webView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
@@ -72,5 +73,4 @@ final class VideoView: UIView, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         UIHelper.showHUDerrorMessage()
     }
-    
 }

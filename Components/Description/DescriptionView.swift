@@ -39,8 +39,8 @@ final class DescriptionView: UIView {
     }
     
     private func setupDescriptionLabel() {
-        addSubview(label)
-        addSubview(button)
+        addSubviews(label,button)
+
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: topAnchor,constant: 12),
             label.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),

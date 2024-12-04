@@ -45,8 +45,7 @@ class CastMovieCredits: UIView {
     }
     
     func setupUI() {
-        addSubview(titleLabel)
-        addSubview(collectionView)
+        addSubviews(titleLabel,collectionView)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
@@ -58,10 +57,9 @@ class CastMovieCredits: UIView {
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 12),
             collectionView.heightAnchor.constraint(equalToConstant: 250)
-            
-            
         ])
     }
+    
     func updateCreditsMovie(model: [CastCredit]) {
         self.model = model
         collectionView.reloadData()
@@ -78,6 +76,7 @@ extension CastMovieCredits: UICollectionViewDataSource {
         cell.configure(posterPath: model[indexPath.item].posterPath)
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItemID = model[indexPath.item].id
         delegate?.movieCreditsSelected(movieID: selectedItemID)

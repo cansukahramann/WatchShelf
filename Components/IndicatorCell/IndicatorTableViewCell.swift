@@ -30,6 +30,7 @@ final class IndicatorTableViewCell: UITableViewCell {
     
     func setup() {
         contentView.addSubview(indicator)
+        
         NSLayoutConstraint.activate([
             indicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
