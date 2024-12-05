@@ -111,7 +111,7 @@ extension WatchListViewController: UITableViewDelegate {
             
             completionHandler(true)
         }
-        deleteAction.backgroundColor = .darkGray
+        deleteAction.backgroundColor = .lightGray
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         configuration.performsFirstActionWithFullSwipe = true
         return configuration

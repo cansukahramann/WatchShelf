@@ -89,7 +89,8 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     
     private func setRightBarButtonItem(with image: UIImage) {
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(addButtonTapped))
-        rightBarButtonItem.tintColor = UIColor(named: "app_color")
+        image.withTintColor(.black)
+        rightBarButtonItem.tintColor = .white
         navigationItem.setRightBarButton(rightBarButtonItem, animated: true)
     }
         
@@ -104,7 +105,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     }
         
     func didFetchDetail() {
-        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark : .add)
+        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark.withTintColor(.gray) : .add)
         headerView.configure(model: viewModel.detailModel)
         descriptionView.configure(text: viewModel.detailModel.overview)
         castView.updateCastView(model: viewModel.movieCastModel)
@@ -119,7 +120,8 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     func addButtonTapped() {
         WatchListStore.shared.updateMedia(viewModel.detailModel.storeableMedia)
         showAlert(message: viewModel.favoriteStatusChangeMessage)
-        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark : .add)
+        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark.withTintColor(.gray) : .add)
+        
     }
     
     func showAlert(message: String) {

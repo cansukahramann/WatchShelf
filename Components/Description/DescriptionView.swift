@@ -14,7 +14,7 @@ final class DescriptionView: UIView {
         label.numberOfLines = 2
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .natural
-        label.clipsToBounds = true
+        label.textColor = .white.withAlphaComponent(0.7)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

@@ -25,7 +25,7 @@ final class AttributeView: UIView {
     private func configureImage() {
         addSubview(attributeImage)
         attributeImage.translatesAutoresizingMaskIntoConstraints = false
-        attributeImage.tintColor = UIColor(named: "app_color")
+        attributeImage.tintColor = .white.withAlphaComponent(0.9)
         
         NSLayoutConstraint.activate([
             attributeImage.widthAnchor.constraint(equalToConstant: 16),
@@ -37,6 +37,7 @@ final class AttributeView: UIView {
     
     private func configureLabel() {
         addSubview(attributeLabel)
+        attributeLabel.textColor = .white.withAlphaComponent(0.7)
         attributeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([

@@ -80,7 +80,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     
     private func setRightBarButtonItem(with image: UIImage) {
         let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(addButtonTapped))
-        rightBarButtonItem.tintColor = .black
+        rightBarButtonItem.tintColor = .white
         navigationItem.setRightBarButton(rightBarButtonItem, animated: true)
     }
     
@@ -95,10 +95,10 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     }
     
     func didFetchDetail() {
-        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark : .add)
+        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark.withTintColor(.gray) : .add)
         headerView.configureTVDetail(model: viewModel.model)
         descriptionView.configure(text: viewModel.model.overview)
-        videoView.getTVVideo(model: viewModel.tvVideoModel)
+        videoView.getVideo(model: viewModel.tvVideoModel)
         castView.updateCastView(model: viewModel.tvCastModel)
         
         castView.isHidden = viewModel.tvCastModel.isEmpty
@@ -120,7 +120,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     func addButtonTapped() {
         WatchListStore.shared.updateMedia(viewModel.model.storeableMedia)
         showAlert(message: viewModel.favoriteStatusChangeMessage)
-        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark : .add)
+        setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark.withTintColor(.gray) : .add)
     }
     
     func showAlert(message: String) {
