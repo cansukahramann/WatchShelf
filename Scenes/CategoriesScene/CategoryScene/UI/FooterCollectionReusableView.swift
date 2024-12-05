@@ -28,18 +28,11 @@ class FooterCollectionReusableView: UICollectionReusableView {
     }
     
     private func setup() {
+        indicator.startAnimating()
         addSubview(indicator)
         NSLayoutConstraint.activate([
             indicator.centerXAnchor.constraint(equalTo: centerXAnchor),
             indicator.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
-    }
-    
-    func startAnimating() {
-        indicator.startAnimating()
-    }
-    
-    func stopAnimating() {
-        indicator.stopAnimating()
     }
 }

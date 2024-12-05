@@ -18,9 +18,13 @@ final class CategoryDetailViewModel {
     var genreID: Int
     weak var delegate: CategoryDetailViewModelDelegate?
     private let service: CategoryDetailService!
-    var shouldRequestNextPage = true
+    private var shouldRequestNextPage = true
     var isFetchingContent = false
     private var page = 1
+    var hasMoreItemsToLoad: Bool {
+        shouldRequestNextPage
+    }
+    
     var contentType: ContentType = .movie {
         didSet {
             reset()

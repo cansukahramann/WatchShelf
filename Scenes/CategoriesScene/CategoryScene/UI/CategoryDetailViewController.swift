@@ -133,16 +133,9 @@ extension CategoryDetailViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionFooter {
-            let footer = collectionView.dequeueReusableSupplementaryView(
-                        ofKind: kind,
-                        withReuseIdentifier: FooterCollectionReusableView.identifier,
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,withReuseIdentifier: FooterCollectionReusableView.identifier,
                         for: indexPath
                     ) as! FooterCollectionReusableView
-            if viewModel.isFetchingContent {
-                footer.startAnimating()
-            } else {
-                footer.stopAnimating()
-            }
             return footer
         }
         return UICollectionReusableView()
@@ -179,7 +172,7 @@ extension CategoryDetailViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        viewModel.isFetchingContent ? CGSize(width: collectionView.frame.width, height: 100) : .zero
+        viewModel.hasMoreItemsToLoad ? CGSize(width: collectionView.frame.width, height: 100) : .zero
     }
     
 }
