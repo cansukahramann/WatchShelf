@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import Alamofire
 
 final class NetworkManager {
     
@@ -20,7 +21,8 @@ final class NetworkManager {
         case failureStatusCode
     }
     
-    func request(_ target: TargetType, completion: @escaping(Result<Moya.Response, Swift.Error>) -> Void) {
+    @discardableResult
+    func request(_ target: TargetType, completion: @escaping (Result<Moya.Response, Swift.Error>) -> Void) -> Cancellable {
         provider.request(.target(target)) { result in
             switch result {
             case .success(let response):
@@ -30,8 +32,17 @@ final class NetworkManager {
                 } catch  {
                     completion(.failure(Error.failureStatusCode))
                 }
-            case .failure:
-                completion(.failure(Error.connectionError))
+            case .failure(let error):
+                switch error {
+                case .underlying(let error as AFError, _):
+                    switch error {
+                    case .explicitlyCancelled: break
+                    default: completion(.failure(Error.connectionError))
+                    }
+                default:
+                    completion(.failure(Error.connectionError))
+                }
+
             }
         }
     }
