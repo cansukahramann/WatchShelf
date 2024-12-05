@@ -32,6 +32,7 @@ class TrendListView: UIView, TrendListViewModelDelegate {
         viewModel.delegate = self
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         collectionView.dataSource = self
+        collectionView.delegate = self
         setupConstraint()
         viewModel.fetchTrendingList()
     }
@@ -128,16 +129,16 @@ extension TrendListView: UICollectionViewDataSource {
         delegate?.trendigAllSelected(id: selectedId, type: selectedMediaType)
     }
     
+}
+
+extension TrendListView: UICollectionViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
         
-        if offsetY >= contentHeight - (2 * height), !viewModel.model.isEmpty {
+        if offsetY >= contentHeight - (2 * height){
             viewModel.fetchTrendingList()
-            updateCollectionView()
         }
     }
-    
 }
-
