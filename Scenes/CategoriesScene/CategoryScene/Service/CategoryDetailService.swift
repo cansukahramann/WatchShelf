@@ -9,54 +9,46 @@ import Foundation
 import Moya
 
 final class CategoryDetailService {
-    private var group = DispatchGroup()
-    var detailModel = [DiscoverResult]()
+    
     private var genreID: Int
     
     init(genreID: Int) {
         self.genreID = genreID
     }
     
-    func loadCategoryDetail(requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]),Error>) -> Void) {
-        
-        loadMovieGenre(requestModel: requestModel)
-        loadTVGenre(requestModel: requestModel)
-        group.notify(queue: .main) { [weak self] in
-            guard let self else { return }
-            completion(.success(detailModel))
-        } 
+    func loadCategoryDetail(contentType: ContentType,requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]),Error>) -> Void) {
+        switch contentType {
+        case .movie:
+            loadMovieGenre(requestModel: requestModel,completion: completion)
+        case .tvShow:
+            loadTVGenre(requestModel: requestModel,completion: completion)
+        }
     }
     
-    private func loadMovieGenre(requestModel: CommonRequestModel) {
-        group.enter()
+    private func loadMovieGenre(requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]),Error>) -> Void) {
         NetworkManager.shared.request(DiscoverAPI.movie(genres: [genreID],requestModel: requestModel)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
-                print("Response Data: \(String(data: response.data, encoding: .utf8) ?? "")")
                 let movies = mapDetailResponse(from: response.data)
-                detailModel.append(contentsOf: movies)
+                completion(.success(movies))
             case .failure(let error):
-                print(error)
+                completion(.failure(error))
             }
-            group.leave()
         }
     }
     
-    private func loadTVGenre(requestModel: CommonRequestModel) {
-        group.enter()
-        NetworkManager.shared.request(DiscoverAPI.tv(genres: [genreID])) { [weak self] result in
+    private func loadTVGenre(requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]),Error>) -> Void) {
+        NetworkManager.shared.request(DiscoverAPI.tv(genres: [genreID], requestModel: requestModel)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
                 let tvShows = mapDetailResponse(from: response.data)
-                detailModel.append(contentsOf: tvShows)
+                completion(.success(tvShows))
             case .failure(let error):
-                print(error)
+                completion(.failure(error))
             }
-            group.leave()
         }
-        
     }
     
     private func mapDetailResponse(from data: Data) -> [DiscoverResult] {

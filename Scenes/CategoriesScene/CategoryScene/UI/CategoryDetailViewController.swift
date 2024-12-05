@@ -29,7 +29,6 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(CategoryDetailCell.self, forCellWithReuseIdentifier: CategoryDetailCell.reuseID)
         collectionView.backgroundColor = .systemBackground
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +62,12 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(IndicatorCell.self, forCellWithReuseIdentifier: IndicatorCell.reuseID)
+        collectionView.register(CategoryDetailCell.self, forCellWithReuseIdentifier: CategoryDetailCell.reuseID)
+        collectionView.register(
+            FooterCollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: FooterCollectionReusableView.identifier
+        )
         setupUI()
         viewModel.delegate = self
         viewModel.fetchCategoryDetail()
@@ -77,13 +81,12 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
     }
     
     private func makeMenu() -> UIMenu {
-        
-        let filterOption1 = UIAction(title: "Movie", image: Image.movieTypeSymbol) { _ in
-            self.filterContent(type: .movie)
+        let filterOption1 = UIAction(title: "Movie", image: Image.movieTypeSymbol) { [unowned self] _ in
+            viewModel.contentType = .movie
         }
         
-        let filterOption2 = UIAction(title: "TV Show", image: Image.tvTypeSymbol) { _ in
-            self.filterContent(type: .tvShow)
+        let filterOption2 = UIAction(title: "TV Show", image: Image.tvTypeSymbol) { [unowned self] _ in
+            viewModel.contentType = .tvShow
         }
         
         return UIMenu(title: "Filter Options", children: [filterOption1, filterOption2])
@@ -115,52 +118,43 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
         noContentLabel.isHidden = !viewModel.detailModel.isEmpty
         collectionView.isHidden = viewModel.detailModel.isEmpty
     }
-    
-    private func filterContent(type: ContentType) {
-        switch type {
-        case .movie:
-            viewModel.filteredMovies()
-        case .tvShow:
-            viewModel.filteredTVShow()
-        }
-        collectionView.reloadData()
-    }
 }
 
 extension CategoryDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (viewModel.detailModel.count > 0) ? (viewModel.detailModel.count + 1) : 0
+        viewModel.detailModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item != viewModel.detailModel.count {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryDetailCell.reuseID, for: indexPath) as! CategoryDetailCell
             cell.configure(model: viewModel.detailModel[indexPath.item])
             return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IndicatorCell.reuseID, for: indexPath) as! IndicatorCell
-            cell.indicator.startAnimating()
-            return cell
         }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionFooter {
+            let footer = collectionView.dequeueReusableSupplementaryView(
+                        ofKind: kind,
+                        withReuseIdentifier: FooterCollectionReusableView.identifier,
+                        for: indexPath
+                    ) as! FooterCollectionReusableView
+            if viewModel.isFetchingContent {
+                footer.startAnimating()
+            } else {
+                footer.stopAnimating()
+            }
+            return footer
+        }
+        return UICollectionReusableView()
     }
 }
 
-extension CategoryDetailViewController: UICollectionViewDelegate {
+extension CategoryDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? CategoryDetailCell else { return }
         cell.configureRatingCircle(rating: viewModel.detailModel[indexPath.item].voteAverage ?? 0)
-        
-        if (indexPath.item == viewModel.detailModel.count ) && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage {
-            _ = (Int(viewModel.detailModel.count) / 20) + 1
-            viewModel.fetchCategoryDetail()
-        }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = collectionView.frame.size
-        let cellHeight =  (indexPath.row == viewModel.detailModel.count && viewModel.isFetchingContent ) ? 20 : (size.height / 4)
-        return CGSize(width: size.width , height: cellHeight)
-    }
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItem = viewModel.detailModel[indexPath.item]
@@ -183,4 +177,9 @@ extension CategoryDetailViewController: UICollectionViewDelegate {
             self.updateCollectionView()
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        viewModel.isFetchingContent ? CGSize(width: collectionView.frame.width, height: 100) : .zero
+    }
+    
 }
