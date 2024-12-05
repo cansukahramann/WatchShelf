@@ -9,8 +9,7 @@ import Foundation
 import Moya
 
 final class SearchService {
-    
-    func search(searchText: String,requestModel: CommonRequestModel, completion: @escaping (Result<SearchResponseModel, Error>) -> Void) {
+    func search(searchText: String,requestModel: CommonRequestModel, completion: @escaping (Result<SearchResponseModel, Error>) -> Void) -> Cancellable {
         NetworkManager.shared.request(SearchAPI.multi(query: searchText, requestModel: requestModel)) { result in
             switch result {
             case .success(let response):

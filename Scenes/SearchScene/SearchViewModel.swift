@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Moya
 
 protocol SearchViewModelDelegate: AnyObject {
     func didCompleteWith(results: [SearchResponseModel.Result])
@@ -22,6 +23,7 @@ final class SearchViewModel {
     var shouldRequestNextPage = true
     var isFetchingContent = false
     private var searchText: String = ""
+    private var searchCancellationToken: Cancellable?
     
     func search(_ searchText: String) {
         self.searchText = searchText
@@ -37,12 +39,15 @@ final class SearchViewModel {
         model = []
         page = 1
         searchText = ""
+        searchCancellationToken?.cancel()
     }
     
     func performSearchRequest() {
         guard !isLoadingMore else { return }
         isLoadingMore = true
-        service.search(searchText: searchText, requestModel: CommonRequestModel(page: page)) { [weak self] result in
+        searchCancellationToken = service.search(searchText: searchText, requestModel: CommonRequestModel(page: page)) { [weak self] result in
+            self?.searchCancellationToken = nil
+            
             switch result {
             case .success(let response):
                 let filteredResults = response.results.filter { $0.mediaType != .person }

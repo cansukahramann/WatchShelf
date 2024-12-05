@@ -122,7 +122,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.model.removeAll()
+        viewModel.resetSearch()
         tableView.reloadData()
     }
 }
