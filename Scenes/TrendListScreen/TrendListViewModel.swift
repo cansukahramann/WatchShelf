@@ -17,9 +17,14 @@ final class TrendListViewModel  {
     private let service  = TrendListService()
     private var page = 1
     var model: [TrendingAll] = []
+    private var isFetching = false
     
      func fetchTrendingList() {
+         guard !isFetching else { return }
+         isFetching = true
+         
          service.loadTrendingAll(requestModel: CommonRequestModel(page: page)) { [weak self] result in
+             self?.isFetching = false
             switch result {
             case .success(let response):
                 self?.model.append(contentsOf: response)
