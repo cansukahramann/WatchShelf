@@ -44,17 +44,6 @@ final class VideoView: UIView, WKNavigationDelegate {
         
     }
     
-    func getTVVideo (model: [Results]) {
-        guard let firstModel = model.first else {
-            print("Video not found")
-            return
-        }
-        
-        let url = URL(string: "https://www.youtube.com/embed/\(firstModel.key)")!
-        webView.load(URLRequest(url: url))
-        UIHelper.showHUD()
-    }
-    
     func setupVideoView() {
         addSubview(webView)
         
