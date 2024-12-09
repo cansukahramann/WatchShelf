@@ -8,14 +8,7 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    
-    convenience init() {
-        self.init(nibName: nil, bundle: nil)
-        
-        UITabBar.appearance().backgroundColor = .systemBackground
-        UITabBar.appearance().tintColor = .app
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
