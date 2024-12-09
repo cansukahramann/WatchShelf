@@ -10,14 +10,14 @@ import UIKit
 final class SplashViewController: UIViewController {
     
     private let posterImageNames: [String] = [
-        "poster1", "poster2", "poster3", "poster4",
-        "poster5", "poster6", "poster7", "poster8",
-        "poster9", "poster10", "poster11", "poster12",
-        "poster13", "poster14", "poster15", "poster16",
-        "poster17", "poster18", "poster19", "poster20",
-        "poster21", "poster22", "poster23", "poster24",
-        "poster25", "poster26", "poster27", "poster28",
-        "poster29", "poster30"
+        "SplashImages/poster1", "SplashImages/poster2", "SplashImages/poster3", "SplashImages/poster4",
+        "SplashImages/poster5", "SplashImages/poster6", "SplashImages/poster7", "SplashImages/poster8",
+        "SplashImages/poster9", "SplashImages/poster10", "SplashImages/poster11", "SplashImages/poster12",
+        "SplashImages/poster13", "SplashImages/poster14", "SplashImages/poster15", "SplashImages/poster16",
+        "SplashImages/poster17", "SplashImages/poster18", "SplashImages/poster19", "SplashImages/poster20",
+        "SplashImages/poster21", "SplashImages/poster22", "SplashImages/poster23", "SplashImages/poster24",
+        "SplashImages/poster25", "SplashImages/poster26", "SplashImages/poster27", "SplashImages/poster28",
+        "SplashImages/poster29", "SplashImages/poster30"
     ]
     
     private var imageViews: [UIImageView] = []

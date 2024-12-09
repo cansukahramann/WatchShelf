@@ -115,7 +115,7 @@ class CategoryDetailCell: UICollectionViewCell {
         if let posterPath = model.posterPath {
             posterImage.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
         } else {
-            posterImage.image = UIImage(named: "default-poster")
+            posterImage.image = UIImage(named: "Placeholders/default-poster")
         }
         percentagLabel.text = String(format: "%.1f", model.voteAverage ?? 0.0)
         

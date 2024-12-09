@@ -20,7 +20,7 @@ class WatchListViewController: UIViewController {
     }()
     
     private var emptyStateAnimationView: LottieAnimationView = {
-        let animationView = LottieAnimationView(name: "empty_watchlist_animation")
+        let animationView = LottieAnimationView(name: "EmptyAnimations/empty_watchlist_animation")
         animationView.translatesAutoresizingMaskIntoConstraints = false
         animationView.contentMode = .scaleAspectFit
         animationView.loopMode = .loop

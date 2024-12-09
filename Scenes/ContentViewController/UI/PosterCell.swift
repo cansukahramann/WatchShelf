@@ -32,7 +32,7 @@ class PosterCell: UICollectionViewCell {
         if let posterPath = posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
         } else {
-            posterImageView.image = UIImage(named: "default-poster")
+            posterImageView.image = UIImage(named: "Placeholders/default-poster")
         }
     }
 

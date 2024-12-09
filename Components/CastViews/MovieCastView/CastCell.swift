@@ -60,7 +60,7 @@ final class CastCell: UICollectionViewCell {
         if let profilePath = model.profilePath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)"))
         } else {
-            posterImageView.image = UIImage(named: "no-photo")
+            posterImageView.image = UIImage(named: "Placeholders/no-photo")
         }
         
         castRealName.text = model.name
@@ -71,7 +71,7 @@ final class CastCell: UICollectionViewCell {
         if let profilePath = model.profilePath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)"))
         } else {
-            posterImageView.image = UIImage(named: "no-photo")
+            posterImageView.image = UIImage(named: "Placeholders/no-photo")
         }
         
         castRealName.text = model.name

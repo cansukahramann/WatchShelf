@@ -21,7 +21,7 @@ class SearchCell: UITableViewCell {
         imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.tintColor = UIColor(named: "app_color")
+        imageView.tintColor = UIColor.accent
         return imageView
     }()
     
@@ -68,7 +68,7 @@ class SearchCell: UITableViewCell {
         if let poster_path = result.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(poster_path)"))
         } else {
-            posterImageView.image = UIImage(named: "default-poster")
+            posterImageView.image = UIImage(named: "Placeholders/default-poster")
         }
         
         nameLabel.text = displayName
@@ -80,7 +80,7 @@ class SearchCell: UITableViewCell {
         if let posterPath = model.posterPath{
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
         } else {
-            posterImageView.image = UIImage(named: "default-poster")
+            posterImageView.image = UIImage(named: "Placeholders/default-poster")
         }
         nameLabel.text = model.title
         dateLabel.text = model.release_date

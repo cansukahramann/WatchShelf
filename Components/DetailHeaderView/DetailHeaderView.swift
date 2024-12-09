@@ -65,7 +65,7 @@ final class DetailHeaderView: UIView {
         if let posterPath = model.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)"))
         } else {
-            posterImageView.image = UIImage(named: "default-poster")
+            posterImageView.image = UIImage(named: "Placeholders/default-poster")
         }
         
         let genreString = model.genres.map { $0.name }.joined(separator: ", ")
@@ -88,7 +88,7 @@ final class DetailHeaderView: UIView {
         if let profilePath = model.profilePath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)"))
         } else {
-            posterImageView.image = UIImage(named: "no-photo")
+            posterImageView.image = UIImage(named: "Placeholders/no-photo")
         }
         
         let placeOfBirth = model.placeOfBirthday ?? "N/A"
@@ -110,7 +110,7 @@ final class DetailHeaderView: UIView {
         if let posterPath = model.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))
         } else {
-            posterImageView.image = UIImage(named: "no-photo")
+            posterImageView.image = UIImage(named: "Placeholders/no-photo")
         }
         
         let genresString = model.genres.map { $0.name }.joined(separator: ", ")
