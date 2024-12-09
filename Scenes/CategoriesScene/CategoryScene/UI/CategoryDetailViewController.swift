@@ -47,11 +47,6 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
     }()
     
     private var viewModel: CategoryDetailViewModel!
-    let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"),
-                                        style: .plain,
-                                        target: nil ,
-                                        action: nil)
-    
     
     convenience init(viewModel: CategoryDetailViewModel) {
         self.init(nibName: nil, bundle: nil)
@@ -75,7 +70,7 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
     }
     
     private func setupBarButtonWithContextMenu() {
-        let barButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), menu: makeMenu())
+        let barButton = UIBarButtonItem(title: "Movie", menu: makeMenu())
         navigationItem.rightBarButtonItem = barButton
         
     }
@@ -83,10 +78,12 @@ class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDele
     private func makeMenu() -> UIMenu {
         let filterOption1 = UIAction(title: "Movie", image: Image.movieTypeSymbol) { [unowned self] _ in
             viewModel.contentType = .movie
+            self.navigationItem.rightBarButtonItem?.title = "Movie"     
         }
         
         let filterOption2 = UIAction(title: "TV Show", image: Image.tvTypeSymbol) { [unowned self] _ in
             viewModel.contentType = .tvShow
+            self.navigationItem.rightBarButtonItem?.title = "TV Show"
         }
         
         return UIMenu(title: "Filter Options", children: [filterOption1, filterOption2])
@@ -126,16 +123,16 @@ extension CategoryDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryDetailCell.reuseID, for: indexPath) as! CategoryDetailCell
-            cell.configure(model: viewModel.detailModel[indexPath.item])
-            return cell
-        }
-
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryDetailCell.reuseID, for: indexPath) as! CategoryDetailCell
+        cell.configure(model: viewModel.detailModel[indexPath.item])
+        return cell
+    }
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionFooter {
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,withReuseIdentifier: FooterCollectionReusableView.identifier,
-                        for: indexPath
-                    ) as! FooterCollectionReusableView
+                                                                         for: indexPath
+            ) as! FooterCollectionReusableView
             return footer
         }
         return UICollectionReusableView()
@@ -147,7 +144,7 @@ extension CategoryDetailViewController: UICollectionViewDelegateFlowLayout {
         guard let cell = cell as? CategoryDetailCell else { return }
         cell.configureRatingCircle(rating: viewModel.detailModel[indexPath.item].voteAverage ?? 0)
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItem = viewModel.detailModel[indexPath.item]
