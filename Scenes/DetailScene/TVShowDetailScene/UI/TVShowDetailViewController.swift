@@ -85,13 +85,11 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
     }
     
     private func configureUI() {
-        stackView.addArrangedSubview(headerView)
-        stackView.addArrangedSubview(descriptionView)
-        stackView.addArrangedSubview(videoView)
+        stackView.addArrangedSubviews(headerView,descriptionView,videoView,castView)
+        
         NSLayoutConstraint.activate([
             videoView.heightAnchor.constraint(equalToConstant: 200)
         ])
-        stackView.addArrangedSubview(castView)
     }
     
     func didFetchDetail() {
