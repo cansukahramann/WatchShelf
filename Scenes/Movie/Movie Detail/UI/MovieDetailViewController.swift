@@ -8,11 +8,10 @@
 import UIKit
 
 final class MovieDetailViewController: UIViewController, MovieDetailViewModelDelegate, SimilarMoviesViewDelegate, CastViewDelegate {
-    
-    private let headerView = DetailHeaderView(frame: .zero)
-    private let descriptionView = DescriptionView(frame: .zero)
-    private let videoView = VideoView(frame: .zero)
-    private let castView = MovieCastView(frame: .zero)
+    private let headerView = DetailHeaderView()
+    private let descriptionView = DescriptionView()
+    private let videoView = VideoView()
+    private let castView = MovieCastView()
     
     private var viewModel: MovieDetailViewModel!
     private var similarMoviesView: SimilarMoviesView!
@@ -75,7 +74,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         ])
     }
     
-    func configureUI() {
+    private func configureUI() {
         view.backgroundColor = .systemBackground
         stackView.addArrangedSubviews(headerView,descriptionView,videoView,castView)
         
@@ -121,7 +120,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         
     }
     
-    func showAlert(message: String) {
+    private func showAlert(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         self.present(alert, animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {

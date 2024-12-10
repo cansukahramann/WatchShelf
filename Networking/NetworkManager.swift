@@ -10,7 +10,6 @@ import Moya
 import Alamofire
 
 final class NetworkManager {
-    
     static let shared = NetworkManager()
     private let provider = MoyaProvider<MultiTarget>()
     

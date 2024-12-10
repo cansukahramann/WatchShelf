@@ -8,17 +8,15 @@
 import UIKit
 
 
-class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate,TVShowCastViewDelegate,SimilarTVShowViewDelegate {
-    
-    private let headerView = DetailHeaderView(frame: .zero)
-    private let descriptionView = DescriptionView(frame: .zero)
-    private let videoView = VideoView(frame: .zero)
-    private let castView = TVShowCastView(frame: .zero)
+final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate,TVShowCastViewDelegate,SimilarTVShowViewDelegate {
+    private let headerView = DetailHeaderView()
+    private let descriptionView = DescriptionView()
+    private let videoView = VideoView()
+    private let castView = TVShowCastView()
     
     private var similarView: SimilarTVShowView!
     private var viewModel: TVShowDetailViewModel!
     private var castDetailViewModel: CastDetailViewModel!
-    
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -121,7 +119,7 @@ class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegat
         setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark.withTintColor(.gray) : .add)
     }
     
-    func showAlert(message: String) {
+    private func showAlert(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         self.present(alert, animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {

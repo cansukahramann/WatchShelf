@@ -13,7 +13,6 @@ protocol GenreViewModelDelegate: AnyObject {
 }
 
 final class GenreViewModel {
-
     weak var delegate: GenreViewModelDelegate?
     var genreModel = [GenreResponse]()
     private let service: GenreService!

@@ -8,7 +8,6 @@
 import UIKit
 
 final class SplashViewController: UIViewController {
-    
     private let posterImageNames: [String] = [
         "SplashImages/poster1", "SplashImages/poster2", "SplashImages/poster3", "SplashImages/poster4",
         "SplashImages/poster5", "SplashImages/poster6", "SplashImages/poster7", "SplashImages/poster8",
@@ -42,15 +41,15 @@ final class SplashViewController: UIViewController {
         }
     }
     
-    func rowHeight() -> CGFloat {
+    private func rowHeight() -> CGFloat {
         view.bounds.height / CGFloat(rows)
     }
     
-    func columnWidth() -> CGFloat {
+    private func columnWidth() -> CGFloat {
         rowHeight() * 3 / 4
     }
     
-    func setupPosterImages() {
+    private func setupPosterImages() {
         let rowHeight = rowHeight()
         let columnWidth = columnWidth()
         let posterSize = CGSize(width: columnWidth - spacing, height: rowHeight - spacing)
@@ -81,7 +80,7 @@ final class SplashViewController: UIViewController {
         }
     }
     
-    func startPosterAnimation(for imageView: UIImageView, row: Int) {
+    private func startPosterAnimation(for imageView: UIImageView, row: Int) {
         animationGroup.enter()
         let totalWidth = CGFloat(columns) * columnWidth()
         let availableWidthToScroll = totalWidth - view.bounds.width

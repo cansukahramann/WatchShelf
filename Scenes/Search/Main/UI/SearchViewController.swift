@@ -41,7 +41,7 @@ final class SearchViewController: UITableViewController {
         (viewModel.model.count > 0) ? (viewModel.model.count + 1) : 0
     }
     
-    func processResult(_ result: SearchResponseModel.Result) -> String {
+    private func processResult(_ result: SearchResponseModel.Result) -> String {
         let title = result.title?.trimmingCharacters(in: .whitespacesAndNewlines)
         let name = result.name?.trimmingCharacters(in: .whitespacesAndNewlines)
         

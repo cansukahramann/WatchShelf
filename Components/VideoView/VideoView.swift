@@ -9,7 +9,6 @@ import UIKit
 import WebKit
 
 final class VideoView: UIView, WKNavigationDelegate {
-    
     let webView: WKWebView = {
         let prefs = WKWebpagePreferences()
         prefs.allowsContentJavaScript = true
@@ -21,7 +20,7 @@ final class VideoView: UIView, WKNavigationDelegate {
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setupVideoView()
         webView.navigationDelegate = self
         

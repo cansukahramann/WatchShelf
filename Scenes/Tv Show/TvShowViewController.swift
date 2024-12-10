@@ -7,8 +7,7 @@
 
 import UIKit
 
-class TvShowViewController: UIViewController {
-
+final class TvShowViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemBackground

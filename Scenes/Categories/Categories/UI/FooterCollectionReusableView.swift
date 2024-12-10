@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FooterCollectionReusableView: UICollectionReusableView {
+final class FooterCollectionReusableView: UICollectionReusableView {
     static let identifier = "FooterCollectionReusableView"
     
     private let indicator: UIActivityIndicatorView = {
@@ -18,7 +18,7 @@ class FooterCollectionReusableView: UICollectionReusableView {
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setup()
     }
     

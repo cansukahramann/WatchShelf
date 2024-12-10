@@ -12,9 +12,9 @@ protocol CastDetailViewModelDelegate: AnyObject {
     func didFetchCastDetail()
 }
 
-class CastDetailViewModel {
+final class CastDetailViewModel {
     
-    var castID: Int
+    private var castID: Int
     var castDetailModel: CastDetailModel!
     var movies = [CastCredit]()
     var tvShows = [CastCredit]()

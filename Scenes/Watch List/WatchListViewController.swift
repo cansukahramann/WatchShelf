@@ -8,8 +8,7 @@
 import UIKit
 import Lottie
 
-class WatchListViewController: UIViewController {
-    
+final class WatchListViewController: UIViewController {
     private var tableView: UITableView = {
         var tableView = UITableView()
         tableView.register(SearchCell.self, forCellReuseIdentifier: "SearchCell")

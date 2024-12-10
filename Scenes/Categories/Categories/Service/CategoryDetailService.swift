@@ -9,7 +9,6 @@ import Foundation
 import Moya
 
 final class CategoryDetailService {
-    
     private var genreID: Int
     
     init(genreID: Int) {

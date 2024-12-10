@@ -7,8 +7,7 @@
 
 import UIKit
 
-class TrendViewController: UIViewController {
-    
+final class TrendViewController: UIViewController {
     private let trendListView = TrendListView(frame: .zero)
     
     private let scrollView: UIScrollView = {
@@ -36,7 +35,7 @@ class TrendViewController: UIViewController {
         trendListView.delegate = self
     }
     
-    func configureSearchController() {
+    private func configureSearchController() {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "Search and don’t get lost..."
         searchController.searchBar.delegate = self

@@ -11,8 +11,7 @@ protocol TrendListViewDelegate: AnyObject {
     func trendigAllSelected(id: Int, type: MediaType?)
 }
 
-class TrendListView: UIView, TrendListViewModelDelegate {
-    
+final class TrendListView: UIView, TrendListViewModelDelegate {
     private var collectionView: UICollectionView = {
         let layout = createLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -24,7 +23,7 @@ class TrendListView: UIView, TrendListViewModelDelegate {
         return collectionView
     }()
     
-    var viewModel =  TrendListViewModel()
+    private var viewModel =  TrendListViewModel()
     weak var delegate: TrendListViewDelegate?
     
     override init(frame: CGRect) {
@@ -42,7 +41,6 @@ class TrendListView: UIView, TrendListViewModelDelegate {
     }
     
     static func createLayout() -> UICollectionViewCompositionalLayout {
-
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(2/3),
             heightDimension: .fractionalHeight(1)))
@@ -95,7 +93,7 @@ class TrendListView: UIView, TrendListViewModelDelegate {
         return UICollectionViewCompositionalLayout(section: section)
     }
 
-    func setupConstraint() {
+    private func setupConstraint() {
         addSubview(collectionView)
         
         NSLayoutConstraint.activate([

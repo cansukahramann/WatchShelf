@@ -8,19 +8,17 @@
 import UIKit
 
 final class PosterImageView: UIImageView {
+    private var isCircle: Bool
     
-    private var isRound: Bool
-    
-    init(frame: CGRect, isRound: Bool = false) {
-        
-        self.isRound = isRound
-        super.init(frame: frame)
+    init(isRound: Bool = false) {
+        self.isCircle = isRound
+        super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         contentMode = .scaleAspectFill
     }
     
     required init?(coder: NSCoder) {
-        self.isRound = false
+        self.isCircle = false
         super.init(coder: coder)
         translatesAutoresizingMaskIntoConstraints = false
         contentMode = .scaleAspectFill
@@ -28,7 +26,7 @@ final class PosterImageView: UIImageView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        if isRound {
+        if isCircle {
             layer.cornerRadius = min(bounds.size.width, bounds.size.height) / 2
         } else {
             layer.cornerRadius = 12

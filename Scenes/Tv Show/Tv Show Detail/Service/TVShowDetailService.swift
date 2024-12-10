@@ -10,7 +10,6 @@ import Moya
 
 final class TVShowDetailService {
     private let group = DispatchGroup()
-    
     private var model: TVShowDetailModel!
     private var tvCastModel = [SeriesCast]()
     private var tvVideoModel = [Results]()

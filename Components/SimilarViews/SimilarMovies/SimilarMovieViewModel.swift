@@ -12,7 +12,6 @@ protocol SimilarMovieViewModelDelegate: AnyObject {
 }
 
 final class SimilarMovieViewModel {
-    
     private let service: SimilarServiceProtocol!
     private var movieID: Int
     private var page = 1

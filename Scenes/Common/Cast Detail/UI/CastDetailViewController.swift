@@ -7,12 +7,12 @@
 
 import UIKit
 
-class CastDetailViewController: UIViewController, CastMovieCreditsDelegate, CastTVCreditsDelegate, CastDetailViewModelDelegate{
+final class CastDetailViewController: UIViewController, CastMovieCreditsDelegate, CastTVCreditsDelegate, CastDetailViewModelDelegate{
     
-    private let headerView = DetailHeaderView(frame: .zero)
-    private let descriptionView = DescriptionView(frame: .zero)
-    private let castMovieCredits = CastMovieCredits(frame: .zero)
-    private let castTVCredits = CastTVCredits(frame: .zero)
+    private let headerView = DetailHeaderView()
+    private let descriptionView = DescriptionView()
+    private let castMovieCredits = CastMovieCredits()
+    private let castTVCredits = CastTVCredits()
     
     private var viewModel: CastDetailViewModel!
     

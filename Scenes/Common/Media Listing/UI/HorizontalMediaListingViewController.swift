@@ -8,8 +8,7 @@
 import UIKit
 import Kingfisher
 
-class HorizontalMediaListingViewController: UIViewController, MediaListingViewModelDelegate {
-    
+final class HorizontalMediaListingViewController: UIViewController, MediaListingViewModelDelegate {
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -62,7 +61,6 @@ class HorizontalMediaListingViewController: UIViewController, MediaListingViewMo
     func updateCollectionView() {
         collectionView.reloadData()
     }
-    
     
     private func setupConstraints() {
         view.addSubviews(collectionView,categoryNameLabel)

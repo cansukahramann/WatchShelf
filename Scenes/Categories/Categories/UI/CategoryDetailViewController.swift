@@ -12,8 +12,7 @@ enum ContentType {
     case tvShow
 }
 
-class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDelegate {
-    
+final class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDelegate {
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical

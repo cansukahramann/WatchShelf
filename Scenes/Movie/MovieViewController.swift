@@ -8,8 +8,7 @@
 import UIKit
 import Moya
 
-class MovieViewController: UIViewController {
-    
+final class MovieViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemBackground

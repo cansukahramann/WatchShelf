@@ -7,8 +7,7 @@
 
 import UIKit
 
-class GenreViewController: UIViewController,GenreViewModelDelegate {
-    
+final class GenreViewController: UIViewController,GenreViewModelDelegate {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let numberOfItemsInRow: CGFloat = 2

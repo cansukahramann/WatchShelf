@@ -8,7 +8,6 @@
 import Foundation
 
 final class WatchListStore {
-    
     private(set) var mediaList: [StoreableMedia] = []
     
     static let shared = WatchListStore()

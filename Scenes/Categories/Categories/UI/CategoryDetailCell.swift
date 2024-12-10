@@ -8,9 +8,8 @@
 import UIKit
 import Kingfisher
 
-class CategoryDetailCell: UICollectionViewCell {
-    
-    let posterImage = PosterImageView(frame: .zero, isRound: false)
+final class CategoryDetailCell: UICollectionViewCell {
+    private let posterImage = PosterImageView(isRound: false)
     static let reuseID = "CategoryDetailCell"
     
     let shapeLayer = CAShapeLayer()
@@ -34,7 +33,7 @@ class CategoryDetailCell: UICollectionViewCell {
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setupUI()
         
     }

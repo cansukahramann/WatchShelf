@@ -9,7 +9,6 @@ import Foundation
 import Moya
 
 final class MovieDetailService {
-    
     private let group = DispatchGroup()
     private var detailModel: MovieDetailModel!
     private var similarModel = [SimilarResult]()
