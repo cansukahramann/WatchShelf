@@ -11,8 +11,7 @@ protocol CastTVCreditsDelegate: AnyObject {
     func selectedTVCredits(tvID: Int)
 }
 
-class CastTVCredits: UIView {
-    
+final class CastTVCredits: UIView {
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -24,11 +23,11 @@ class CastTVCredits: UIView {
     }()
     
     weak var delegate: CastTVCreditsDelegate?
-    let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
+    private let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
     private var model = [CastCredit]()
 
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setupCollectionView()
         setupUI()
         titleLabel.text = "Show"
@@ -46,6 +45,7 @@ class CastTVCredits: UIView {
     
     func setupUI() {
         addSubviews(titleLabel,collectionView)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false 
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),

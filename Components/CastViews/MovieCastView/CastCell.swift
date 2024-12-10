@@ -9,11 +9,10 @@ import UIKit
 import Kingfisher
 
 final class CastCell: UICollectionViewCell {
-    
     static let reuseID = "CastCell"
-    var castRealName = NameLabel(textColor: .white, fontSize: 14)
-    var castMovieName = NameLabel(textColor: .white.withAlphaComponent(0.7), fontSize: 12)
-    var posterImageView = PosterImageView(frame: .zero, isRound: true)
+    private var castRealName = Label(textColor: UIColor.white, font: .boldSystemFont(ofSize: 14),textAlignment: .center)
+    private var castMovieName = Label(textColor: .white.withAlphaComponent(0.7), font: UIFont.systemFont(ofSize: 12),textAlignment: .center )
+    private var posterImageView = PosterImageView(isRound: true)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,6 +36,8 @@ final class CastCell: UICollectionViewCell {
     private func setupConstraint() {
         contentView.addSubviews(posterImageView,castRealName,castMovieName)
         posterImageView.contentMode = .scaleAspectFill
+        castRealName.translatesAutoresizingMaskIntoConstraints = false
+        castMovieName.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate( [
             posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 8),

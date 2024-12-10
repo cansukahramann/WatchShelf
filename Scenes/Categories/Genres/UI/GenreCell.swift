@@ -9,13 +9,12 @@ import UIKit
 
 
 final class GenreCell: UICollectionViewCell {
-    
     static let reuseID = "CategoryCell"
-    let categoryName = EventLabel(textAlignment: .center, fontSize: 24)
+    private var categoryName = Label(font: UIFont.boldSystemFont(ofSize: 22), textAlignment: .center)
     private var gradientLayer: CAGradientLayer?
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setupUI()
     }
     
@@ -41,6 +40,7 @@ final class GenreCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 12.0
         contentView.clipsToBounds = true
         contentView.addSubview(categoryName)
+        categoryName.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             categoryName.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),

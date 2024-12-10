@@ -8,11 +8,10 @@
 import UIKit
 import Kingfisher
 
-class SearchCell: UITableViewCell {
-    
-    private let posterImageView  = PosterImageView(frame: .zero,isRound: false)
-    private let nameLabel = EventLabel(textAlignment: .left, fontSize: 24)
-    private let dateLabel = EventLabel(textAlignment: .left, fontSize: 12)
+final class SearchCell: UITableViewCell {
+    private let posterImageView  = PosterImageView(isRound: false)
+    private let nameLabel = Label(font: UIFont.boldSystemFont(ofSize: 20), textAlignment: .left)
+    private let dateLabel = Label(font: UIFont.systemFont(ofSize: 18), textAlignment: .left)
     
     private let mediaType: UIImageView = {
         let imageView = UIImageView()
@@ -28,7 +27,7 @@ class SearchCell: UITableViewCell {
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 8
+        stackView.spacing = 12
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -45,6 +44,8 @@ class SearchCell: UITableViewCell {
     private func setupUI() {
         contentView.addSubviews(posterImageView,nameLabel,stackView)
         stackView.addArrangedSubviews(dateLabel,mediaType)
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false 
         
         NSLayoutConstraint.activate([
             posterImageView.heightAnchor.constraint(equalToConstant: 100),
@@ -53,10 +54,10 @@ class SearchCell: UITableViewCell {
             posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 8),
             nameLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor,constant: 4),
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            nameLabel.bottomAnchor.constraint(equalTo: stackView.topAnchor,constant: -8),
+            nameLabel.bottomAnchor.constraint(equalTo: stackView.topAnchor,constant: -12),
             
             stackView.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor,constant: 4),
             stackView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor)
@@ -64,7 +65,7 @@ class SearchCell: UITableViewCell {
     }
     
     func configure(result: SearchResponseModel.Result, displayName: String) {
-        if let poster_path = result.posterPath {
+        if let poster_path = result.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(poster_path)"))
         } else {
             posterImageView.image = UIImage(named: "Placeholders/default-poster")

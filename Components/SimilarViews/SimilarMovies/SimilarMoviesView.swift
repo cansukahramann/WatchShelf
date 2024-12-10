@@ -12,7 +12,6 @@ protocol SimilarMoviesViewDelegate: AnyObject {
 }
 
 final class SimilarMoviesView: UIView, SimilarMovieViewModelDelegate {
-    
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -23,7 +22,7 @@ final class SimilarMoviesView: UIView, SimilarMovieViewModelDelegate {
         return collectionView
     }()
     
-    let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
+    let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
     private var viewModel: SimilarMovieViewModel!
     weak var delegate: SimilarMoviesViewDelegate!
     var didSelectItem: ((_ id: Int) -> Void)?
@@ -39,7 +38,7 @@ final class SimilarMoviesView: UIView, SimilarMovieViewModelDelegate {
     
     func setupCollectionView() {
         addSubviews(titleLabel,collectionView)
-        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         collectionView.register(IndicatorCell.self, forCellWithReuseIdentifier: IndicatorCell.reuseID)
         collectionView.dataSource = self

@@ -12,7 +12,6 @@ protocol TVShowCastViewDelegate: AnyObject {
 }
 
 final class TVShowCastView: UIView {
-    
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -23,12 +22,12 @@ final class TVShowCastView: UIView {
         return collectionView
     }()
     
-    private let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
+    private let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
     var model = [SeriesCast]()
     weak var delegate: TVShowCastViewDelegate?
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         titleLabel.text = "Top Billed Cast"
         collectionView.register(CastCell.self, forCellWithReuseIdentifier: CastCell.reuseID)
         collectionView.dataSource = self
@@ -43,6 +42,7 @@ final class TVShowCastView: UIView {
     
     func setupConstraints() {
         addSubviews(titleLabel,collectionView)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor,constant: 8),

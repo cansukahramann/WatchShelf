@@ -23,7 +23,7 @@ final class SimilarTVShowView: UIView,SimilarTVShowViewModelDelegate {
         return collectionView
     }()
     
-    let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
+    private var titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
     private var viewModel: SimilarTVShowViewModel!
     weak var delegate: SimilarTVShowViewDelegate?
     var didSelectItem: ((_ id: Int) -> Void)? 
@@ -39,7 +39,7 @@ final class SimilarTVShowView: UIView,SimilarTVShowViewModelDelegate {
     
     func setupCollectionView() {
         addSubviews(titleLabel,collectionView)
-        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false 
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         collectionView.dataSource = self
         collectionView.delegate = self

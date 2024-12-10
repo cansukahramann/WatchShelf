@@ -8,12 +8,11 @@
 import UIKit
 
 final class AttributeView: UIView {
-    
     let attributeImage = UIImageView()
-    let attributeLabel = EventLabel(textAlignment: .left, fontSize: 14)
+    let attributeLabel = Label(font: UIFont.systemFont(ofSize: 15), numberOfLines: 0, textAlignment: .left)
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         configureImage()
         configureLabel()
     }
@@ -47,5 +46,4 @@ final class AttributeView: UIView {
             attributeLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
 }

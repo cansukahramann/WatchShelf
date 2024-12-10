@@ -12,7 +12,6 @@ protocol CastViewDelegate: AnyObject {
 }
 
 final class MovieCastView: UIView {
-    
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -23,18 +22,17 @@ final class MovieCastView: UIView {
         return collectionView
     }()
     
-    private let titleLabel = EventLabel(textAlignment: .left, fontSize: 18)
+    private let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
     var model = [Cast]()
     weak var delegate: CastViewDelegate?
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         titleLabel.text = "Top Billed Cast"
         collectionView.register(CastCell.self, forCellWithReuseIdentifier: CastCell.reuseID)
         collectionView.dataSource = self
         collectionView.delegate = self
         setupConstraints()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +41,7 @@ final class MovieCastView: UIView {
     
     func setupConstraints() {
         addSubviews(titleLabel,collectionView)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false 
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor,constant: 8),

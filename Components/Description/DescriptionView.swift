@@ -8,11 +8,10 @@
 import UIKit
 
 final class DescriptionView: UIView {
-    
     let label: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
-        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.textAlignment = .natural
         label.textColor = .white.withAlphaComponent(0.7)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -30,7 +29,7 @@ final class DescriptionView: UIView {
     private var isExpanded = false
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setupDescriptionLabel()
     }
     
@@ -40,7 +39,7 @@ final class DescriptionView: UIView {
     
     private func setupDescriptionLabel() {
         addSubviews(label,button)
-
+        
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: topAnchor,constant: 12),
             label.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
