@@ -44,7 +44,7 @@ final class CastMovieCredits: UIView {
     }
     
     func setupUI() {
-        addSubviews(titleLabel,collectionView)
+        addSubviews(titleLabel, collectionView)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false 
         
         NSLayoutConstraint.activate([

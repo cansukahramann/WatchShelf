@@ -44,7 +44,7 @@ private extension WatchListStore {
     
     func saveMedia() {
         if let encodedData = try? JSONEncoder().encode(mediaList) {
-            defaults.set(encodedData,forKey: storeKey)
+            defaults.set(encodedData, forKey: storeKey)
         }
     }
 }

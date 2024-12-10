@@ -20,7 +20,7 @@ final class MovieDetailViewModel {
     private let service: MovieDetailService!
     weak var delegate: MovieDetailViewModelDelegate?
     
-    init(service: MovieDetailService ,movieID: Int) {
+    init(service: MovieDetailService, movieID: Int) {
         self.service = service
         self.movieID = movieID
     }

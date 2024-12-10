@@ -22,7 +22,7 @@ class TVShowDetailViewModel {
     private let service: TVShowDetailService!
     var tvShowID: Int
     
-    init(service: TVShowDetailService,tvShowID: Int) {
+    init(service: TVShowDetailService, tvShowID: Int) {
         self.service = service
         self.tvShowID = tvShowID
     }
@@ -39,7 +39,7 @@ class TVShowDetailViewModel {
         service.loadTVDetail() { [weak self] result in
             guard let self else { return }
             switch result {
-            case .success(let (model,tvCastModel,tvVideoModel, tvSimilarModel)):
+            case .success(let (model, tvCastModel, tvVideoModel, tvSimilarModel)):
                 self.model = model
                 self.tvCastModel = tvCastModel
                 self.tvVideoModel = tvVideoModel

@@ -70,8 +70,8 @@ final class CategoryDetailCell: UICollectionViewCell {
         contentView.layer.addSublayer(shapeLayer)
         contentView.addSubview(percentagLabel)
         NSLayoutConstraint.activate([
-            percentagLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor,constant: center.x - contentView.bounds.width / 2),
-            percentagLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor,constant: center.y - contentView.bounds.height / 2),
+            percentagLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: center.x - contentView.bounds.width / 2),
+            percentagLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: center.y - contentView.bounds.height / 2),
             percentagLabel.widthAnchor.constraint(equalToConstant: 60),
             percentagLabel.heightAnchor.constraint(equalToConstant: 30)
         ])

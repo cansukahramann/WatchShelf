@@ -10,7 +10,7 @@ import Kingfisher
 
 final class DetailHeaderView: UIView {
     private let posterImageView = PosterImageView(isRound: false)
-    private let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 20),numberOfLines: 0, textAlignment: .left)
+    private let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 20), numberOfLines: 0, textAlignment: .left)
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -38,17 +38,17 @@ final class DetailHeaderView: UIView {
     }
     
     private func setupView() {
-        addSubviews(titleLabel,posterImageView,stackView)
+        addSubviews(titleLabel, posterImageView, stackView)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 12),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
-            titleLabel.bottomAnchor.constraint(equalTo: stackView.topAnchor,constant: -12),
+            titleLabel.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -12),
             
             posterImageView.topAnchor.constraint(equalTo: topAnchor),
-            posterImageView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
+            posterImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             posterImageView.widthAnchor.constraint(equalToConstant: 192),
             posterImageView.heightAnchor.constraint(equalToConstant: 240),
             posterImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 0),

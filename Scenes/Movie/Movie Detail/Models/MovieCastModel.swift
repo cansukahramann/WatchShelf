@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieCastModel: Codable {
+struct MovieCastModel: Codable {
     let id: Int
     let cast: [Cast]
 }

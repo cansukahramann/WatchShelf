@@ -21,7 +21,7 @@ final class MovieDetailService {
     }
     
     
-    func loadMovieDetail(completion: @escaping(Result<(MovieDetailModel,[Cast],[Results]),Error>) -> Void) {
+    func loadMovieDetail(completion: @escaping(Result<(MovieDetailModel, [Cast], [Results]), Error>) -> Void) {
         
         loadMovieDetail()
         loadMovieCredits()
@@ -29,8 +29,8 @@ final class MovieDetailService {
         
         group.notify(queue: .main) { [weak self] in
             guard let self else { return }
-            if let movieDetailModel = detailModel {
-                completion(.success((detailModel,movieCastModel,movieVideoModel)))
+            if detailModel != nil {
+                completion(.success((detailModel, movieCastModel, movieVideoModel)))
             } else {
                 let error = NSError(domain: "MovieDetailService", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to load movie service"])
                 completion(.failure(error))

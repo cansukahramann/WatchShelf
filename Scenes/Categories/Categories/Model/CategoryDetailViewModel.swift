@@ -44,7 +44,7 @@ final class CategoryDetailViewModel {
         delegate?.updateCollectionView()
     }
     
-    init(service: CategoryDetailService,genreID: Int) {
+    init(service: CategoryDetailService, genreID: Int) {
         self.service = service
         self.genreID = genreID
     }

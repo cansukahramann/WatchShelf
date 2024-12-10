@@ -8,7 +8,7 @@
 import UIKit
 
 
-final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate,TVShowCastViewDelegate,SimilarTVShowViewDelegate {
+final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate, TVShowCastViewDelegate, SimilarTVShowViewDelegate {
     private let headerView = DetailHeaderView()
     private let descriptionView = DescriptionView()
     private let videoView = VideoView()
@@ -83,7 +83,7 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
     }
     
     private func configureUI() {
-        stackView.addArrangedSubviews(headerView,descriptionView,videoView,castView)
+        stackView.addArrangedSubviews(headerView, descriptionView, videoView, castView)
         
         NSLayoutConstraint.activate([
             videoView.heightAnchor.constraint(equalToConstant: 200)

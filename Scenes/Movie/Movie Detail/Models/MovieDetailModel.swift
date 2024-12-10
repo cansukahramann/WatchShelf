@@ -18,7 +18,7 @@ struct MovieDetailModel: Codable {
     let voteAverage: Double
     
     enum CodingKeys: String, CodingKey {
-        case id,title,overview,runtime,genres
+        case id, title, overview, runtime, genres
         case posterPath = "poster_path"
         case releaseDate = "release_date"
         case voteAverage = "vote_average"
@@ -30,6 +30,6 @@ struct Genres: Codable {
     let name: String
     
     enum CodingKeys: String, CodingKey {
-        case id,name
+        case id, name
     }
 }

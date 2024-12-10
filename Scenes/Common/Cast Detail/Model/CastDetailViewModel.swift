@@ -21,7 +21,7 @@ final class CastDetailViewModel {
     private let service: CastDetailService!
     weak var delegate: CastDetailViewModelDelegate?
 
-    init(service: CastDetailService,castID: Int) {
+    init(service: CastDetailService, castID: Int) {
         self.service = service
         self.castID = castID
     }

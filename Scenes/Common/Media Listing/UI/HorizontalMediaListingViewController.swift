@@ -63,14 +63,14 @@ final class HorizontalMediaListingViewController: UIViewController, MediaListing
     }
     
     private func setupConstraints() {
-        view.addSubviews(collectionView,categoryNameLabel)
+        view.addSubviews(collectionView, categoryNameLabel)
         
         NSLayoutConstraint.activate([
             categoryNameLabel.topAnchor.constraint(equalTo: view.topAnchor),
             categoryNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             categoryNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             
-            collectionView.topAnchor.constraint(equalTo: categoryNameLabel.bottomAnchor,constant: 10),
+            collectionView.topAnchor.constraint(equalTo: categoryNameLabel.bottomAnchor, constant: 10),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -117,7 +117,7 @@ extension HorizontalMediaListingViewController: UICollectionViewDelegateFlowLayo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: (collectionView.bounds.width - 16) / 2 , height: collectionView.bounds.height)
+        CGSize(width: (collectionView.bounds.width - 16) / 2, height: collectionView.bounds.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

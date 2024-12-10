@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 final class TrendListService {
-    func loadTrendingAll(requestModel: CommonRequestModel,completion: @escaping (Swift.Result<[TrendingAll], Error>) -> Void) {
+    func loadTrendingAll(requestModel: CommonRequestModel, completion: @escaping (Swift.Result<[TrendingAll], Error>) -> Void) {
         NetworkManager.shared.request(TrendingAPI.trendingAll(requestModel: requestModel)) { result in
             switch result {
             case .success(let response):

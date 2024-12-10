@@ -8,11 +8,11 @@
 import Foundation
 
 protocol SimilarServiceProtocol {
-    func similarContentSelected(contentID: Int,requestModel: CommonRequestModel,completion: @escaping(Result<[SimilarResult], Error>) -> Void)
+    func similarContentSelected(contentID: Int,requestModel: CommonRequestModel, completion: @escaping(Result<[SimilarResult], Error>) -> Void)
 }
 
 extension SimilarServiceProtocol {
-    func mapResponseDetail(from data: Data) -> Result <[SimilarResult],Error> {
+    func mapResponseDetail(from data: Data) -> Result <[SimilarResult], Error> {
         do {
             let decoder = JSONDecoder()
             let decodedModel = try decoder.decode(SimilarModel.self, from: data)

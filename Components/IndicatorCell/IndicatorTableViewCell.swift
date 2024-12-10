@@ -36,5 +36,4 @@ final class IndicatorTableViewCell: UITableViewCell {
         ])
         indicator.startAnimating()
     }
-
 }

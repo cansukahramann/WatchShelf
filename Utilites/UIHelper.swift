@@ -10,7 +10,7 @@ import ProgressHUD
 
 enum UIHelper {
     static func showHUD() {
-        ProgressHUD.animate(symbol: "movieclapper",interaction: false)
+        ProgressHUD.animate(symbol: "movieclapper", interaction: false)
         ProgressHUD.colorAnimation = .white
         ProgressHUD.colorHUD = .lightText
         ProgressHUD.colorHUD = .clear

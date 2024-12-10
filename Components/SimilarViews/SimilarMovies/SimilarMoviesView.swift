@@ -37,7 +37,7 @@ final class SimilarMoviesView: UIView, SimilarMovieViewModelDelegate {
     }
     
     func setupCollectionView() {
-        addSubviews(titleLabel,collectionView)
+        addSubviews(titleLabel, collectionView)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
         collectionView.register(IndicatorCell.self, forCellWithReuseIdentifier: IndicatorCell.reuseID)
@@ -46,14 +46,14 @@ final class SimilarMoviesView: UIView, SimilarMovieViewModelDelegate {
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -12),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             
             
-            collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 8),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
+            collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -12),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
             collectionView.heightAnchor.constraint(equalToConstant: 250)
         ])
     }
@@ -99,7 +99,7 @@ extension SimilarMoviesView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = collectionView.frame.size
         let cellHeight =  (indexPath.item == viewModel.similarModel.count && viewModel.isFetchingContent ) ? 40  : (size.height)
-        return CGSize(width: 190 , height: cellHeight)
+        return CGSize(width: 190, height: cellHeight)
     }
 }
 

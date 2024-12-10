@@ -13,7 +13,7 @@ final class GenreService {
     var genreModel = [GenreResponse]()
     
     
-    func loadGenre(completion: @escaping(Result<([GenreResponse]),Error>) -> Void) {
+    func loadGenre(completion: @escaping(Result<([GenreResponse]), Error>) -> Void) {
         loadGenreMovie()
         loadGenreTV()
         

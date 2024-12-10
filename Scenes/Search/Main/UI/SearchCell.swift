@@ -42,8 +42,8 @@ final class SearchCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubviews(posterImageView,nameLabel,stackView)
-        stackView.addArrangedSubviews(dateLabel,mediaType)
+        contentView.addSubviews(posterImageView, nameLabel, stackView)
+        stackView.addArrangedSubviews(dateLabel, mediaType)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false 
         
@@ -55,11 +55,11 @@ final class SearchCell: UITableViewCell {
             posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
             nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 8),
-            nameLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor,constant: 4),
+            nameLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 4),
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            nameLabel.bottomAnchor.constraint(equalTo: stackView.topAnchor,constant: -12),
+            nameLabel.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -12),
             
-            stackView.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor,constant: 4),
+            stackView.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 4),
             stackView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor)
         ])
     }

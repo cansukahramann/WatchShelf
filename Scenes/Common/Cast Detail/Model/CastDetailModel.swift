@@ -16,7 +16,7 @@ struct  CastDetailModel: Codable {
     let profilePath: String?
     
     enum CodingKeys: String, CodingKey {
-        case biography,birthday,id,name
+        case biography, birthday, id, name
         case placeOfBirthday = "place_of_birth"
         case profilePath = "profile_path"
     }

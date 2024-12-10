@@ -20,7 +20,7 @@ final class TVShowDetailService {
         self.tvShowID = tvShowID
     }
     
-    func loadTVDetail(completion: @escaping(Result<(TVShowDetailModel,[SeriesCast],[Results], [SimilarResult] ),Error>) -> Void) {
+    func loadTVDetail(completion: @escaping(Result<(TVShowDetailModel, [SeriesCast], [Results], [SimilarResult]), Error>) -> Void) {
         
         loadTVDetail()
         loadTVVideo()
@@ -28,7 +28,7 @@ final class TVShowDetailService {
 
         group.notify(queue: .main) { [weak self] in
             guard let self else { return }
-            if let tvShowdetail = model {
+            if model != nil {
                 completion(.success((model, tvCastModel, tvVideoModel, tvSimilarModel)))
             } else {
                 let error = NSError(domain: "TVShowDetailService", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to load tv show detail"])

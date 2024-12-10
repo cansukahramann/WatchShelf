@@ -76,7 +76,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     
     private func configureUI() {
         view.backgroundColor = .systemBackground
-        stackView.addArrangedSubviews(headerView,descriptionView,videoView,castView)
+        stackView.addArrangedSubviews(headerView, descriptionView, videoView, castView)
         
         NSLayoutConstraint.activate([
             videoView.heightAnchor.constraint(equalToConstant: 200)

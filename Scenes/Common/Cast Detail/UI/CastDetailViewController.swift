@@ -65,7 +65,7 @@ final class CastDetailViewController: UIViewController, CastMovieCreditsDelegate
     }
     
     func configureUI() {
-        stackView.addArrangedSubviews(headerView,descriptionView,castMovieCredits,castTVCredits)
+        stackView.addArrangedSubviews(headerView, descriptionView, castMovieCredits, castTVCredits)
     }
     
     func didFetchCastDetail() {

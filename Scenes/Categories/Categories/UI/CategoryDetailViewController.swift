@@ -12,7 +12,7 @@ enum ContentType {
     case tvShow
 }
 
-final class CategoryDetailViewController: UIViewController,CategoryDetailViewModelDelegate {
+final class CategoryDetailViewController: UIViewController, CategoryDetailViewModelDelegate {
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -77,7 +77,7 @@ final class CategoryDetailViewController: UIViewController,CategoryDetailViewMod
     private func makeMenu() -> UIMenu {
         let filterOption1 = UIAction(title: "Movie", image: Image.movieTypeSymbol) { [unowned self] _ in
             viewModel.contentType = .movie
-            self.navigationItem.rightBarButtonItem?.title = "Movie"     
+            self.navigationItem.rightBarButtonItem?.title = "Movie"
         }
         
         let filterOption2 = UIAction(title: "TV Show", image: Image.tvTypeSymbol) { [unowned self] _ in
@@ -129,9 +129,7 @@ extension CategoryDetailViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionFooter {
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,withReuseIdentifier: FooterCollectionReusableView.identifier,
-                                                                         for: indexPath
-            ) as! FooterCollectionReusableView
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FooterCollectionReusableView.identifier, for: indexPath) as! FooterCollectionReusableView
             return footer
         }
         return UICollectionReusableView()

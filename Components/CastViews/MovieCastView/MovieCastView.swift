@@ -40,12 +40,12 @@ final class MovieCastView: UIView {
     }
     
     func setupConstraints() {
-        addSubviews(titleLabel,collectionView)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false 
+        addSubviews(titleLabel, collectionView)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor,constant: 8),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
             

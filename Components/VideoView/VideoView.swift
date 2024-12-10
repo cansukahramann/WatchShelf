@@ -14,7 +14,7 @@ final class VideoView: UIView, WKNavigationDelegate {
         prefs.allowsContentJavaScript = true
         let configuration = WKWebViewConfiguration()
         configuration.defaultWebpagePreferences = prefs
-        let webView = WKWebView(frame: .zero,configuration: configuration)
+        let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.translatesAutoresizingMaskIntoConstraints = false
         return webView
     }()
@@ -48,8 +48,8 @@ final class VideoView: UIView, WKNavigationDelegate {
         
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: topAnchor),
-            webView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
-            webView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -12),
+            webView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            webView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             webView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

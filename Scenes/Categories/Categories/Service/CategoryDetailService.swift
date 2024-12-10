@@ -15,17 +15,17 @@ final class CategoryDetailService {
         self.genreID = genreID
     }
     
-    func loadCategoryDetail(contentType: ContentType,requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]),Error>) -> Void) {
+    func loadCategoryDetail(contentType: ContentType, requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]), Error>) -> Void) {
         switch contentType {
         case .movie:
-            loadMovieGenre(requestModel: requestModel,completion: completion)
+            loadMovieGenre(requestModel: requestModel, completion: completion)
         case .tvShow:
-            loadTVGenre(requestModel: requestModel,completion: completion)
+            loadTVGenre(requestModel: requestModel, completion: completion)
         }
     }
     
-    private func loadMovieGenre(requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]),Error>) -> Void) {
-        NetworkManager.shared.request(DiscoverAPI.movie(genres: [genreID],requestModel: requestModel)) { [weak self] result in
+    private func loadMovieGenre(requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]), Error>) -> Void) {
+        NetworkManager.shared.request(DiscoverAPI.movie(genres: [genreID], requestModel: requestModel)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let response):
@@ -37,7 +37,7 @@ final class CategoryDetailService {
         }
     }
     
-    private func loadTVGenre(requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]),Error>) -> Void) {
+    private func loadTVGenre(requestModel: CommonRequestModel, completion: @escaping(Result<([DiscoverResult]), Error>) -> Void) {
         NetworkManager.shared.request(DiscoverAPI.tv(genres: [genreID], requestModel: requestModel)) { [weak self] result in
             guard let self else { return }
             switch result {

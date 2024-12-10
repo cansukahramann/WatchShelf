@@ -10,7 +10,7 @@ import Moya
 
 enum SimilarAPI: TargetType {
     case movieSimilar(movieID: Int, requestModel:CommonRequestModel = .init())
-    case tvShowSimilar(seriesID: Int,requestModel:CommonRequestModel = .init())
+    case tvShowSimilar(seriesID: Int, requestModel:CommonRequestModel = .init())
   
     var path: String {
         switch self {

@@ -8,11 +8,10 @@
 import UIKit
 
 enum SimilarTVShowContentFactory {
-    
-   static func makeView(with id: Int, onItemSelection: @escaping (Int) -> Void) -> UIView {
-       let service = SimilarTVService()
-       let viewModel = SimilarTVShowViewModel(service: service, tvShowID: id)
-       let view = SimilarTVShowView(viewModel: viewModel)
+    static func makeView(with id: Int, onItemSelection: @escaping (Int) -> Void) -> UIView {
+        let service = SimilarTVService()
+        let viewModel = SimilarTVShowViewModel(service: service, tvShowID: id)
+        let view = SimilarTVShowView(viewModel: viewModel)
         view.didSelectItem = onItemSelection
         return view
     }

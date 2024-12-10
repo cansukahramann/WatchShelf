@@ -42,7 +42,7 @@ final class WatchListViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.addSubviews(tableView,emptyStateAnimationView)
+        view.addSubviews(tableView, emptyStateAnimationView)
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),

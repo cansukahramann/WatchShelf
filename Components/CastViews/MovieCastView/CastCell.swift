@@ -10,8 +10,8 @@ import Kingfisher
 
 final class CastCell: UICollectionViewCell {
     static let reuseID = "CastCell"
-    private var castRealName = Label(textColor: UIColor.white, font: .boldSystemFont(ofSize: 14),textAlignment: .center)
-    private var castMovieName = Label(textColor: .white.withAlphaComponent(0.7), font: UIFont.systemFont(ofSize: 12),textAlignment: .center )
+    private var castRealName = Label(textColor: UIColor.white, font: .boldSystemFont(ofSize: 14), textAlignment: .center)
+    private var castMovieName = Label(textColor: .white.withAlphaComponent(0.7), font: UIFont.systemFont(ofSize: 12), textAlignment: .center )
     private var posterImageView = PosterImageView(isRound: true)
     
     override init(frame: CGRect) {
@@ -34,18 +34,18 @@ final class CastCell: UICollectionViewCell {
     }
     
     private func setupConstraint() {
-        contentView.addSubviews(posterImageView,castRealName,castMovieName)
+        contentView.addSubviews(posterImageView, castRealName,castMovieName)
         posterImageView.contentMode = .scaleAspectFill
         castRealName.translatesAutoresizingMaskIntoConstraints = false
         castMovieName.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate( [
-            posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 8),
+            posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             posterImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             posterImageView.heightAnchor.constraint(equalTo: posterImageView.widthAnchor),
             
-            castRealName.topAnchor.constraint(equalTo: posterImageView.bottomAnchor,constant: 2),
+            castRealName.topAnchor.constraint(equalTo: posterImageView.bottomAnchor, constant: 2),
             castRealName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             castRealName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
