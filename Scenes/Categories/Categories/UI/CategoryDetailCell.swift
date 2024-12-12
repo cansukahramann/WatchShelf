@@ -58,7 +58,7 @@ final class CategoryDetailCell: UICollectionViewCell {
         contentView.layer.addSublayer(trackLayer)
         
         shapeLayer.path = circularPath.cgPath
-        shapeLayer.strokeColor = UIColor(named: "app_color")?.cgColor
+        shapeLayer.strokeColor = UIColor.white.cgColor
         shapeLayer.lineCap = .round
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.lineWidth = 5

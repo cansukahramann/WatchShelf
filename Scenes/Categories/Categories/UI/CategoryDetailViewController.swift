@@ -51,6 +51,7 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
         button.setImage(UIImage(systemName: "chevron.up.chevron.down"), for: .normal)
         button.configuration = .plain()
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
+        button.widthAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
         button.configuration?.titleTextAttributesTransformer =
         UIConfigurationTextAttributesTransformer { container in
             var container = container
@@ -98,12 +99,12 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
     private func makeMenu() -> UIMenu {
         let filterOption1 = UIAction(title: "Movie", image: Image.movieTypeSymbol) { [unowned self] _ in
             viewModel.contentType = .movie
-            self.button.setTitle("movie", for: .normal)
+            self.button.setTitle("Movie", for: .normal)
         }
         
         let filterOption2 = UIAction(title: "Tv Show", image: Image.tvTypeSymbol) { [unowned self] _ in
             viewModel.contentType = .tvShow
-            self.button.setTitle("Tv show", for: .normal)
+            self.button.setTitle("Tv Show", for: .normal)
         }
         
         return UIMenu(title: "Filter Options", children: [filterOption1, filterOption2])
