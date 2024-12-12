@@ -10,7 +10,7 @@ import Moya
 
 protocol CategoryDetailViewModelDelegate: AnyObject {
     func updateCollectionView()
-    func noContent()
+    func setNoContentVisible(_ visible: Bool)
 }
 
 final class CategoryDetailViewModel {
@@ -33,15 +33,13 @@ final class CategoryDetailViewModel {
     }
     
     private func checkEmptyContent() {
-        if detailModel.isEmpty {
-            delegate?.updateCollectionView()
-        }
+        delegate?.setNoContentVisible(detailModel.isEmpty)
     }
     
     private func reset() {
         page = 1
         detailModel = []
-        delegate?.updateCollectionView()
+        delegate?.setNoContentVisible(false)
     }
     
     init(service: CategoryDetailService, genreID: Int) {
@@ -59,7 +57,7 @@ final class CategoryDetailViewModel {
             
             switch result {
             case .success(let (detailModel)):
-                if detailModel.isEmpty {
+                if detailModel.isEmpty, page != 1 {
                     self.shouldRequestNextPage = false
                 }
                 self.detailModel.append(contentsOf: detailModel)

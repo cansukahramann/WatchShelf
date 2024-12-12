@@ -45,6 +45,24 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
         return label
     }()
     
+    private let button: UIButton = {
+        let button = UIButton()
+        button.setTitle("Movie", for: .normal)
+        button.setImage(UIImage(systemName: "chevron.up.chevron.down"), for: .normal)
+        button.configuration = .plain()
+        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
+        button.configuration?.titleTextAttributesTransformer =
+        UIConfigurationTextAttributesTransformer { container in
+            var container = container
+            container.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+            return container
+        }
+        button.configuration?.imagePlacement = .trailing
+        button.configuration?.imagePadding = 4
+        button.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 14, weight: .medium, scale: .small )
+        return button
+    }()
+    
     private var viewModel: CategoryDetailViewModel!
     
     convenience init(viewModel: CategoryDetailViewModel) {
@@ -54,6 +72,7 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CategoryDetailCell.self, forCellWithReuseIdentifier: CategoryDetailCell.reuseID)
@@ -69,20 +88,22 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
     }
     
     private func setupBarButtonWithContextMenu() {
-        let barButton = UIBarButtonItem(title: "Movie", menu: makeMenu())
+        button.menu = makeMenu()
+        button.showsMenuAsPrimaryAction = true
+        let barButton = UIBarButtonItem(customView: button)
         navigationItem.rightBarButtonItem = barButton
-        
     }
+    
     
     private func makeMenu() -> UIMenu {
         let filterOption1 = UIAction(title: "Movie", image: Image.movieTypeSymbol) { [unowned self] _ in
             viewModel.contentType = .movie
-            self.navigationItem.rightBarButtonItem?.title = "Movie"
+            self.button.setTitle("movie", for: .normal)
         }
         
-        let filterOption2 = UIAction(title: "TV Show", image: Image.tvTypeSymbol) { [unowned self] _ in
+        let filterOption2 = UIAction(title: "Tv Show", image: Image.tvTypeSymbol) { [unowned self] _ in
             viewModel.contentType = .tvShow
-            self.navigationItem.rightBarButtonItem?.title = "TV Show"
+            self.button.setTitle("Tv show", for: .normal)
         }
         
         return UIMenu(title: "Filter Options", children: [filterOption1, filterOption2])
@@ -107,12 +128,11 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
     
     func updateCollectionView() {
         collectionView.reloadData()
-        noContent()
     }
     
-    func noContent() {
-        noContentLabel.isHidden = !viewModel.detailModel.isEmpty
-        collectionView.isHidden = viewModel.detailModel.isEmpty
+    func setNoContentVisible(_ visible: Bool) {
+        noContentLabel.isHidden = !visible
+        collectionView.isHidden = visible
     }
 }
 
