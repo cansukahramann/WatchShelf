@@ -90,7 +90,7 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
     }
     
     private func setupUI() {
-        view.addSubviews(collectionView,noContentLabel)
+        view.addSubviews(collectionView, noContentLabel)
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -168,5 +168,4 @@ extension CategoryDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         viewModel.hasMoreItemsToLoad ? CGSize(width: collectionView.frame.width, height: 100) : .zero
     }
-    
 }

@@ -17,21 +17,28 @@ final class TrendListViewModel  {
     private let service  = TrendListService()
     private var page = 1
     var model: [TrendingAll] = []
-    private var isFetching = false
+    private var shouldRequestNextPage = true
+    var isFetchingContent = false
+    var hasMoreItemsToLoad: Bool {
+        shouldRequestNextPage
+    }
     
      func fetchTrendingList() {
-         guard !isFetching else { return }
-         isFetching = true
+         guard !isFetchingContent, shouldRequestNextPage else { return }
+         self.isFetchingContent = true
          
          service.loadTrendingAll(requestModel: CommonRequestModel(page: page)) { [weak self] result in
-             self?.isFetching = false
-            switch result {
+             guard let self else { return }
+             self.isFetchingContent = false
+             
+             switch result {
             case .success(let response):
-                self?.model.append(contentsOf: response)
-                self?.delegate?.updateCollectionView()
-                self?.page += 1
+                self.model.append(contentsOf: response)
+                self.delegate?.updateCollectionView()
+                self.page += 1
             case .failure(let failure):
-                print(failure)
+                 print(failure)
+                self.shouldRequestNextPage = false
             }
         }
     }

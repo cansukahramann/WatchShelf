@@ -19,7 +19,7 @@ final class TrendListView: UIView, TrendListViewModelDelegate {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.isUserInteractionEnabled = true
-
+        
         return collectionView
     }()
     
@@ -30,6 +30,11 @@ final class TrendListView: UIView, TrendListViewModelDelegate {
         super.init(frame: frame)
         viewModel.delegate = self
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
+        collectionView.register(
+            FooterCollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: FooterCollectionReusableView.identifier
+        )
         collectionView.dataSource = self
         collectionView.delegate = self
         setupConstraint()
@@ -42,7 +47,7 @@ final class TrendListView: UIView, TrendListViewModelDelegate {
     
     static func createLayout() -> UICollectionViewCompositionalLayout {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(2/3),
+            widthDimension: .fractionalWidth(0.5),
             heightDimension: .fractionalHeight(1)))
         
         item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
@@ -53,27 +58,26 @@ final class TrendListView: UIView, TrendListViewModelDelegate {
         
         verticalStackItem.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
         
-   
+        
         let verticalStackGroup = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1/3),
+                widthDimension: .fractionalWidth(0.5),
                 heightDimension: .fractionalHeight(1)),
             repeatingSubitem: verticalStackItem,
             count: 2)
-    
+        
         
         let tripleItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
+            widthDimension: .fractionalWidth(1/3),
             heightDimension: .fractionalHeight(1)))
         
-        tripleItem.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+        tripleItem.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
         
         let tripleHorizontalGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .fractionalHeight(0.4)),
-            repeatingSubitem: tripleItem,
-            count: 3)
+            subitems: [tripleItem])
         
         let horizontalGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
@@ -85,14 +89,14 @@ final class TrendListView: UIView, TrendListViewModelDelegate {
         let verticalGroup = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(1.0)),
+                heightDimension: .absolute(600)),
             subitems: [horizontalGroup, tripleHorizontalGroup])
         
         let section = NSCollectionLayoutSection(group: verticalGroup)
         
         return UICollectionViewCompositionalLayout(section: section)
     }
-
+    
     private func setupConstraint() {
         addSubview(collectionView)
         
@@ -138,5 +142,17 @@ extension TrendListView: UICollectionViewDelegate {
         if offsetY >= contentHeight - (2 * height){
             viewModel.fetchTrendingList()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionFooter {
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FooterCollectionReusableView.identifier, for: indexPath) as! FooterCollectionReusableView
+            return footer
+        }
+        return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        viewModel.hasMoreItemsToLoad ? CGSize(width: collectionView.frame.width, height: 200) : .zero
     }
 }
