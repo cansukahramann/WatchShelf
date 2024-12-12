@@ -24,14 +24,6 @@ final class SearchCell: UITableViewCell {
         return imageView
     }()
     
-    private let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 12
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier:  reuseIdentifier)
         setupUI()
@@ -42,25 +34,30 @@ final class SearchCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubviews(posterImageView, nameLabel, stackView)
-        stackView.addArrangedSubviews(dateLabel, mediaType)
+        contentView.addSubviews(posterImageView, nameLabel, dateLabel, mediaType)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false 
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             posterImageView.heightAnchor.constraint(equalToConstant: 100),
             posterImageView.widthAnchor.constraint(equalToConstant: 80),
-            posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 8),
+            posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 8),
-            nameLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 4),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            nameLabel.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -12),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
+            nameLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 8),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            nameLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -2),
             
-            stackView.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 4),
-            stackView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor)
+            dateLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 4),
+            dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            dateLabel.bottomAnchor.constraint(equalTo: mediaType.topAnchor, constant: -14),
+            
+            mediaType.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 8),
+            mediaType.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            mediaType.widthAnchor.constraint(equalToConstant: 20),
+            mediaType.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
     
@@ -83,6 +80,7 @@ final class SearchCell: UITableViewCell {
             posterImageView.image = UIImage(named: "Placeholders/default-poster")
         }
         nameLabel.text = model.title
-        dateLabel.text = model.release_date
+        dateLabel.text = model.releaseDate
+        mediaType.image = model.type == .movie ? Image.movieTypeSymbol : Image.tvTypeSymbol
     }
 }

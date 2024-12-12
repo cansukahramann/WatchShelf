@@ -100,11 +100,11 @@ extension WatchListViewController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (_, _, completionHandler) in
             guard let self = self else { return }
             let mediaToRemove = WatchListStore.shared.mediaList[indexPath.row]
-            WatchListStore.shared.updateMedia(mediaToRemove)
+            WatchListStore.shared.updateMediaInWatchList(mediaToRemove)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
             self.checkEmptyState()
             
-            let alert = UIAlertController(title: "Removed", message: "This item has been removed from your WatchList.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Removed", message: "This item has been removed from your watch list.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             

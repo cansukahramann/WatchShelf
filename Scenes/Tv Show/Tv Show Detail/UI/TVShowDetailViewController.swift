@@ -113,8 +113,8 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
     }
     
     @objc
-    func addButtonTapped() {
-        WatchListStore.shared.updateMedia(viewModel.model.storeableMedia)
+    private func addButtonTapped() {
+        WatchListStore.shared.updateMediaInWatchList(viewModel.model.storeableMedia)
         showAlert(message: viewModel.favoriteStatusChangeMessage)
         setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark.withTintColor(.gray) : .add)
     }

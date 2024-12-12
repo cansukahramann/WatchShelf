@@ -12,7 +12,15 @@ struct StoreableMedia: Codable {
     let title: String
     let posterPath: String?
     let type: MediaType
-    let release_date: String?
+    let releaseDate: String?
+    
+    enum CodingKeys: String ,CodingKey {
+        case id
+        case title
+        case posterPath
+        case type
+        case releaseDate = "release_date"
+    }
     
     enum MediaType: String, Codable {
         case movie

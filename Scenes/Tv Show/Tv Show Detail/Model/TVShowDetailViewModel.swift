@@ -32,7 +32,7 @@ class TVShowDetailViewModel {
     }
     
     var favoriteStatusChangeMessage: String {
-        isFavorite ? "Added to Watchlist" : "Removed from Watchlist"
+        isFavorite ? "Added to your watch list" : "Removed from your watch list"
     }
     
     func fetchTVShowDetail() {

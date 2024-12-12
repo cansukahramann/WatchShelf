@@ -8,24 +8,23 @@
 import Foundation
 
 final class WatchListStore {
-    private(set) var mediaList: [StoreableMedia] = []
-    
     static let shared = WatchListStore()
+    private(set) var mediaList: [StoreableMedia] = []
     private let storeKey: String = "WatchlistStoreKey"
-    private let defaults = UserDefaults.standard
+    
+    private let fileManager = FileManager.default
+    private lazy var storeURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appending(path: "WatchList.store")
     
     private init() {
-        retrieveSavedMedia()
+        fetchStoredWatchListFromDisk()
     }
     
-    func updateMedia(_ media: StoreableMedia) {
-        if mediaList.contains(where: { $0.id == media.id }) {
-            mediaList.removeAll { $0.id == media.id }
-        } else {
-            mediaList.append(media)
-        }
+    private func fetchStoredWatchListFromDisk() {
+        guard
+            let data = try? Data(contentsOf: storeURL),
+            let mediaList = try? JSONDecoder().decode([StoreableMedia].self, from: data) else { return }
         
-        saveMedia()
+        self.mediaList = mediaList
     }
     
     func isMediaSaved(id: Int) -> Bool {
@@ -33,32 +32,32 @@ final class WatchListStore {
     }
 }
 
-private extension WatchListStore {
-    
-    func retrieveSavedMedia() {
-        guard let data = defaults.data(forKey: storeKey),
-              let storeableMedia = try? JSONDecoder().decode([StoreableMedia].self, from: data) else { return }
-        
-        self.mediaList = storeableMedia
-    }
-    
-    func saveMedia() {
-        if let encodedData = try? JSONEncoder().encode(mediaList) {
-            defaults.set(encodedData, forKey: storeKey)
+extension WatchListStore {
+    func updateMediaInWatchList(_ media: StoreableMedia) {
+        if mediaList.contains(where: { $0.id == media.id }) {
+            mediaList.removeAll { $0.id == media.id }
+        } else {
+            mediaList.append(media)
         }
+        saveWatchListToDisk()
+    }
+}
+
+private extension WatchListStore {
+    func saveWatchListToDisk() {
+        guard let data = try? JSONEncoder().encode(mediaList) else { return }
+        try? data.write(to: storeURL)
     }
 }
 
 extension MovieDetailModel {
-    
     var storeableMedia: StoreableMedia {
-        StoreableMedia(id: id, title: title, posterPath: posterPath, type: .movie, release_date: releaseDate)
+        StoreableMedia(id: id, title: title, posterPath: posterPath, type: .movie, releaseDate: releaseDate)
     }
 }
 
 extension TVShowDetailModel {
-    
     var storeableMedia: StoreableMedia {
-        StoreableMedia(id: id, title: name, posterPath: posterPath, type: .tv, release_date: firstAirDate)
+        StoreableMedia(id: id, title: name, posterPath: posterPath, type: .tv, releaseDate: firstAirDate)
     }
 }
