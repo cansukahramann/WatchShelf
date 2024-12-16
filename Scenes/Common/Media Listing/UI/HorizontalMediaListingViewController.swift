@@ -50,8 +50,8 @@ final class HorizontalMediaListingViewController: UIViewController, MediaListing
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
-        collectionView.register(IndicatorCell.self, forCellWithReuseIdentifier: IndicatorCell.reuseID)
+        collectionView.register(PosterCell.self)
+        collectionView.register(IndicatorCell.self)
         setupConstraints()
         categoryNameLabel.text = title
         
@@ -86,11 +86,11 @@ extension HorizontalMediaListingViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item != viewModel.allContentResults.count {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
+            let cell = collectionView.dequeueCell(PosterCell.self, for: indexPath)
             cell.configure(posterPath: viewModel.allContentResults[indexPath.item].posterPath)
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IndicatorCell.reuseID, for: indexPath) as! IndicatorCell
+            let cell = collectionView.dequeueCell(IndicatorCell.self, for: indexPath)
             cell.indicator.startAnimating()
             return cell
         }

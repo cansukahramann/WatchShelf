@@ -29,7 +29,7 @@ final class MovieCastView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         titleLabel.text = "Top Billed Cast"
-        collectionView.register(CastCell.self, forCellWithReuseIdentifier: CastCell.reuseID)
+        collectionView.register(CastCell.self)
         collectionView.dataSource = self
         collectionView.delegate = self
         setupConstraints()
@@ -69,7 +69,7 @@ extension MovieCastView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCell.reuseID, for: indexPath) as! CastCell
+        let cell = collectionView.dequeueCell(CastCell.self, for: indexPath)
         cell.configureMovieCast(model: model[indexPath.item])
         return cell
     }

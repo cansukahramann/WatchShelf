@@ -40,7 +40,7 @@ final class SimilarTVShowView: UIView, SimilarTVShowViewModelDelegate {
     func setupCollectionView() {
         addSubviews(titleLabel, collectionView)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
+        collectionView.register(PosterCell.self)
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -73,7 +73,7 @@ extension SimilarTVShowView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
+        let cell = collectionView.dequeueCell(PosterCell.self, for: indexPath)
         cell.configure(posterPath: viewModel.similarModel[indexPath.item].posterPath)
         return cell
     }

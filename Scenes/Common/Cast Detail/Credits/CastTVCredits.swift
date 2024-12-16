@@ -38,7 +38,7 @@ final class CastTVCredits: UIView {
     }
     
     func setupCollectionView() {
-        collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
+        collectionView.register(PosterCell.self)
         collectionView.dataSource = self
         collectionView.delegate = self 
     }
@@ -71,7 +71,7 @@ extension CastTVCredits: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
+        let cell = collectionView.dequeueCell(PosterCell.self, for: indexPath)
         cell.configure(posterPath: model[indexPath.item].posterPath)
         return cell
     }

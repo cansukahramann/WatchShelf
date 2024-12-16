@@ -21,7 +21,7 @@ final class DescriptionView: UIView {
     let button: UIButton = {
         let button = UIButton()
         button.setTitle("Read More", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

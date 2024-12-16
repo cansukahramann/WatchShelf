@@ -11,7 +11,7 @@ import Lottie
 final class WatchListViewController: UIViewController {
     private var tableView: UITableView = {
         var tableView = UITableView()
-        tableView.register(SearchCell.self, forCellReuseIdentifier: "SearchCell")
+        tableView.register(SearchCell.self)
         tableView.separatorStyle = .singleLine
         tableView.backgroundColor = .systemBackground
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +75,7 @@ extension WatchListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as! SearchCell
+        let cell = tableView.dequeueCell(SearchCell.self, for: indexPath)
         let model = WatchListStore.shared.mediaList[indexPath.row]
         cell.config(model: model)
         return cell

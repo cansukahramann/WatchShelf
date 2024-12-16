@@ -76,12 +76,8 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
         view.backgroundColor = .systemBackground
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(CategoryDetailCell.self, forCellWithReuseIdentifier: CategoryDetailCell.reuseID)
-        collectionView.register(
-            FooterCollectionReusableView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: FooterCollectionReusableView.identifier
-        )
+        collectionView.register(CategoryDetailCell.self)
+        collectionView.registerSupplementaryView(FooterCollectionReusableView.self, kind: UICollectionView.elementKindSectionFooter)
         setupUI()
         viewModel.delegate = self
         viewModel.fetchCategoryDetail()
@@ -143,7 +139,7 @@ extension CategoryDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryDetailCell.reuseID, for: indexPath) as! CategoryDetailCell
+        let cell = collectionView.dequeueCell(CategoryDetailCell.self, for: indexPath)
         cell.configure(model: viewModel.detailModel[indexPath.item])
         return cell
     }

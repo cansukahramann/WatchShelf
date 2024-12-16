@@ -21,7 +21,7 @@ final class GenreViewController: UIViewController, GenreViewModelDelegate {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .systemBackground
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(GenreCell.self, forCellWithReuseIdentifier: GenreCell.reuseID)
+        collectionView.register(GenreCell.self)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -64,7 +64,7 @@ extension GenreViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCell.reuseID, for: indexPath) as! GenreCell
+        let cell = collectionView.dequeueCell(GenreCell.self, for: indexPath)
         cell.configure(model: viewModel.genreModel[indexPath.item])
         return cell
     }

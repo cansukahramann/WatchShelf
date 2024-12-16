@@ -29,12 +29,8 @@ final class TrendListView: UIView, TrendListViewModelDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         viewModel.delegate = self
-        collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.reuseID)
-        collectionView.register(
-            FooterCollectionReusableView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: FooterCollectionReusableView.identifier
-        )
+        collectionView.register(PosterCell.self)
+        collectionView.registerSupplementaryView(FooterCollectionReusableView.self, kind: UICollectionView.elementKindSectionFooter)
         collectionView.dataSource = self
         collectionView.delegate = self
         setupConstraint()
@@ -119,7 +115,7 @@ extension TrendListView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.reuseID, for: indexPath) as! PosterCell
+        let cell = collectionView.dequeueCell(PosterCell.self, for: indexPath)
         cell.configure(posterPath: viewModel.model[indexPath.item].posterPath)
         return cell
     }

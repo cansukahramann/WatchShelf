@@ -25,7 +25,7 @@ final class SearchViewController: UITableViewController {
         searchController.searchBar.placeholder = "Search and don’t get lost..."
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
-        tableView.register(SearchCell.self, forCellReuseIdentifier: "SearchCell")
+        tableView.register(SearchCell.self)
         tableView.register(IndicatorTableViewCell.self, forCellReuseIdentifier: IndicatorTableViewCell.reuseID)
         viewModel.delegate = self
         tableView.estimatedRowHeight = 100
@@ -56,13 +56,13 @@ final class SearchViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row != viewModel.model.count {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as! SearchCell
+            let cell = tableView.dequeueCell(SearchCell.self, for: indexPath)
             let result = viewModel.model[indexPath.row]
             let displayName = processResult(result)
             cell.configure(result: result, displayName: displayName)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: IndicatorTableViewCell.reuseID, for: indexPath) as! IndicatorTableViewCell
+            let cell = tableView.dequeueCell(IndicatorTableViewCell.self, for: indexPath)
             cell.indicator.startAnimating()
             return cell
         }
