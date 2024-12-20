@@ -114,7 +114,7 @@ The TV Show Detail screen is structured by combining various views, including a 
   <img src="https://github.com/user-attachments/assets/9373cba5-879d-4e64-989e-e03c08a14586" width="250" />
 </p>
 
-## Cast Detail Scene
+## Cast Detail Screen
 
 This screen displays the cast's photo, birthdate, birthplace, biography, and the movies and TV shows they have appeared in (if available). The screen is fully implemented programmatically, with all components created separately and organized using a **Stack View** for a clean and structured layout.
 
@@ -124,7 +124,7 @@ This screen displays the cast's photo, birthdate, birthplace, biography, and the
 </p>
 
 
-## Category Scene
+## Category Screen
 
 This screen displays all movie and TV show categories (e.g., Action, Western) fetched from the API. Once a category is selected, the relevant movies for that category are listed. In the top right corner, users can switch between movies and TV shows using a filtering option.
 
@@ -142,7 +142,7 @@ This screen provides a smooth and interactive experience for users to explore di
 </p>
 
 
-## Search Scene
+## Search Screen
 
 This screen displays random content. Users can search for movies or TV shows using the Search bar.
 
@@ -158,7 +158,7 @@ This screen allows users to search for content quickly and efficiently, while pr
   <img src="https://github.com/user-attachments/assets/0ed854a8-b5cd-4336-951a-bcbbf076090d" width="250" />
 </p>
 
-## WatchList Scene
+## WatchList Screen
 
 This screen lists the movies and TV shows liked by the user using **FileManager**. The content is displayed in a **TableView**. The screen is **fully designed programmatically**, with all components created and assembled without the use of Interface Builder.
 
