@@ -35,7 +35,7 @@ The Movie screen is the first tab in the tab bar. The films are organized into f
 - Users can access the categories more quickly.
 - The UI is entirely built programmatically.
 
-<img src="https://github.com/user-attachments/assets/d772f86b-8cb2-4fad-98b6-2c3f0bc7cb7e" width="500" />
+<img src="https://github.com/user-attachments/assets/d772f86b-8cb2-4fad-98b6-2c3f0bc7cb7e" width="250" />
 
 
 
