@@ -14,7 +14,7 @@ WatchShelf is a movie and series tracking iOS application designed to help users
 
 ## UI Architecture and Design
 
-- **Programmatic Development**: The entire application, including its user interfaces and functionality, has been developed programmatically. This approach provides greater flexibility, reusability, and customization opportunities.
+The entire application, including its user interfaces and functionality, has been developed programmatically. This approach provides greater flexibility, reusability, and customization opportunities.
 
 ## Libraries Used
 
@@ -25,7 +25,7 @@ WatchShelf is a movie and series tracking iOS application designed to help users
 
 ## Splash View
 
-This is the welcome screen displayed every time the application is opened. It features custom animations created manually using Swift code.
+This is the welcome screen displayed every time the application is opened. It features custom animations created manually.
 
 ## Main Views (Movies - TV Shows)
 
@@ -35,16 +35,23 @@ The Movie screen is the first tab in the tab bar. The films are organized into f
 - Users can access the categories more quickly.
 - The UI is entirely built programmatically.
 
-<p align="center" style="display: flex; justify-content: center;">
+<p style="display: flex;">
   <img src="https://github.com/user-attachments/assets/d772f86b-8cb2-4fad-98b6-2c3f0bc7cb7e" width="250" />
   <img src="https://github.com/user-attachments/assets/113d51af-c80d-4a47-b1c0-f11f6611af6c" width="250" />
 </p>
+
 
 ### TV Show
 
 This screen is the second tab in the tab bar. The TV shows are organized into four distinct categories: Airing Today, On the Air, Popular, and Top Rated.
 - Users can access the categories more quickly.
 - The UI is entirely built programmatically.
+
+<p style="display: flex;">
+  <img src="https://github.com/user-attachments/assets/6c11e1dc-82b5-4f4f-b46d-2cbad86da5a5" width="250" />
+  <img src="https://github.com/user-attachments/assets/a955c7de-34ca-461b-b3c9-88d9b7f32998" width="250" />
+</p>
+
 
 ## Movie Detail Screen
 
@@ -71,6 +78,12 @@ The Movie Detail screen is structured by combining various views, including a he
 - **Similar Movies**:
   - Recommended similar movies are shown in a horizontal list with their posters.
 
+<p style="display: flex;">
+  <img src="https://github.com/user-attachments/assets/7ff32996-c20a-4d59-8148-624808a3fe21" width="250" />
+  <img src="https://github.com/user-attachments/assets/6650811e-a757-4a40-b872-d67c67c10e7c" width="250" />
+</p>
+
+
 ## TV Show Detail Screen
 
 This screen allows users to access detailed information about a specific TV show. It is fully implemented programmatically and includes the following features:
@@ -96,6 +109,21 @@ The TV Show Detail screen is structured by combining various views, including a 
 - **Similar TV Shows**:
   - Recommended similar TV shows are shown in a horizontal list with their posters.
 
+<p style="display: flex;">
+  <img src="https://github.com/user-attachments/assets/0df9a55f-2951-489d-a524-9b3383f4c424" width="250" />
+  <img src="https://github.com/user-attachments/assets/9373cba5-879d-4e64-989e-e03c08a14586" width="250" />
+</p>
+
+## Cast Detail Scene
+
+This screen displays the cast's photo, birthdate, birthplace, biography, and the movies and TV shows they have appeared in (if available). The screen is fully implemented programmatically, with all components created separately and organized using a **Stack View** for a clean and structured layout.
+
+<p style="display: flex;">
+  <img src="https://github.com/user-attachments/assets/68bffa9a-88ff-422c-9d4a-3b84284cc970" width="250" />
+  <img src="https://github.com/user-attachments/assets/7aed9b81-073a-4d8b-87d5-4ee2e7c181ef" width="250" />
+</p>
+
+
 ## Category Scene
 
 This screen displays all movie and TV show categories (e.g., Action, Western) fetched from the API. Once a category is selected, the relevant movies for that category are listed. In the top right corner, users can switch between movies and TV shows using a filtering option.
@@ -106,6 +134,13 @@ The Category screen is fully implemented programmatically and includes the follo
 - **Components**: Each component of the screen is designed as independent modules, which are then combined in the main view.
 
 This screen provides a smooth and interactive experience for users to explore different categories and switch between movie and TV show content effortlessly.
+
+<p style="display: flex;">
+  <img src="https://github.com/user-attachments/assets/eb563b14-b371-4676-a2e8-6511228f9bc9" width="250" />
+  <img src="https://github.com/user-attachments/assets/2c72311c-bb9b-4c6d-9540-e5d785ad31f5" width="250" />
+  <img src="https://github.com/user-attachments/assets/bb69f72d-4a21-4bb9-8b34-2acf5bd17f84" width="250" />
+</p>
+
 
 ## Search Scene
 
@@ -118,3 +153,26 @@ The content listed after the search is shown using a TableView. The screen is fu
 - **Components**: Each component of the screen is designed as independent modules, which are then combined in the main view.
 
 This screen allows users to search for content quickly and efficiently, while providing a clean and dynamic user experience.
+
+<p style="display: flex;">
+  <img src="https://github.com/user-attachments/assets/0ed854a8-b5cd-4336-951a-bcbbf076090d" width="250" />
+</p>
+
+## WatchList Scene
+
+This screen lists the movies and TV shows liked by the user using **FileManager**. The content is displayed in a **TableView**. The screen is **fully designed programmatically**, with all components created and assembled without the use of Interface Builder.
+
+The screen is **fully implemented programmatically** and includes the following features:
+
+- **FileManager**: The user's liked movies and TV shows are stored in local storage using FileManager and then listed.
+- **TableView**: The liked content is displayed in an organized and structured manner using TableView.
+- **Lottie Animation**: When the list is empty, a Lottie animation is displayed to provide a dynamic and engaging user experience.
+
+This screen provides users with an easy way to view and manage their favorite content.
+
+<p style="display: flex;">
+  <img src="https://github.com/user-attachments/assets/a42a702b-30cd-4b1a-970c-2dd170f31e43" width="250" />
+  <img src="https://github.com/user-attachments/assets/42767435-018a-4bbc-9f2b-66b81dc714b5" width="250" />
+</p>
+
+
