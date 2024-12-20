@@ -27,7 +27,7 @@ The entire application, including its user interfaces and functionality, has bee
 
 This is the welcome screen displayed every time the application is opened. It features custom animations created manually.
 
-https://github.com/user-attachments/assets/3157d87c-9c3c-4b5a-a7c2-548bcd38d32a
+https://github.com/user-attachments/assets/b156d4a0-8267-46a3-be1d-7ccbe6eef074
 
 
 ## Main Views (Movies - TV Shows)
