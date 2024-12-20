@@ -156,7 +156,9 @@ This screen allows users to search for content quickly and efficiently, while pr
 
 <p style="display: flex;">
   <img src="https://github.com/user-attachments/assets/0ed854a8-b5cd-4336-951a-bcbbf076090d" width="250" />
+  <img src="https://github.com/user-attachments/assets/9fa85062-b8b6-4c32-8537-1831ca011a27" width="250" />
 </p>
+
 
 ## WatchList Screen
 
