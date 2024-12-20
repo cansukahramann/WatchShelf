@@ -16,7 +16,7 @@ class TVShowDetailViewModel {
     
     var model: TVShowDetailModel!
     var tvCastModel = [SeriesCast]()
-    var tvVideoModel = [Results]()
+    var tvVideoModel = [VideoItem]()
     var tvSimilarModel = [SimilarResult]()
     weak var delegate: TVShowDetailViewModelDelegate!
     private let service: TVShowDetailService!

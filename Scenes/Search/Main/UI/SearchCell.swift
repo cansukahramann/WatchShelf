@@ -61,7 +61,7 @@ final class SearchCell: UITableViewCell {
         ])
     }
     
-    func configure(result: SearchResponseModel.Result, displayName: String) {
+    func configure(result: SearchResult, displayName: String) {
         if let poster_path = result.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(poster_path)"))
         } else {

@@ -14,7 +14,12 @@ protocol CategoryDetailViewModelDelegate: AnyObject {
 }
 
 final class CategoryDetailViewModel {
-    var detailModel: [DiscoverResult] = []
+    var detailModel: [DiscoverResult] = [] {
+        didSet {
+            delegate?.updateCollectionView()
+        }
+    }
+    
     var genreID: Int
     weak var delegate: CategoryDetailViewModelDelegate?
     private let service: CategoryDetailService!
@@ -62,7 +67,6 @@ final class CategoryDetailViewModel {
                 }
                 self.detailModel.append(contentsOf: detailModel)
                 self.checkEmptyContent()
-                self.delegate?.updateCollectionView()
                 page += 1
             case .failure(let error):
                 print(error)

@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 protocol SearchViewModelDelegate: AnyObject {
-    func didCompleteWith(results: [SearchResponseModel.Result])
+    func didCompleteWith(results: [SearchResult])
     func didCompleteWithError()
 }
 
@@ -17,13 +17,14 @@ final class SearchViewModel {
     weak var delegate: SearchViewModelDelegate?
     private var debounceTimer: Timer?
     private let service = SearchService()
-    var model: [SearchResponseModel.Result] = []
+    var model: [SearchResult] = []
     private var page = 1
     private(set) var isLoadingMore: Bool = false
-    var shouldRequestNextPage = true
     var isFetchingContent = false
     private var searchText: String = ""
     private var searchCancellationToken: Cancellable?
+    
+    private(set) var hasMoreItemsToLoad = true
     
     func search(_ searchText: String) {
         self.searchText = searchText
@@ -43,17 +44,18 @@ final class SearchViewModel {
     }
     
     func performSearchRequest() {
-        guard !isLoadingMore else { return }
+        guard !isLoadingMore, hasMoreItemsToLoad else { return }
         isLoadingMore = true
         searchCancellationToken = service.search(searchText: searchText, requestModel: CommonRequestModel(page: page)) { [weak self] result in
             self?.searchCancellationToken = nil
             
             switch result {
             case .success(let response):
-                let filteredResults = response.results.filter { $0.mediaType != .person }
+                let filteredResults = response.filter { $0.mediaType != .person }
                 self?.model.append(contentsOf: filteredResults)
-                self?.delegate?.didCompleteWith(results: self?.model ?? [])
+                self?.hasMoreItemsToLoad = !filteredResults.isEmpty
                 self?.page += 1
+                self?.delegate?.didCompleteWith(results: self?.model ?? [])
             case .failure:
                 self?.delegate?.didCompleteWithError()
             }

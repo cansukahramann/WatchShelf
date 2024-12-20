@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SearchViewControllerDelegate: AnyObject {
-    func selectedContent(id: Int, type: SearchResponseModel.Result.MediaType)
+    func selectedContent(id: Int, type: SearchResult.MediaType)
 }
 
 final class SearchViewController: UITableViewController {
@@ -38,10 +38,14 @@ final class SearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        (viewModel.model.count > 0) ? (viewModel.model.count + 1) : 0
+//        (viewModel.model.count > 0) ? (viewModel.model.count + 1) : 0
+        if viewModel.model.isEmpty{
+            return .zero
+        }
+        return viewModel.model.count + (viewModel.hasMoreItemsToLoad ? 1 : 0)
     }
     
-    private func processResult(_ result: SearchResponseModel.Result) -> String {
+    private func processResult(_ result: SearchResult) -> String {
         let title = result.title?.trimmingCharacters(in: .whitespacesAndNewlines)
         let name = result.name?.trimmingCharacters(in: .whitespacesAndNewlines)
         
@@ -85,7 +89,7 @@ final class SearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == viewModel.model.count && viewModel.isFetchingContent {
+        if indexPath.row == viewModel.model.count && viewModel.hasMoreItemsToLoad {
             return 20
         } else {
             let heightRatio: CGFloat = 0.16
@@ -94,10 +98,8 @@ final class SearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.model.count && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage {
-            _ = (Int(viewModel.model.count) / 20) + 1
-            viewModel.performSearchRequest()
-        }
+        guard indexPath.row >= viewModel.model.count - 3 else { return }
+        viewModel.performSearchRequest()
     }
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -128,11 +130,9 @@ extension SearchViewController: UISearchBarDelegate {
 }
 
 extension SearchViewController: SearchViewModelDelegate {
-    func didCompleteWith(results: [SearchResponseModel.Result]) {
+    func didCompleteWith(results: [SearchResult]) {
         viewModel.model = results
-        if !viewModel.model.isEmpty {
-            tableView.reloadData()
-        }
+        tableView.reloadData()
     }
     
     func didCompleteWithError() {

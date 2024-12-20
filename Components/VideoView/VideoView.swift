@@ -31,7 +31,7 @@ final class VideoView: UIView, WKNavigationDelegate {
     }
     
     
-    func getVideo(model: [Results]) {
+    func getVideo(model: [VideoItem]) {
         guard let firstModel = model.first else {
             print("Video not found")
             return

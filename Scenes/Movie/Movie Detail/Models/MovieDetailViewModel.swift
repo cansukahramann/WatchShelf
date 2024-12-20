@@ -15,7 +15,7 @@ protocol MovieDetailViewModelDelegate: AnyObject {
 final class MovieDetailViewModel {
     var detailModel: MovieDetailModel!
     var movieCastModel = [Cast]()
-    var movieVideoModel = [Results]()
+    var movieVideoModel = [VideoItem]()
     var movieID: Int
     private let service: MovieDetailService!
     weak var delegate: MovieDetailViewModelDelegate?

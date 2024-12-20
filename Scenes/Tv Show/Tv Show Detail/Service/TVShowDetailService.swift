@@ -10,17 +10,17 @@ import Moya
 
 final class TVShowDetailService {
     private let group = DispatchGroup()
-    private var model: TVShowDetailModel!
+    private var tvShowDetail: TVShowDetailModel!
     private var tvCastModel = [SeriesCast]()
-    private var tvVideoModel = [Results]()
-    private var tvSimilarModel = [SimilarResult]()
+    private var tvVideoModel = [VideoItem]()
+    private var similarTVShows = [SimilarResult]()
     private var tvShowID: Int
     
     init(tvShowID: Int) {
         self.tvShowID = tvShowID
     }
     
-    func loadTVDetail(completion: @escaping(Result<(TVShowDetailModel, [SeriesCast], [Results], [SimilarResult]), Error>) -> Void) {
+    func loadTVDetail(completion: @escaping(Result<(TVShowDetailModel, [SeriesCast], [VideoItem], [SimilarResult]), Error>) -> Void) {
         
         loadTVDetail()
         loadTVVideo()
@@ -28,8 +28,8 @@ final class TVShowDetailService {
 
         group.notify(queue: .main) { [weak self] in
             guard let self else { return }
-            if model != nil {
-                completion(.success((model, tvCastModel, tvVideoModel, tvSimilarModel)))
+            if tvShowDetail != nil {
+                completion(.success((tvShowDetail, tvCastModel, tvVideoModel, similarTVShows)))
             } else {
                 let error = NSError(domain: "TVShowDetailService", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to load tv show detail"])
                 completion(.failure(error))
@@ -40,12 +40,10 @@ final class TVShowDetailService {
     private func loadTVDetail() {
         group.enter()
         NetworkManager.shared.request(DetailAPI.tvShowDetail(tvShowID:tvShowID)) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let response):
-                model = mapDetailResponse(from: response.data)!
-            case .failure(let error):
-                print(error)
+            guard let self = self else { return }
+            let mappingResult: Result<TVShowDetailModel, PresentableError> = ResponseMapper.map(result)
+            if let mappingTvShowDetail = try? mappingResult.get() {
+                self.tvShowDetail = mappingTvShowDetail
             }
             group.leave()
         }
@@ -55,11 +53,9 @@ final class TVShowDetailService {
         group.enter()
         NetworkManager.shared.request(DetailAPI.tvShowVideo(tvShowID: tvShowID)) { [weak self] result in
             guard let self else { return }
-            switch result {
-            case .success(let response):
-                tvVideoModel = mapVideoResponse(from: response.data)!
-            case .failure(let error):
-                print(error)
+            let mappingResult: Result<VideoResponseModel, PresentableError> = ResponseMapper.map(result)
+            if let mappingTvVideo = try? mappingResult.get() {
+                tvVideoModel = mappingTvVideo.results
             }
             group.leave()
         }
@@ -69,11 +65,9 @@ final class TVShowDetailService {
         group.enter()
         NetworkManager.shared.request(DetailAPI.tvShowCredits(tvShowID: tvShowID)) { [weak self] result in
             guard let self else { return }
-            switch result {
-            case .success(let response):
-                tvCastModel = mapCreditsResponse(from: response.data)!
-            case .failure(let error):
-                print(error)
+            let mappingResult: Result<TVShowCastModel, PresentableError> = ResponseMapper.map(result)
+            if let mappingTvCredits = try? mappingResult.get() {
+                tvCastModel = mappingTvCredits.cast
             }
             group.leave()
         }
@@ -84,8 +78,8 @@ final class TVShowDetailService {
         return response
     }
     
-    private func mapVideoResponse(from data: Data) -> [Results]? {
-        let response  = try! JSONDecoder().decode(MovieVideoModel.self, from: data)
+    private func mapVideoResponse(from data: Data) -> [VideoItem]? {
+        let response  = try! JSONDecoder().decode(VideoResponseModel.self, from: data)
         return response.results
     }
     

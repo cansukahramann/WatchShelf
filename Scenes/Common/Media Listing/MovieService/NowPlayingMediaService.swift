@@ -8,14 +8,10 @@
 import Moya
 
 struct NowPlayingMediaService: MediaServiceProtocol {
-    func fetchMedia(requestModel: CommonRequestModel, completion: @escaping (Result<[Media], any Error>) -> Void) {
-        NetworkManager.shared.request(ContentAPI.nowPlayingMovie(requestModel)) { result in
-            switch result {
-            case let .success(response):
-                completion(map(data: response.data))
-            case let .failure(error):
-                completion(.failure(error))
-            }
+    func fetchMedia(requestModel: CommonRequestModel, completion: @escaping (Result<[Media], PresentableError>) -> Void) {
+        NetworkManager.shared.request(ContentAPI.nowPlayingMovie(requestModel)) {
+            let mappingResult: Result<MediaResponseModel, PresentableError> = ResponseMapper.map($0)
+            completion(mappingResult.map({ $0.results }))
         }
     }
 }
