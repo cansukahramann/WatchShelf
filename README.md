@@ -1,6 +1,6 @@
 # WatchShelf
 
-WatchShelf is a movie and series tracking iOS application designed to help users discover, organize, and explore detailed information about their favorite movies and series. It is built with the MVVM architecture and uses data from The Movie Database. The app is created with Swift Package Manager (SPM) and has its own network layer.
+WatchShelf is a movie and series tracking iOS application designed to help users discover, organize, and explore detailed information about their favorite movies and series. It is built with the MVVM architecture and uses data from  [The Movie Database](https://www.themoviedb.org/). The app is created with Swift Package Manager (SPM) and has its own network layer.
 
 ## General Features
 
