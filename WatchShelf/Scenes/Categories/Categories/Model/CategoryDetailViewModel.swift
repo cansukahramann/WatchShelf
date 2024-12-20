@@ -14,7 +14,7 @@ protocol CategoryDetailViewModelDelegate: AnyObject {
 }
 
 final class CategoryDetailViewModel {
-    var detailModel: [DiscoverResult] = [] {
+    var categoryDetailResults: [DiscoverResult] = [] {
         didSet {
             delegate?.updateCollectionView()
         }
@@ -38,12 +38,12 @@ final class CategoryDetailViewModel {
     }
     
     private func checkEmptyContent() {
-        delegate?.setNoContentVisible(detailModel.isEmpty)
+        delegate?.setNoContentVisible(categoryDetailResults.isEmpty)
     }
     
     private func reset() {
         page = 1
-        detailModel = []
+        categoryDetailResults = []
         delegate?.setNoContentVisible(false)
     }
     
@@ -65,7 +65,7 @@ final class CategoryDetailViewModel {
                 if detailModel.isEmpty, page != 1 {
                     self.shouldRequestNextPage = false
                 }
-                self.detailModel.append(contentsOf: detailModel)
+                self.categoryDetailResults.append(contentsOf: detailModel)
                 self.checkEmptyContent()
                 page += 1
             case .failure(let error):

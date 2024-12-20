@@ -45,7 +45,7 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
         return label
     }()
     
-    private let button: UIButton = {
+    private let filterButton: UIButton = {
         let button = UIButton()
         button.setTitle("Movie", for: .normal)
         button.setImage(UIImage(systemName: "chevron.up.chevron.down"), for: .normal)
@@ -85,9 +85,9 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
     }
     
     private func setupBarButtonWithContextMenu() {
-        button.menu = makeMenu()
-        button.showsMenuAsPrimaryAction = true
-        let barButton = UIBarButtonItem(customView: button)
+        filterButton.menu = makeMenu()
+        filterButton.showsMenuAsPrimaryAction = true
+        let barButton = UIBarButtonItem(customView: filterButton)
         navigationItem.rightBarButtonItem = barButton
     }
     
@@ -95,12 +95,12 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
     private func makeMenu() -> UIMenu {
         let filterOption1 = UIAction(title: "Movie", image: Image.movieTypeSymbol) { [unowned self] _ in
             viewModel.contentType = .movie
-            self.button.setTitle("Movie", for: .normal)
+            self.filterButton.setTitle("Movie", for: .normal)
         }
         
         let filterOption2 = UIAction(title: "Tv Show", image: Image.tvTypeSymbol) { [unowned self] _ in
             viewModel.contentType = .tvShow
-            self.button.setTitle("Tv Show", for: .normal)
+            self.filterButton.setTitle("Tv Show", for: .normal)
         }
         
         return UIMenu(title: "Filter Options", children: [filterOption1, filterOption2])
@@ -135,12 +135,12 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
 
 extension CategoryDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.detailModel.count
+        viewModel.categoryDetailResults.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(CategoryDetailCell.self, for: indexPath)
-        cell.configure(model: viewModel.detailModel[indexPath.item])
+        cell.configure(model: viewModel.categoryDetailResults[indexPath.item])
         return cell
     }
     
@@ -156,12 +156,12 @@ extension CategoryDetailViewController: UICollectionViewDataSource {
 extension CategoryDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? CategoryDetailCell else { return }
-        cell.configureRatingCircle(rating: viewModel.detailModel[indexPath.item].voteAverage ?? 0)
+        cell.configureRatingCircle(rating: viewModel.categoryDetailResults[indexPath.item].voteAverage ?? 0)
     }
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedItem = viewModel.detailModel[indexPath.item]
+        let selectedItem = viewModel.categoryDetailResults[indexPath.item]
         let selectedId = selectedItem.id
         
         if selectedItem.isMovie {

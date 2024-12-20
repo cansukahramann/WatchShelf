@@ -10,12 +10,11 @@ import Kingfisher
 
 final class CategoryDetailCell: UICollectionViewCell {
     private let posterImage = PosterImageView(isRound: false)
-    static let reuseID = "CategoryDetailCell"
     
     let shapeLayer = CAShapeLayer()
     let trackLayer = CAShapeLayer()
     
-    let percentagLabel: UILabel = {
+    let percentageLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -68,12 +67,12 @@ final class CategoryDetailCell: UICollectionViewCell {
         shapeLayer.shadowOffset = CGSize(width: 4, height: 4)
         shapeLayer.shadowRadius = 6
         contentView.layer.addSublayer(shapeLayer)
-        contentView.addSubview(percentagLabel)
+        contentView.addSubview(percentageLabel)
         NSLayoutConstraint.activate([
-            percentagLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: center.x - contentView.bounds.width / 2),
-            percentagLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: center.y - contentView.bounds.height / 2),
-            percentagLabel.widthAnchor.constraint(equalToConstant: 60),
-            percentagLabel.heightAnchor.constraint(equalToConstant: 30)
+            percentageLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: center.x - contentView.bounds.width / 2),
+            percentageLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: center.y - contentView.bounds.height / 2),
+            percentageLabel.widthAnchor.constraint(equalToConstant: 60),
+            percentageLabel.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         animateCircle(for: rating)
@@ -116,7 +115,7 @@ final class CategoryDetailCell: UICollectionViewCell {
         } else {
             posterImage.image = UIImage(named: "Placeholders/default-poster")
         }
-        percentagLabel.text = String(format: "%.1f", model.voteAverage ?? 0.0)
+        percentageLabel.text = String(format: "%.1f", model.voteAverage ?? 0.0)
         
         if model.isMovie {
             iconImageView.image = Image.movieTypeSymbol
