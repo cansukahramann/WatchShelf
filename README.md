@@ -34,8 +34,6 @@ This is the welcome screen displayed every time the application is opened. It fe
 The Movie screen is the first tab in the tab bar. The films are organized into four distinct categories: Popular, Now Playing, Upcoming, and Top Rated.
 - Users can access the categories more quickly.
 - The UI is entirely built programmatically.
-![Movie1](https://github.com/user-attachments/assets/d772f86b-8cb2-4fad-98b6-2c3f0bc7cb7e)
-
 
 ### TV Show
 
