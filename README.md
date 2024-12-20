@@ -27,6 +27,10 @@ WatchShelf is a movie and series tracking iOS application designed to help users
 
 This is the welcome screen displayed every time the application is opened. It features custom animations created manually using Swift code.
 
+![SplashVideo](https://github.com/user-name/repository-name/raw/main/assets/screenshot.png)
+
+
+
 ## Main Views (Movies - TV Shows)
 
 ### Movie
