@@ -35,6 +35,13 @@ The Movie screen is the first tab in the tab bar. The films are organized into f
 - Users can access the categories more quickly.
 - The UI is entirely built programmatically.
 
+
+![Movie1](https://github.com/user-attachments/assets/cf842bf4-2fb6-4e65-8c9c-c00a662cb130)
+<img src="https://github.com/user-attachments/assets/d772f86b-8cb2-4fad-98b6-2c3f0bc7cb7e" width="500" />
+
+
+
+
 ### TV Show
 
 This screen is the second tab in the tab bar. The TV shows are organized into four distinct categories: Airing Today, On the Air, Popular, and Top Rated.
