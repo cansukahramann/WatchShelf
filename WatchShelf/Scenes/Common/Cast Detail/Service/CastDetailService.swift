@@ -11,7 +11,7 @@ import Moya
 final class CastDetailService {
     private let group = DispatchGroup()
     
-    private var castDetail: CastDetailModel!
+    private var castDetail: CastDetailResponse!
     private var movieCredits = [CastCredit]()
     private var tvCredits = [CastCredit]()
     private var castID: Int
@@ -20,7 +20,7 @@ final class CastDetailService {
         self.castID = castID
     }
     
-    func loadCastDetail(completion: @escaping(Result<(CastDetailModel, [CastCredit], [CastCredit]), Error>) -> Void) {
+    func loadCastDetail(completion: @escaping(Result<(CastDetailResponse, [CastCredit], [CastCredit]), Error>) -> Void) {
         loadPeopleDetail()
         loadPeopleMovieCredits()
         loadPeopleTVCredits()
@@ -40,7 +40,7 @@ final class CastDetailService {
         group.enter()
         NetworkManager.shared.request(DetailAPI.peopleDetail(castID: castID)) { [weak self] result in
             guard let self else { return }
-            let mappingResult: Result<CastDetailModel, PresentableError> = ResponseMapper.map(result)
+            let mappingResult: Result<CastDetailResponse, PresentableError> = ResponseMapper.map(result)
             if let mappedCastDetail = try? mappingResult.get() {
                 castDetail = mappedCastDetail
             }

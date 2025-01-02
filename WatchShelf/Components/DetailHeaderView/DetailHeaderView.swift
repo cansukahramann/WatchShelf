@@ -82,7 +82,7 @@ final class DetailHeaderView: UIView {
         }
     }
     
-    func configureCastDetail(model: CastDetailModel) {
+    func configureCastDetail(model: CastDetailResponse) {
         titleLabel.text = model.name
         if let profilePath = model.profilePath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)"))
@@ -104,7 +104,7 @@ final class DetailHeaderView: UIView {
         }
     }
     
-    func configureTVDetail(model: TVShowDetailModel) {
+    func configureTVDetail(model: TVShowDetails) {
         titleLabel.text = model.name
         if let posterPath = model.posterPath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)"))

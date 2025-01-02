@@ -1,5 +1,5 @@
 //
-//  MediaResponseModel.swift
+//  MediaResponse.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 22.09.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MediaResponseModel: Codable{
+struct MediaResponse: Codable{
     let page: Int
     let results: [Media]
 }

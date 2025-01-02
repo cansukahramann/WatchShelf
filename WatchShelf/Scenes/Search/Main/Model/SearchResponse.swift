@@ -1,5 +1,5 @@
 //
-//  SearchResponseModel.swift
+//  SearchResponse.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 3.11.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchResponseModel: Decodable {
+struct SearchResponse: Decodable {
     let results: [SearchResult]
 }
 

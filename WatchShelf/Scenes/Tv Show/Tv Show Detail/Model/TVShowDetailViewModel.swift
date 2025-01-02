@@ -14,7 +14,7 @@ protocol TVShowDetailViewModelDelegate: AnyObject {
 
 class TVShowDetailViewModel {
     
-    var model: TVShowDetailModel!
+    var model: TVShowDetails!
     var tvCastModel = [SeriesCast]()
     var tvVideoModel = [VideoItem]()
     var tvSimilarModel = [SimilarResult]()

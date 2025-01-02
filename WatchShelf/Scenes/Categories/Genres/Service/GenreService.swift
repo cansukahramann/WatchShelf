@@ -25,7 +25,7 @@ final class GenreService {
         group.enter()
         NetworkManager.shared.request(api) { [weak self] result in
             guard let self else { return }
-            let mappingResult: Result<GenreModel, PresentableError> = ResponseMapper.map(result)
+            let mappingResult: Result<GenreListResponse, PresentableError> = ResponseMapper.map(result)
             if let model = try? mappingResult.get() {
                 genreModel.append(contentsOf: model.genres)
             }

@@ -8,8 +8,6 @@
 import UIKit
 
 final class IndicatorCell: UICollectionViewCell {
-    static let reuseID = "IndicatorCell"
-    
     var indicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
         view.style = .medium

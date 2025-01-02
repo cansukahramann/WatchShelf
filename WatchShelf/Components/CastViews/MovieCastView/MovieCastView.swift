@@ -23,7 +23,7 @@ final class MovieCastView: UIView {
     }()
     
     private let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
-    var model = [Cast]()
+    var model = [CastMember]()
     weak var delegate: CastViewDelegate?
     
     override init(frame: CGRect) {
@@ -57,7 +57,7 @@ final class MovieCastView: UIView {
         ])
     }
     
-    func updateCastView(model: [Cast]) {
+    func updateCastView(model: [CastMember]) {
         self.model = model
         collectionView.reloadData()
     }

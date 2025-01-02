@@ -14,7 +14,7 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
     private let videoView = VideoView()
     private let castView = TVShowCastView()
     
-    private var similarView: SimilarTVShowView!
+    private var similarTvShowView: SimilarTVShowView!
     private var viewModel: TVShowDetailViewModel!
     private var castDetailViewModel: CastDetailViewModel!
     
@@ -46,7 +46,7 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
         viewModel.fetchTVShowDetail()
         viewModel.delegate = self
         similarTVShowView()
-        similarView.delegate = self
+        similarTvShowView.delegate = self
         castView.delegate = self
     }
     
@@ -72,12 +72,12 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
         let similarView = SimilarTVShowContentFactory.makeView(with: viewModel.tvShowID) { tvShowID in
             self.similarTVShowSelected(tvShowID: tvShowID)
         }
-        self.similarView = similarView as? SimilarTVShowView
+        self.similarTvShowView = similarView as? SimilarTVShowView
         stackView.addArrangedSubview(similarView)
     }
     
     private func setRightBarButtonItem(with image: UIImage) {
-        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(addButtonTapped))
+        let rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(toggleFavoriteStatus))
         rightBarButtonItem.tintColor = .white
         navigationItem.setRightBarButton(rightBarButtonItem, animated: true)
     }
@@ -99,7 +99,7 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
         
         castView.isHidden = viewModel.tvCastModel.isEmpty
         videoView.isHidden = viewModel.tvVideoModel.isEmpty
-        similarView.hiddenIfNoData()
+        similarTvShowView.hiddenIfNoData()
     }
     
     func tvCastSelected(castID: Int) {
@@ -108,12 +108,12 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
     }
     
     func similarTVShowSelected(tvShowID: Int) {
-        let tvShowDetail = TVShowDetailFactory.makeCastDetailVC(tvShowID: tvShowID)
+        let tvShowDetail = TVShowDetailFactory.makeCastDetailViewController(tvShowID: tvShowID)
         navigationController?.pushViewController(tvShowDetail, animated: true)
     }
     
     @objc
-    private func addButtonTapped() {
+    private func toggleFavoriteStatus() {
         WatchListStore.shared.updateMediaInWatchList(viewModel.model.storeableMedia)
         showAlert(message: viewModel.favoriteStatusChangeMessage)
         setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark.withTintColor(.gray) : .add)

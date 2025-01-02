@@ -11,7 +11,7 @@ import Moya
 final class SearchService {
     func search(searchText: String,requestModel: CommonRequestModel, completion: @escaping (Result<[SearchResult], PresentableError>) -> Void) -> Cancellable {
         NetworkManager.shared.request(SearchAPI.multi(query: searchText, requestModel: requestModel)) {
-            let mappingResult: Result<SearchResponseModel, PresentableError> = ResponseMapper.map($0)
+            let mappingResult: Result<SearchResponse, PresentableError> = ResponseMapper.map($0)
             completion(mappingResult.map({ $0.results }))
         }
     }

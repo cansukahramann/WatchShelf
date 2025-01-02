@@ -15,7 +15,7 @@ protocol CastDetailViewModelDelegate: AnyObject {
 final class CastDetailViewModel {
     
     private var castID: Int
-    var castDetailModel: CastDetailModel!
+    var castDetailModel: CastDetailResponse!
     var movies = [CastCredit]()
     var tvShows = [CastCredit]()
     private let service: CastDetailService!

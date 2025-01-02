@@ -37,6 +37,8 @@ final class SearchCell: UITableViewCell {
         contentView.addSubviews(posterImageView, nameLabel, dateLabel, mediaType)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        posterImageView.layer.cornerRadius = 8
+        posterImageView.clipsToBounds = true
         
         NSLayoutConstraint.activate([
             posterImageView.heightAnchor.constraint(equalToConstant: 100),

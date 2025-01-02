@@ -24,19 +24,19 @@ enum HorizontalMediaListingVCFactory {
         makeContentVC(with: "Top Rated", service: TopRatedMediaService(), onItemSelection: onItemSelection)
     }
     
-    static func makeAiringTodayTVContentVC(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
+    static func makeAiringTodayContentViewController(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
         makeContentVC(with: "Airing Today", service: AiringTodayMediaService(), onItemSelection: onItemSelection)
     }
     
-    static func makeOnTheAirTVContentVC(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
+    static func makeOnTheAirTVContentViewController(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
         makeContentVC(with: "On The Air", service: OnTheAirMediaService(), onItemSelection: onItemSelection)
     }
     
-    static func makePopularTVContentVC(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
+    static func makePopularTVContentViewController(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
         makeContentVC(with: "Popular", service: PopularTVMediaService(), onItemSelection: onItemSelection)
     }
     
-    static func makeTopRatedTVContentVC(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
+    static func makeTopRatedTVContentViewController(onItemSelection: @escaping (Int) -> Void) -> UIViewController {
         makeContentVC(with: "Top Rated", service: TopRatedTVMediaService(), onItemSelection: onItemSelection)
     }
     

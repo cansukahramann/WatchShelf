@@ -9,7 +9,6 @@ import UIKit
 import Kingfisher
 
 final class CastCell: UICollectionViewCell {
-    static let reuseID = "CastCell"
     private var castRealName = Label(textColor: UIColor.white, font: .boldSystemFont(ofSize: 14), textAlignment: .center)
     private var castMovieName = Label(textColor: .white.withAlphaComponent(0.7), font: UIFont.systemFont(ofSize: 12), textAlignment: .center )
     private var posterImageView = PosterImageView(isRound: true)
@@ -57,7 +56,7 @@ final class CastCell: UICollectionViewCell {
         ])
     }
     
-    func configureMovieCast(model: Cast) {
+    func configureMovieCast(model: CastMember) {
         if let profilePath = model.profilePath {
             posterImageView.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)"))
         } else {

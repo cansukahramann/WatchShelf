@@ -167,7 +167,7 @@ extension CategoryDetailViewController: UICollectionViewDelegateFlowLayout {
         if selectedItem.isMovie {
             navigationController?.pushViewController(MovieDetailFactory.makeCastDetailVC(movieID: selectedId), animated: true)
         } else if selectedItem.isTVShow {
-            navigationController?.pushViewController(TVShowDetailFactory.makeCastDetailVC(tvShowID: selectedId), animated: true)
+            navigationController?.pushViewController(TVShowDetailFactory.makeCastDetailViewController(tvShowID: selectedId), animated: true)
         }
     }
     

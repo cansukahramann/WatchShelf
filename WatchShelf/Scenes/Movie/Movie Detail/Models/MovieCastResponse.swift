@@ -1,5 +1,5 @@
 //
-//  MovieCastModel.swift
+//  MovieCastResponse.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 20.10.2024.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct MovieCastModel: Codable {
+struct MovieCastResponse: Codable {
     let id: Int
-    let cast: [Cast]
+    let cast: [CastMember]
 }
 
-struct Cast: Codable {
+struct CastMember: Codable {
     let id: Int
     let name: String
     let profilePath: String?

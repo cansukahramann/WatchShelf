@@ -26,15 +26,15 @@ final class TvShowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
-        configureChildViewControllers()
+        addChildViewControllers()
     }
     
-    private func configureChildViewControllers() {
+    private func addChildViewControllers() {
         let viewControllers: [UIViewController] = [
-            HorizontalMediaListingVCFactory.makeAiringTodayTVContentVC(onItemSelection: onItemSelection),
-            HorizontalMediaListingVCFactory.makeOnTheAirTVContentVC(onItemSelection: onItemSelection),
-            HorizontalMediaListingVCFactory.makePopularTVContentVC(onItemSelection: onItemSelection),
-            HorizontalMediaListingVCFactory.makeTopRatedTVContentVC(onItemSelection: onItemSelection)
+            HorizontalMediaListingVCFactory.makeAiringTodayContentViewController(onItemSelection: onItemSelection),
+            HorizontalMediaListingVCFactory.makeOnTheAirTVContentViewController(onItemSelection: onItemSelection),
+            HorizontalMediaListingVCFactory.makePopularTVContentViewController(onItemSelection: onItemSelection),
+            HorizontalMediaListingVCFactory.makeTopRatedTVContentViewController(onItemSelection: onItemSelection)
         ]
         
         viewControllers.forEach { viewController in
@@ -45,7 +45,7 @@ final class TvShowViewController: UIViewController {
     }
     
     private func onItemSelection(id: Int) -> Void {
-        let tvShowDetailVC = TVShowDetailFactory.makeCastDetailVC(tvShowID: id)
+        let tvShowDetailVC = TVShowDetailFactory.makeCastDetailViewController(tvShowID: id)
         navigationController?.pushViewController(tvShowDetailVC, animated: true)
     }
     

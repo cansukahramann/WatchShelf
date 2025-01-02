@@ -12,7 +12,7 @@ final class MovieDetailService {
     private let group = DispatchGroup()
     private var movieDetail: MovieDetailModel!
     private var similarResults = [SimilarResult]()
-    private var movieCast = [Cast]()
+    private var movieCast = [CastMember]()
     private var movieVideo = [VideoItem]()
     private var movieID: Int
     
@@ -20,7 +20,7 @@ final class MovieDetailService {
         self.movieID = movieID
     }
     
-    func loadMovieDetail(completion: @escaping(Result<(MovieDetailModel, [Cast], [VideoItem]), Error>) -> Void) {
+    func loadMovieDetail(completion: @escaping(Result<(MovieDetailModel, [CastMember], [VideoItem]), Error>) -> Void) {
         loadMovieDetail()
         loadMovieCredits()
         loadMovieVideo()
@@ -52,7 +52,7 @@ final class MovieDetailService {
         group.enter()
         NetworkManager.shared.request(DetailAPI.movieCredits(movieID: movieID)) { [weak self] result in
             guard let self else { return }
-            let mappingResult: Result<MovieCastModel, PresentableError> = ResponseMapper.map(result)
+            let mappingResult: Result<MovieCastResponse, PresentableError> = ResponseMapper.map(result)
             if let mappedMovieCast = try? mappingResult.get() {
                 movieCast = mappedMovieCast.cast
             }
@@ -64,7 +64,7 @@ final class MovieDetailService {
         group.enter()
         NetworkManager.shared.request(DetailAPI.movieVideo(movieID: movieID)) { [weak self] result in
             guard let self else { return }
-            let mappingResult: Result<VideoResponseModel, PresentableError> = ResponseMapper.map(result)
+            let mappingResult: Result<VideoResponse, PresentableError> = ResponseMapper.map(result)
             if let mappedMovieVideo = try? mappingResult.get() {
                 movieVideo = mappedMovieVideo.results
             }

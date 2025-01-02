@@ -11,8 +11,7 @@ import Moya
 struct UpcomingMediaService: MediaServiceProtocol {
     func fetchMedia(requestModel: CommonRequestModel, completion: @escaping (Result<[Media], PresentableError>) -> Void) {
         NetworkManager.shared.request(ContentAPI.upcomingMovie(requestModel)) {
-            let mappingResult: Result<MediaResponseModel, PresentableError> = ResponseMapper.map($0)
-            completion(ResponseMapper.map($0))
+            let mappingResult: Result<MediaResponse, PresentableError> = ResponseMapper.map($0)
             completion(mappingResult.map({ $0.results }))
         }
     }

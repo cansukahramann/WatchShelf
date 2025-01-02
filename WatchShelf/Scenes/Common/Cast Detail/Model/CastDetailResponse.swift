@@ -1,5 +1,5 @@
 //
-//  CastDetailModel.swift
+//  CastDetailResponse.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 21.10.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct  CastDetailModel: Codable {
+struct  CastDetailResponse: Codable {
     let biography: String?
     let birthday: String?
     let id: Int

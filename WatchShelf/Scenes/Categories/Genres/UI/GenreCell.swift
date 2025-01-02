@@ -9,7 +9,6 @@ import UIKit
 
 
 final class GenreCell: UICollectionViewCell {
-    static let reuseID = "CategoryCell"
     private var categoryName = Label(font: UIFont.boldSystemFont(ofSize: 22), textAlignment: .center)
     private var gradientLayer: CAGradientLayer?
     

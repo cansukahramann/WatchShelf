@@ -26,7 +26,7 @@ final class SearchViewController: UITableViewController {
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         tableView.register(SearchCell.self)
-        tableView.register(IndicatorTableViewCell.self, forCellReuseIdentifier: IndicatorTableViewCell.reuseID)
+        tableView.register(IndicatorTableViewCell.self)
         viewModel.delegate = self
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
@@ -82,7 +82,7 @@ final class SearchViewController: UITableViewController {
         case .movie:
             navigationController?.pushViewController(MovieDetailFactory.makeCastDetailVC(movieID: selectedId), animated: true)
         case .tv:
-            navigationController?.pushViewController(TVShowDetailFactory.makeCastDetailVC(tvShowID: selectedId), animated: true)
+            navigationController?.pushViewController(TVShowDetailFactory.makeCastDetailViewController(tvShowID: selectedId), animated: true)
         case .person:
             break
         }

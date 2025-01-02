@@ -9,7 +9,6 @@ import UIKit
 import Kingfisher
 
 class PosterCell: UICollectionViewCell {
-    static let reuseID = "PosterCell"
     let posterImageView = PosterImageView(isRound: false)
     
     override init(frame: CGRect) {

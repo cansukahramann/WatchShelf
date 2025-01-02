@@ -1,5 +1,5 @@
 //
-//  DiscoverModel.swift
+//  DiscoverResponse.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 8.11.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DiscoverModel: Codable {
+struct DiscoverResponse: Codable {
     let results: [DiscoverResult]
 }
 
