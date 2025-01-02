@@ -7,18 +7,10 @@
 
 import UIKit
 
-final class DescriptionView: UIView {
-    let label: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 2
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textAlignment = .natural
-        label.textColor = .white.withAlphaComponent(0.7)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+final class DescriptionView: UIView { 
+    private let label = UILabel(textColor: .secondaryLabel, font: UIFont.systemFont(ofSize: 17), numberOfLines: 2)
     
-    let button: UIButton = {
+    private let button: UIButton = {
         let button = UIButton()
         button.setTitle("Read More", for: .normal)
         button.setTitleColor(.white, for: .normal)

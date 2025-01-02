@@ -8,7 +8,7 @@
 import UIKit
 
 final class IndicatorTableViewCell: UITableViewCell {
-    var indicator: UIActivityIndicatorView = {
+    let indicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
         view.style = .medium
         view.translatesAutoresizingMaskIntoConstraints = false

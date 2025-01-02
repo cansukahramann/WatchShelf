@@ -20,16 +20,7 @@ final class HorizontalMediaListingViewController: UIViewController, MediaListing
         return collectionView
     }()
     
-    private var categoryNameLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.textAlignment = .left
-        label.adjustsFontForContentSizeCategory = true
-        label.numberOfLines = 2
-        label.font = UIFont.preferredFont(forTextStyle: .headline)
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private let categoryNameLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 20), numberOfLines: 2)
     
     private var viewModel: MediaListingViewModel!
     var didSelectItem: ((_ id: Int) -> Void)?

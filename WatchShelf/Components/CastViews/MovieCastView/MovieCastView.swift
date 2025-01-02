@@ -12,7 +12,7 @@ protocol CastViewDelegate: AnyObject {
 }
 
 final class MovieCastView: UIView {
-    private var collectionView: UICollectionView = {
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -22,8 +22,8 @@ final class MovieCastView: UIView {
         return collectionView
     }()
     
-    private let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
-    var model = [CastMember]()
+    private let titleLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
+    private var model = [CastMember]()
     weak var delegate: CastViewDelegate?
     
     override init(frame: CGRect) {

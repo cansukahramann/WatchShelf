@@ -9,7 +9,7 @@ import UIKit
 
 
 final class GenreCell: UICollectionViewCell {
-    private var categoryName = Label(font: UIFont.boldSystemFont(ofSize: 22), textAlignment: .center)
+    private let categoryName = UILabel(font: UIFont.boldSystemFont(ofSize: 22), textAlignment: .center)
     private var gradientLayer: CAGradientLayer?
     
     override init(frame: CGRect) {

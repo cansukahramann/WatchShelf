@@ -9,9 +9,16 @@ import UIKit
 import Kingfisher
 
 final class CastCell: UICollectionViewCell {
-    private var castRealName = Label(textColor: UIColor.white, font: .boldSystemFont(ofSize: 14), textAlignment: .center)
-    private var castMovieName = Label(textColor: .white.withAlphaComponent(0.7), font: UIFont.systemFont(ofSize: 12), textAlignment: .center )
-    private var posterImageView = PosterImageView(isRound: true)
+    private let castRealName = UILabel(
+        font: .boldSystemFont(ofSize: 14),
+        textAlignment: .center
+    )
+    private let castMovieName = UILabel(
+        textColor: .secondaryLabel,
+        font: UIFont.systemFont(ofSize: 12),
+        textAlignment: .center
+    )
+    private let posterImageView = PosterImageView(isRound: true)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

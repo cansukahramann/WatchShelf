@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 final class GenreService {
-    private var group = DispatchGroup()
+    private let group = DispatchGroup()
     private var genreModel = [GenreResponse]()
     
     func loadGenre(completion: @escaping(Result<([GenreResponse]), PresentableError>) -> Void) {

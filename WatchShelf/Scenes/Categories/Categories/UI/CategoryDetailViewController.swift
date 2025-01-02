@@ -13,7 +13,7 @@ enum ContentType {
 }
 
 final class CategoryDetailViewController: UIViewController, CategoryDetailViewModelDelegate {
-    private var collectionView: UICollectionView = {
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
@@ -34,16 +34,12 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
         return collectionView
     }()
     
-    private let noContentLabel: UILabel = {
-        let label = UILabel()
-        label.text = "There is no content available for this category."
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .gray
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.isHidden = true
-        return label
-    }()
+    private let noContentLabel  = UILabel(
+        text: "There is no content available for this category.",
+        textColor: .tertiaryLabel, font: UIFont.systemFont(ofSize: 16),
+        numberOfLines: .zero,
+        textAlignment: .center
+    )
     
     private let filterButton: UIButton = {
         let button = UIButton()

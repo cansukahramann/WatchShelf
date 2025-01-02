@@ -13,7 +13,7 @@ protocol SimilarTVShowViewDelegate: AnyObject {
 
 final class SimilarTVShowView: UIView, SimilarTVShowViewModelDelegate {
     
-    private var collectionView: UICollectionView = {
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -23,7 +23,7 @@ final class SimilarTVShowView: UIView, SimilarTVShowViewModelDelegate {
         return collectionView
     }()
     
-    private var titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
+    private let titleLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
     private var viewModel: SimilarTVShowViewModel!
     weak var delegate: SimilarTVShowViewDelegate?
     var didSelectItem: ((_ id: Int) -> Void)? 

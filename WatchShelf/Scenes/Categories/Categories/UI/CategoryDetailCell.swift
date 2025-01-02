@@ -11,19 +11,12 @@ import Kingfisher
 final class CategoryDetailCell: UICollectionViewCell {
     private let posterImage = PosterImageView(isRound: false)
     
-    let shapeLayer = CAShapeLayer()
-    let trackLayer = CAShapeLayer()
-    
-    let percentageLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private let shapeLayer = CAShapeLayer()
+    private let trackLayer = CAShapeLayer()
    
-    let iconImageView: UIImageView = {
+    private let percentageLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .center)
+    
+    private let iconImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.tintColor = .white

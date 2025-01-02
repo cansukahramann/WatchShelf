@@ -10,7 +10,7 @@ import Kingfisher
 
 final class DetailHeaderView: UIView {
     private let posterImageView = PosterImageView(isRound: false)
-    private let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 20), numberOfLines: 0, textAlignment: .left)
+    private let titleLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 20), numberOfLines: 0, textAlignment: .left)
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()

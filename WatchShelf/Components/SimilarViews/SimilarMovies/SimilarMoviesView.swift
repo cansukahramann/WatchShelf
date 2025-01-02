@@ -12,7 +12,7 @@ protocol SimilarMoviesViewDelegate: AnyObject {
 }
 
 final class SimilarMoviesView: UIView, SimilarMovieViewModelDelegate {
-    private var collectionView: UICollectionView = {
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -22,7 +22,7 @@ final class SimilarMoviesView: UIView, SimilarMovieViewModelDelegate {
         return collectionView
     }()
     
-    let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
+    private let titleLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
     private var viewModel: SimilarMovieViewModel!
     weak var delegate: SimilarMoviesViewDelegate!
     var didSelectItem: ((_ id: Int) -> Void)?

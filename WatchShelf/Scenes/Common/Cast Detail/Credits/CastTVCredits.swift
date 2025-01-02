@@ -23,7 +23,7 @@ final class CastTVCredits: UIView {
     }()
     
     weak var delegate: CastTVCreditsDelegate?
-    private let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
+    private let titleLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
     private var model = [CastCredit]()
 
     override init(frame: CGRect) {

@@ -12,7 +12,7 @@ protocol TVShowCastViewDelegate: AnyObject {
 }
 
 final class TVShowCastView: UIView {
-    private var collectionView: UICollectionView = {
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -22,8 +22,8 @@ final class TVShowCastView: UIView {
         return collectionView
     }()
     
-    private let titleLabel = Label(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
-    var model = [SeriesCast]()
+    private let titleLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
+    private var model = [SeriesCast]()
     weak var delegate: TVShowCastViewDelegate?
     
     override init(frame: CGRect) {

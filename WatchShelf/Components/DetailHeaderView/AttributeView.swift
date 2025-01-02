@@ -9,7 +9,7 @@ import UIKit
 
 final class AttributeView: UIView {
     let attributeImage = UIImageView()
-    let attributeLabel = Label(font: UIFont.systemFont(ofSize: 15), numberOfLines: 0, textAlignment: .left)
+    let attributeLabel = UILabel(font: UIFont.systemFont(ofSize: 15), numberOfLines: 0, textAlignment: .left)
     
     override init(frame: CGRect) {
         super.init(frame: .zero)

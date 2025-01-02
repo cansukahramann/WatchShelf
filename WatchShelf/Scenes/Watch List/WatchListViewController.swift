@@ -9,7 +9,7 @@ import UIKit
 import Lottie
 
 final class WatchListViewController: UIViewController {
-    private var tableView: UITableView = {
+    private let tableView: UITableView = {
         var tableView = UITableView()
         tableView.register(SearchCell.self)
         tableView.separatorStyle = .singleLine
@@ -18,7 +18,7 @@ final class WatchListViewController: UIViewController {
         return tableView
     }()
     
-    private var emptyStateAnimationView: LottieAnimationView = {
+    private let emptyStateAnimationView: LottieAnimationView = {
         let animationView = LottieAnimationView(name: "EmptyAnimations/empty_watchlist_animation")
         animationView.translatesAutoresizingMaskIntoConstraints = false
         animationView.contentMode = .scaleAspectFit

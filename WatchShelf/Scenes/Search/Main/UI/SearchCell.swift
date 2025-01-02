@@ -10,8 +10,8 @@ import Kingfisher
 
 final class SearchCell: UITableViewCell {
     private let posterImageView  = PosterImageView(isRound: false)
-    private let nameLabel = Label(font: UIFont.boldSystemFont(ofSize: 20), textAlignment: .left)
-    private let dateLabel = Label(font: UIFont.systemFont(ofSize: 18), textAlignment: .left)
+    private let nameLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 20), textAlignment: .left)
+    private let dateLabel = UILabel(font: UIFont.systemFont(ofSize: 18), textAlignment: .left)
     
     private let mediaType: UIImageView = {
         let imageView = UIImageView()

@@ -26,7 +26,7 @@ final class GenreViewController: UIViewController, GenreViewModelDelegate {
         return collectionView
     }()
     
-    var viewModel: GenreViewModel!
+    private var viewModel: GenreViewModel!
     
     convenience init(viewModel: GenreViewModel!) {
         self.init(nibName: nil, bundle: nil)

@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 struct SimilarTVService: SimilarServiceProtocol {
-    private var provider = MoyaProvider<SimilarAPI>()
+    private let provider = MoyaProvider<SimilarAPI>()
     
     func similarContentSelected(contentID: Int, requestModel: CommonRequestModel, completion: @escaping (Result<[SimilarResult], any Error>) -> Void) {
         provider.request(.tvShowSimilar(seriesID: contentID, requestModel: requestModel)) { result in
