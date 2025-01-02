@@ -8,11 +8,11 @@
 import UIKit
 
 
-final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate, TVShowCastViewDelegate, SimilarTVShowViewDelegate {
+final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate, SimilarTVShowViewDelegate {
     private let headerView = DetailHeaderView()
     private let descriptionView = DescriptionView()
     private let videoView = VideoView()
-    private let castView = TVShowCastView()
+    private let castView = CastView()
     
     private var similarTvShowView: SimilarTVShowView!
     private var viewModel: TVShowDetailViewModel!
@@ -47,7 +47,11 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
         viewModel.delegate = self
         similarTVShowView()
         similarTvShowView.delegate = self
-        castView.delegate = self
+        
+        castView.onCastSelection = { [unowned self] id in
+            let castDetailVC = CastDetailFactory.makeCastDetailVC(castID: id)
+            navigationController?.pushViewController(castDetailVC, animated: true)
+        }
     }
     
     private func setupUI() {
@@ -95,16 +99,10 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
         headerView.configureTVDetail(model: viewModel.model)
         descriptionView.configure(text: viewModel.model.overview)
         videoView.getVideo(model: viewModel.tvVideoModel)
-        castView.updateCastView(model: viewModel.tvCastModel)
-        
+        castView.casts = viewModel.tvCastModel
         castView.isHidden = viewModel.tvCastModel.isEmpty
         videoView.isHidden = viewModel.tvVideoModel.isEmpty
         similarTvShowView.hiddenIfNoData()
-    }
-    
-    func tvCastSelected(castID: Int) {
-        let castDetailVC = CastDetailFactory.makeCastDetailVC(castID: castID)
-        navigationController?.pushViewController(castDetailVC, animated: true)
     }
     
     func similarTVShowSelected(tvShowID: Int) {

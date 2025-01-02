@@ -15,7 +15,7 @@ protocol TVShowDetailViewModelDelegate: AnyObject {
 class TVShowDetailViewModel {
     
     var model: TVShowDetails!
-    var tvCastModel = [SeriesCast]()
+    var tvCastModel = [Cast]()
     var tvVideoModel = [VideoItem]()
     var tvSimilarModel = [SimilarResult]()
     weak var delegate: TVShowDetailViewModelDelegate!
@@ -41,7 +41,9 @@ class TVShowDetailViewModel {
             switch result {
             case .success(let (model, tvCastModel, tvVideoModel, tvSimilarModel)):
                 self.model = model
-                self.tvCastModel = tvCastModel
+                self.tvCastModel = tvCastModel.map({ seriesCast in
+                    Cast(id: seriesCast.id, realName: seriesCast.name, characterName: seriesCast.character, imagePath: seriesCast.profilePath)
+                })
                 self.tvVideoModel = tvVideoModel
                 self.tvSimilarModel = tvSimilarModel
                 self.delegate.didFetchDetail()

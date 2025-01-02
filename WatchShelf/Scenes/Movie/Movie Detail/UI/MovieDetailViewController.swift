@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class MovieDetailViewController: UIViewController, MovieDetailViewModelDelegate, SimilarMoviesViewDelegate, CastViewDelegate {
+final class MovieDetailViewController: UIViewController, MovieDetailViewModelDelegate, SimilarMoviesViewDelegate {
     private let headerView = DetailHeaderView()
     private let descriptionView = DescriptionView()
     private let videoView = VideoView()
-    private let castView = MovieCastView()
+    private let castView = CastView()
     
     private var viewModel: MovieDetailViewModel!
     private var similarMoviesView: SimilarMoviesView!
@@ -44,8 +44,11 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         configureUI()
         similarView()
         similarMoviesView.delegate = self
-        castView.delegate = self
-       
+        
+        castView.onCastSelection = { [unowned self] id in
+            let vc = CastDetailFactory.makeCastDetailVC(castID: id)
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     private func similarView() {
@@ -94,17 +97,12 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         let detailVC = MovieDetailFactory.makeCastDetailVC(movieID: movieID)
         navigationController?.pushViewController(detailVC, animated: true)
     }
-    
-    func movieCastSelected(castID: Int) {
-        let vc = CastDetailFactory.makeCastDetailVC(castID: castID)
-        navigationController?.pushViewController(vc, animated: true)
-    }
         
     func didFetchDetail() {
         setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark.withTintColor(.gray) : .add)
         headerView.configure(model: viewModel.detailModel)
         descriptionView.configure(text: viewModel.detailModel.overview)
-        castView.updateCastView(model: viewModel.movieCastModel)
+        castView.casts = viewModel.movieCastModel
         videoView.getVideo(model: viewModel.movieVideoModel)
         
         castView.isHidden = viewModel.movieCastModel.isEmpty
