@@ -9,7 +9,7 @@ import UIKit
 
 final class AttributeView: UIView {
     let attributeImage = UIImageView()
-    let attributeLabel = UILabel(font: UIFont.systemFont(ofSize: 15), numberOfLines: 0, textAlignment: .left)
+    let attributeLabel = UILabel(textColor:.secondaryLabel, font: UIFont.systemFont(ofSize: 15), numberOfLines: 0, textAlignment: .left)
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -24,7 +24,7 @@ final class AttributeView: UIView {
     private func configureImage() {
         addSubview(attributeImage)
         attributeImage.translatesAutoresizingMaskIntoConstraints = false
-        attributeImage.tintColor = .white.withAlphaComponent(0.9)
+        attributeImage.tintColor = .secondaryLabel
         
         NSLayoutConstraint.activate([
             attributeImage.widthAnchor.constraint(equalToConstant: 16),
@@ -36,8 +36,6 @@ final class AttributeView: UIView {
     
     private func configureLabel() {
         addSubview(attributeLabel)
-        attributeLabel.textColor = .white.withAlphaComponent(0.7)
-        attributeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             attributeLabel.topAnchor.constraint(equalTo: topAnchor),
