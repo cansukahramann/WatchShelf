@@ -13,9 +13,9 @@ protocol MovieDetailViewModelDelegate: AnyObject {
 }
 
 final class MovieDetailViewModel {
-    var detailModel: MovieDetailModel!
-    var movieCastModel = [Cast]()
-    var movieVideoModel = [VideoItem]()
+    private(set) var detailModel: MovieDetailModel!
+    private(set) var casts = [Cast]()
+    private(set) var movieVideoModel = [VideoItem]()
     var movieID: Int
     private let service: MovieDetailService!
     weak var delegate: MovieDetailViewModelDelegate?
@@ -39,7 +39,7 @@ final class MovieDetailViewModel {
             switch result {
             case .success(let (detailModel, movieCastModel, movieVideoModel)):
                 self.detailModel = detailModel
-                self.movieCastModel = movieCastModel.map({ moviesCast in
+                self.casts = movieCastModel.map({ moviesCast in
                     Cast(id: moviesCast.id, realName: moviesCast.name, characterName: moviesCast.character, imagePath: moviesCast.profilePath)
                 })
                 self.movieVideoModel = movieVideoModel

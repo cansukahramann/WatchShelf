@@ -20,7 +20,7 @@ final class CastView: UIView {
     private let titleLabel = UILabel(text:"Top Billed Cast", font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
     
     var casts = [Cast]() {
-        didSet { collectionView.reloadData() }
+        didSet { collectionView.reloadData() }
     }
     
     var onCastSelection: ((_ id: Int) -> Void)?

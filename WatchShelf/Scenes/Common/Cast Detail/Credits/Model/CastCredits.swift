@@ -7,16 +7,11 @@
 
 import Foundation
 
-struct CastCredits: Codable {
+struct CastCredits: Decodable {
     let cast: [CastCredit]
 }
 
-struct CastCredit: Codable {
+struct CastCredit: Decodable {
     let id: Int
     let posterPath: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case posterPath = "poster_path"
-    }
 }

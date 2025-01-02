@@ -14,13 +14,13 @@ protocol TVShowDetailViewModelDelegate: AnyObject {
 
 class TVShowDetailViewModel {
     
-    var model: TVShowDetails!
-    var tvCastModel = [Cast]()
-    var tvVideoModel = [VideoItem]()
-    var tvSimilarModel = [SimilarResult]()
+    private(set) var model: TVShowDetails!
+    private(set) var casts = [Cast]()
+    private(set) var tvVideoModel = [VideoItem]()
+    private(set) var tvSimilarModel = [SimilarResult]()
+    var tvShowID: Int
     weak var delegate: TVShowDetailViewModelDelegate!
     private let service: TVShowDetailService!
-    var tvShowID: Int
     
     init(service: TVShowDetailService, tvShowID: Int) {
         self.service = service
@@ -41,7 +41,7 @@ class TVShowDetailViewModel {
             switch result {
             case .success(let (model, tvCastModel, tvVideoModel, tvSimilarModel)):
                 self.model = model
-                self.tvCastModel = tvCastModel.map({ seriesCast in
+                self.casts = tvCastModel.map({ seriesCast in
                     Cast(id: seriesCast.id, realName: seriesCast.name, characterName: seriesCast.character, imagePath: seriesCast.profilePath)
                 })
                 self.tvVideoModel = tvVideoModel

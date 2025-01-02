@@ -7,24 +7,17 @@
 
 import Foundation
 
-struct DiscoverResponse: Codable {
+struct DiscoverResponse: Decodable {
     let results: [DiscoverResult]
 }
 
-struct DiscoverResult: Codable {
+struct DiscoverResult: Decodable {
     let id: Int
     let title: String?
     let name: String?
     let voteAverage: Double?
     let posterPath: String?
     let genreIds: [Int]
-    
-    enum CodingKeys: String, CodingKey {
-        case id, title, name 
-        case voteAverage = "vote_average"
-        case posterPath = "poster_path"
-        case genreIds = "genre_ids"
-    }
     
     var isMovie: Bool {
         return title != nil

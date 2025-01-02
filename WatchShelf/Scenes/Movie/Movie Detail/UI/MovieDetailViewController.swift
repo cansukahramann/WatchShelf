@@ -102,10 +102,10 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark.withTintColor(.gray) : .add)
         headerView.configure(model: viewModel.detailModel)
         descriptionView.configure(text: viewModel.detailModel.overview)
-        castView.casts = viewModel.movieCastModel
+        castView.casts = viewModel.casts
         videoView.getVideo(model: viewModel.movieVideoModel)
-        
-        castView.isHidden = viewModel.movieCastModel.isEmpty
+    
+        castView.isHidden = viewModel.casts.isEmpty
         videoView.isHidden = viewModel.movieVideoModel.isEmpty
         similarMoviesView.hiddenIfNoData()
     }

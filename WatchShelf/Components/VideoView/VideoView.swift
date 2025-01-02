@@ -59,6 +59,6 @@ final class VideoView: UIView, WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        UIHelper.showHUDerrorMessage()
+        UIHelper.showHUDerror()
     }
 }

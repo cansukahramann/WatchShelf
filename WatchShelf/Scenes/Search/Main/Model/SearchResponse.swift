@@ -19,14 +19,6 @@ struct SearchResult: Decodable {
     let title: String?
     let name: String?
     
-    enum CodingKeys: String, CodingKey {
-        case id, title, name
-        case posterPath = "poster_path"
-        case mediaType = "media_type"
-        case releaseDate = "release_date"
-
-    }
-    
     enum MediaType: String, Decodable {
         case movie
         case tv

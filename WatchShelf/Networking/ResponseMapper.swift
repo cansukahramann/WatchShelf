@@ -11,7 +11,7 @@ import Moya
 enum ResponseMapper {
     private static let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
-//        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }()
     

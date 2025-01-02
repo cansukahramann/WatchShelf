@@ -7,18 +7,13 @@
 
 import Foundation
 
-struct TVShowCastResponse: Codable {
+struct TVShowCastResponse: Decodable {
     let cast: [SeriesCast]
 }
 
-struct SeriesCast: Codable {
+struct SeriesCast: Decodable {
     let id: Int
     let name: String
     let profilePath: String?
     let character: String
-    
-    enum CodingKeys: String, CodingKey {
-        case id, name, character
-        case profilePath = "profile_path"
-    }
 }

@@ -7,21 +7,15 @@
 
 import Foundation
 
-struct TrendingResponse: Codable {
+struct TrendingResponse: Decodable {
     let results: [TrendingAll]
 }
 
-struct TrendingAll: Codable {
+struct TrendingAll: Decodable {
     let posterPath: String?
     let id: Int
     let mediaType: String
     
-    enum CodingKeys: String, CodingKey {
-        case posterPath = "poster_path"
-        case id
-        case mediaType = "media_type"
-        
-    }
     var type: MediaType? {
         switch mediaType {
         case "movie":

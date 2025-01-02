@@ -99,8 +99,8 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
         headerView.configureTVDetail(model: viewModel.model)
         descriptionView.configure(text: viewModel.model.overview)
         videoView.getVideo(model: viewModel.tvVideoModel)
-        castView.casts = viewModel.tvCastModel
-        castView.isHidden = viewModel.tvCastModel.isEmpty
+        castView.casts = viewModel.casts
+        castView.isHidden = viewModel.casts.isEmpty
         videoView.isHidden = viewModel.tvVideoModel.isEmpty
         similarTvShowView.hiddenIfNoData()
     }

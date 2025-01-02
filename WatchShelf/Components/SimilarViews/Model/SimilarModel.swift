@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct SimilarModel: Codable {
+struct SimilarModel: Decodable {
     let page: Int
     let results: [SimilarResult]
 }
 
-struct SimilarResult: Codable {
+struct SimilarResult: Decodable {
     let id: Int
     let posterPath: String?
     
