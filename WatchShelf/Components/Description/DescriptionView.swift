@@ -14,8 +14,8 @@ final class DescriptionView: UIView {
         let button = UIButton()
         button.setTitle("Read More", for: .normal)
         button.setTitleColor(.label , for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
+        button.translatesAutoresizingMaskIntoConstraints = false 
         return button
     }()
     
@@ -38,7 +38,7 @@ final class DescriptionView: UIView {
             label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             
-            button.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8),
+            button.topAnchor.constraint(equalTo: label.bottomAnchor),
             button.trailingAnchor.constraint(equalTo: label.trailingAnchor),
             button.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
