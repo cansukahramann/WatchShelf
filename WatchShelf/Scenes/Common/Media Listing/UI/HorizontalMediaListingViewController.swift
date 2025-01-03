@@ -72,47 +72,37 @@ final class HorizontalMediaListingViewController: UIViewController, MediaListing
 
 extension HorizontalMediaListingViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (viewModel.allContentResults.count > 0) ? (viewModel.allContentResults.count + 1) : 0
+        return viewModel.MediaList.isEmpty ? .zero : viewModel.MediaList.count + (viewModel.hasLoadingFooter ? 1 : .zero)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item != viewModel.allContentResults.count {
-            let cell = collectionView.dequeueCell(PosterCell.self, for: indexPath)
-            cell.configure(posterPath: viewModel.allContentResults[indexPath.item].posterPath)
-            return cell
-        } else {
+        let lastIndex = viewModel.MediaList.count
+        let currentIndex = indexPath.item
+        
+        if viewModel.hasLoadingFooter && currentIndex == lastIndex {
             let cell = collectionView.dequeueCell(IndicatorCell.self, for: indexPath)
             cell.indicator.startAnimating()
+            return cell
+        } else {
+            let cell = collectionView.dequeueCell(PosterCell.self, for: indexPath)
+            cell.configure(posterPath: viewModel.MediaList[indexPath.item].posterPath)
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if (indexPath.item == viewModel.allContentResults.count ) && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage{
-            _ = (Int(viewModel.allContentResults.count) / 20) + 1
-            viewModel.fetchAllContent()
-        }
+        guard indexPath.item == viewModel.MediaList.count - 3 else { return }
+        viewModel.fetchAllContent()
     }
 }
 
 extension HorizontalMediaListingViewController: UICollectionViewDelegateFlowLayout {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let offsetX = scrollView.contentOffset.x
-        let contentWidth = scrollView.contentSize.height
-        let width = scrollView.frame.size.width
-        
-        if offsetX >= contentWidth - (2 * width) {
-            viewModel.fetchAllContent()
-            self.updateCollectionView()
-        }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: (collectionView.bounds.width - 16) / 2, height: collectionView.bounds.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedItemID = viewModel.allContentResults[indexPath.item].id
+        let selectedItemID = viewModel.MediaList[indexPath.item].id
         didSelectItem?(selectedItemID)
     }
     

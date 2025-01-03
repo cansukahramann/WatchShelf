@@ -20,8 +20,8 @@ enum UIHelper {
         ProgressHUD.dismiss()
     }
     
-    static func showHUDerror() {
-        ProgressHUD.failed("Something went wrong")
+    static func showHUDerror(_ message: String = "Something went wrong") {
+        ProgressHUD.failed(message)
         ProgressHUD.colorAnimation = .white
         ProgressHUD.colorHUD = .lightText
     }
