@@ -9,7 +9,7 @@ import UIKit
 
 final class MovieDetailViewController: UIViewController, MovieDetailViewModelDelegate, SimilarMoviesViewDelegate {
     private let headerView = DetailHeaderView()
-    private let descriptionView = DescriptionView()
+    private let descriptionView = ExpandableDescriptionView()
     private let videoView = VideoView()
     private let castView = CastView()
     

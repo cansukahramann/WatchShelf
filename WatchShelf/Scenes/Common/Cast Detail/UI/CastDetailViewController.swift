@@ -10,7 +10,7 @@ import UIKit
 final class CastDetailViewController: UIViewController, CastMovieCreditsDelegate, CastTVCreditsDelegate, CastDetailViewModelDelegate{
     
     private let headerView = DetailHeaderView()
-    private let descriptionView = DescriptionView()
+    private let descriptionView = ExpandableDescriptionView()
     private let castMovieCredits = CastMovieCredits()
     private let castTVCredits = CastTVCredits()
     

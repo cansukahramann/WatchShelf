@@ -10,7 +10,7 @@ import UIKit
 
 final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate, SimilarTVShowViewDelegate {
     private let headerView = DetailHeaderView()
-    private let descriptionView = DescriptionView()
+    private let descriptionView = ExpandableDescriptionView()
     private let videoView = VideoView()
     private let castView = CastView()
     

@@ -26,4 +26,14 @@ extension UILabel {
         
         translatesAutoresizingMaskIntoConstraints = false
     }
+    
+    func requiredNumberOfLines() -> Int {
+        guard let font else { return .zero }
+        
+        let size = CGSize(width: bounds.width, height: .greatestFiniteMagnitude)
+        let boundingRect = (text ?? "").boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: [.font : font], context: nil )
+        let requiredHeightToDrawText = boundingRect.height
+        let requiredNumberOfLinesForText = requiredHeightToDrawText / font.lineHeight
+        return Int(ceil(requiredNumberOfLinesForText))
+    }
 }
