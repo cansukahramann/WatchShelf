@@ -39,14 +39,20 @@ final class MovieDetailViewModel {
             switch result {
             case .success(let (detailModel, movieCastModel, movieVideoModel)):
                 self.detailModel = detailModel
-                self.casts = movieCastModel.map({ moviesCast in
-                    Cast(id: moviesCast.id, realName: moviesCast.name, characterName: moviesCast.character, imagePath: moviesCast.profilePath)
-                })
+                self.casts = movieCastModel.map()
                 self.movieVideoModel = movieVideoModel
                 self.delegate?.didFetchDetail()
             case .failure(let error):
                 print(error)
             }
+        }
+    }
+}
+
+extension Array where Element == CastMember {
+    func map() -> [Cast] {
+        self.map {
+            Cast(id: $0.id, realName: $0.name, characterName: $0.character, imagePath: $0.profilePath)
         }
     }
 }

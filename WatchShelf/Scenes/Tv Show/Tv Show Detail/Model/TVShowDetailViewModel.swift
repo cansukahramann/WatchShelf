@@ -41,9 +41,7 @@ class TVShowDetailViewModel {
             switch result {
             case .success(let (model, tvCastModel, tvVideoModel, tvSimilarModel)):
                 self.model = model
-                self.casts = tvCastModel.map({ seriesCast in
-                    Cast(id: seriesCast.id, realName: seriesCast.name, characterName: seriesCast.character, imagePath: seriesCast.profilePath)
-                })
+                self.casts = tvCastModel.map()
                 self.tvVideoModel = tvVideoModel
                 self.tvSimilarModel = tvSimilarModel
                 self.delegate.didFetchDetail()
@@ -54,4 +52,10 @@ class TVShowDetailViewModel {
     }
 }
 
-
+extension Array where Element == SeriesCast {
+    func map() -> [Cast] {
+        self.map {
+            Cast(id: $0.id, realName: $0.name, characterName: $0.character, imagePath: $0.profilePath)
+        }
+    }
+}
