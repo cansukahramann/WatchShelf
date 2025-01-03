@@ -16,14 +16,14 @@ final class CastDetailViewController: UIViewController, CastMovieCreditsDelegate
     
     private var viewModel: CastDetailViewModel!
     
-    private let scrollView: UIScrollView = {
+    let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemBackground
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
-    private let stackView: UIStackView = {
+    let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 18
@@ -36,7 +36,7 @@ final class CastDetailViewController: UIViewController, CastMovieCreditsDelegate
         castMovieCredits.delegate = self
         castTVCredits.delegate = self
         viewModel.delegate = self
-        setup()
+        setupConstraints()
         configureUI()
         viewModel.fetchCastDetail()
     }
@@ -44,24 +44,6 @@ final class CastDetailViewController: UIViewController, CastMovieCreditsDelegate
     convenience init(viewModel: CastDetailViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-    }
-    
-    private func setup() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(stackView)
-        
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
     }
     
     func configureUI() {

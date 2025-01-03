@@ -43,17 +43,6 @@ final class VideoView: UIView, WKNavigationDelegate {
         
     }
     
-    func setupVideoView() {
-        addSubview(webView)
-        
-        NSLayoutConstraint.activate([
-            webView.topAnchor.constraint(equalTo: topAnchor),
-            webView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            webView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-            webView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-    }
-    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         UIHelper.dismissHUD()
     }

@@ -13,6 +13,7 @@ class PosterCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        posterImageView.contentMode = .scaleAspectFill
         setupConstraint()
     }
     
@@ -32,17 +33,5 @@ class PosterCell: UICollectionViewCell {
         } else {
             posterImageView.image = UIImage(named: "Placeholders/default-poster")
         }
-    }
-
-    private func setupConstraint() {
-        contentView.addSubview(posterImageView)
-        posterImageView.contentMode = .scaleAspectFill
-        
-        NSLayoutConstraint.activate([
-            posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            posterImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
     }
 }

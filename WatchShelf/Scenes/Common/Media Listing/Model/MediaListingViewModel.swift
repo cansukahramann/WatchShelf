@@ -21,7 +21,7 @@ final class MediaListingViewModel {
     private var shouldRequestNextPage = true
     private var isFetchingContent = false
     
-    var hasLoadingFooter: Bool {
+    var hasLoadingIndicator: Bool {
         shouldRequestNextPage
     }
     

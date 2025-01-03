@@ -9,7 +9,7 @@ import UIKit
 import Lottie
 
 final class WatchListViewController: UIViewController {
-    private let tableView: UITableView = {
+    let tableView: UITableView = {
         var tableView = UITableView()
         tableView.register(SearchCell.self)
         tableView.separatorStyle = .singleLine
@@ -18,7 +18,7 @@ final class WatchListViewController: UIViewController {
         return tableView
     }()
     
-    private let emptyStateAnimationView: LottieAnimationView = {
+    let emptyStateAnimationView: LottieAnimationView = {
         let animationView = LottieAnimationView(name: "EmptyAnimations/empty_watchlist_animation")
         animationView.translatesAutoresizingMaskIntoConstraints = false
         animationView.contentMode = .scaleAspectFit
@@ -29,7 +29,7 @@ final class WatchListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupConstraints()
         tableView.dataSource = self
         tableView.delegate = self
         checkEmptyState()
@@ -39,22 +39,6 @@ final class WatchListViewController: UIViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
         checkEmptyState()
-    }
-    
-    private func setupUI() {
-        view.addSubviews(tableView, emptyStateAnimationView)
-        
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            emptyStateAnimationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emptyStateAnimationView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            emptyStateAnimationView.widthAnchor.constraint(equalToConstant: 300),
-            emptyStateAnimationView.heightAnchor.constraint(equalToConstant: 300)
-        ])
     }
     
     private func checkEmptyState() {

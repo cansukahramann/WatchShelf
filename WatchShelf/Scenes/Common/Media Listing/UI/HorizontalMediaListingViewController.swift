@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 final class HorizontalMediaListingViewController: UIViewController, MediaListingViewModelDelegate {
-    private var collectionView: UICollectionView = {
+    var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: .zero, left: 16, bottom: .zero, right: 16)
@@ -19,8 +19,7 @@ final class HorizontalMediaListingViewController: UIViewController, MediaListing
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    
-    private let categoryNameLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 20), numberOfLines: 2)
+    let categoryNameLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 20), numberOfLines: 2)
     
     private var viewModel: MediaListingViewModel!
     var didSelectItem: ((_ id: Int) -> Void)?
@@ -52,34 +51,18 @@ final class HorizontalMediaListingViewController: UIViewController, MediaListing
     func updateCollectionView() {
         collectionView.reloadData()
     }
-    
-    private func setupConstraints() {
-        view.addSubviews(collectionView, categoryNameLabel)
-        
-        NSLayoutConstraint.activate([
-            categoryNameLabel.topAnchor.constraint(equalTo: view.topAnchor),
-            categoryNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            categoryNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            
-            collectionView.topAnchor.constraint(equalTo: categoryNameLabel.bottomAnchor, constant: 10),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 250)
-        ])
-    }
 }
 
 extension HorizontalMediaListingViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.MediaList.isEmpty ? .zero : viewModel.MediaList.count + (viewModel.hasLoadingFooter ? 1 : .zero)
+        return viewModel.MediaList.isEmpty ? .zero : viewModel.MediaList.count + (viewModel.hasLoadingIndicator ? 1 : .zero)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let lastIndex = viewModel.MediaList.count
         let currentIndex = indexPath.item
         
-        if viewModel.hasLoadingFooter && currentIndex == lastIndex {
+        if viewModel.hasLoadingIndicator && currentIndex == lastIndex {
             let cell = collectionView.dequeueCell(IndicatorCell.self, for: indexPath)
             cell.indicator.startAnimating()
             return cell

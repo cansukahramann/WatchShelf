@@ -18,14 +18,14 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
     private var viewModel: TVShowDetailViewModel!
     private var castDetailViewModel: CastDetailViewModel!
     
-    private let scrollView: UIScrollView = {
+    let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemBackground
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
-    private let stackView: UIStackView = {
+    let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 18
@@ -41,7 +41,7 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .purple
-        setupUI()
+        setupConstraints()
         configureUI()
         viewModel.fetchTVShowDetail()
         viewModel.delegate = self
@@ -52,24 +52,6 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
             let castDetailVC = CastDetailFactory.makeCastDetailVC(castID: id)
             navigationController?.pushViewController(castDetailVC, animated: true)
         }
-    }
-    
-    private func setupUI() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(stackView)
-        
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
     }
     
     private func similarTVShowView() {

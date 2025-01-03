@@ -13,7 +13,7 @@ protocol SimilarTVShowViewDelegate: AnyObject {
 
 final class SimilarTVShowView: UIView, SimilarTVShowViewModelDelegate {
     
-    private let collectionView: UICollectionView = {
+    let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -23,7 +23,7 @@ final class SimilarTVShowView: UIView, SimilarTVShowViewModelDelegate {
         return collectionView
     }()
     
-    private let titleLabel = UILabel(font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
+    let titleLabel = UILabel(text: "Similar Shows", font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
     private var viewModel: SimilarTVShowViewModel!
     weak var delegate: SimilarTVShowViewDelegate?
     var didSelectItem: ((_ id: Int) -> Void)? 
@@ -33,28 +33,14 @@ final class SimilarTVShowView: UIView, SimilarTVShowViewModelDelegate {
         self.viewModel = viewModel
         viewModel.fetchTVShowSimilarModel()
         viewModel.delegate = self
-        setupCollectionView()
-        titleLabel.text = "Similar Shows"
+        configureUI()
+        setupConstraints()
     }
     
-    func setupCollectionView() {
-        addSubviews(titleLabel, collectionView)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    func configureUI() {
         collectionView.register(PosterCell.self)
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-            
-            collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-            collectionView.heightAnchor.constraint(equalToConstant: 250)
-        ])
     }
     
     func updateCollectionView() {

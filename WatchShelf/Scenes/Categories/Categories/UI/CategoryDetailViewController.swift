@@ -13,7 +13,7 @@ enum ContentType {
 }
 
 final class CategoryDetailViewController: UIViewController, CategoryDetailViewModelDelegate {
-    private let collectionView: UICollectionView = {
+    let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
@@ -34,7 +34,7 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
         return collectionView
     }()
     
-    private let noContentLabel  = UILabel(
+    let noContentLabel  = UILabel(
         text: "There is no content available for this category.",
         textColor: .tertiaryLabel, font: UIFont.systemFont(ofSize: 16),
         numberOfLines: .zero,
@@ -74,7 +74,7 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
         collectionView.delegate = self
         collectionView.register(CategoryDetailCell.self)
         collectionView.registerSupplementaryView(FooterCollectionReusableView.self, kind: UICollectionView.elementKindSectionFooter)
-        setupUI()
+        setupConstraints()
         viewModel.delegate = self
         viewModel.fetchCategoryDetail()
         setupBarButtonWithContextMenu()
@@ -101,22 +101,6 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
         
         return UIMenu(title: "Filter Options", children: [filterOption1, filterOption2])
         
-    }
-    
-    private func setupUI() {
-        view.addSubviews(collectionView, noContentLabel)
-        
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            noContentLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            noContentLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            noContentLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            noContentLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
     }
     
     func updateCollectionView() {
