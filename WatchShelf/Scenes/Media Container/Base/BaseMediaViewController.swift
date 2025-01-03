@@ -1,13 +1,13 @@
 //
-//  MovieViewController.swift
+//  BaseMediaViewController.swift
 //  WatchShelf
 //
-//  Created by Cansu Kahraman on 17.09.2024.
+//  Created by Cansu Kahraman on 3.01.2025.
 //
 
 import UIKit
 
-final class MovieViewController: UIViewController {
+class BaseMediaViewController: UIViewController {
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemBackground
@@ -31,23 +31,14 @@ final class MovieViewController: UIViewController {
         setupConstraints()
     }
     
-    private func configureChildViewControllers() {
-        let viewControllers: [UIViewController] = [
-            HorizontalMediaListingVCFactory.makePopularContentVC(onItemSelection: onItemSelection(id:)),
-            HorizontalMediaListingVCFactory.makeNowPlayingContentVC(onItemSelection: onItemSelection),
-            HorizontalMediaListingVCFactory.makeUpcomingContentVC(onItemSelection: onItemSelection),
-            HorizontalMediaListingVCFactory.makeTopRatedContentVC(onItemSelection: onItemSelection)
-        ]
-        
+    ///Subclass must implement this method
+    func configureChildViewControllers() {}
+    
+    func addChildViewControllers(_ viewControllers: [UIViewController]) {
         viewControllers.forEach { viewController in
             addChild(viewController)
             stackView.addArrangedSubview(viewController.view)
             viewController.didMove(toParent: self)
         }
-    }
-    
-    private func onItemSelection(id: Int) -> Void {
-        let movieDetailVC = MovieDetailFactory.makeCastDetailVC(movieID: id)
-        navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

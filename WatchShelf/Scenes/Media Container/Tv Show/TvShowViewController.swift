@@ -7,31 +7,12 @@
 
 import UIKit
 
-final class TvShowViewController: UIViewController {
-    let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.backgroundColor = .systemBackground
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-    
-    let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
+final class TvShowViewController: BaseMediaViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupConstraints()
-        addChildViewControllers()
     }
     
-    private func addChildViewControllers() {
+    override func configureChildViewControllers() {
         let viewControllers: [UIViewController] = [
             HorizontalMediaListingVCFactory.makeAiringTodayContentViewController(onItemSelection: onItemSelection),
             HorizontalMediaListingVCFactory.makeOnTheAirTVContentViewController(onItemSelection: onItemSelection),
@@ -39,11 +20,7 @@ final class TvShowViewController: UIViewController {
             HorizontalMediaListingVCFactory.makeTopRatedTVContentViewController(onItemSelection: onItemSelection)
         ]
         
-        viewControllers.forEach { viewController in
-            addChild(viewController)
-            stackView.addArrangedSubview(viewController.view)
-            viewController.didMove(toParent: self)
-        }
+        addChildViewControllers(viewControllers)
     }
     
     private func onItemSelection(id: Int) -> Void {

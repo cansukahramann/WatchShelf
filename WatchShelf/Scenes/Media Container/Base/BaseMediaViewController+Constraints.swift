@@ -1,5 +1,5 @@
 //
-//  TvShowViewController+Constraints.swift
+//  BaseMediaViewController+Constraints.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 3.01.2025.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-extension TvShowViewController {
+extension BaseMediaViewController {
     func setupConstraints() {
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
-        
+
         NSLayoutConstraint.activate( [
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
