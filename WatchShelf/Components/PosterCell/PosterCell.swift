@@ -13,7 +13,8 @@ class PosterCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        posterImageView.contentMode = .scaleAspectFill
+        
+        contentView.backgroundColor = .quaternaryLabel
         setupConstraint()
     }
     
