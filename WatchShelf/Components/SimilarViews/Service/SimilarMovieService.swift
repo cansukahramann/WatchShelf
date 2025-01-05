@@ -1,5 +1,5 @@
 //
-//  SimilarService.swift
+//  SimilarMovieService.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 30.11.2024.
@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-struct SimilarService: SimilarServiceProtocol {
+struct SimilarMovieService: SimilarServiceProtocol {
     private let provider = MoyaProvider<SimilarAPI>()
    
     func similarContentSelected(similarID: Int, requestModel: CommonRequestModel, completion: @escaping (Result<[SimilarResult], any Error>) -> Void) {
