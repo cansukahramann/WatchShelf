@@ -26,5 +26,17 @@ class BaseSimilarViewViewModel {
         self.similarID = similarID
     }
     
-    func fetchSimilarContent() { }
+    func fetchSimilarContent() {
+        service.similarContentSelected(similarID: similarID, requestModel: CommonRequestModel(page: page)) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let result):
+                self.similarModel.append(contentsOf: result)
+                self.page += 1
+            case .failure(let error):
+                print(error)
+            }
+            delegate?.updateCollectionView()
+        }
+    }
 }
