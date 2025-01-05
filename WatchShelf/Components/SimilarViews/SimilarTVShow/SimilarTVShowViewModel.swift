@@ -7,25 +7,9 @@
 
 import Foundation
 
-protocol SimilarTVShowViewModelDelegate: AnyObject {
-    func updateCollectionView()
-}
-
-final class SimilarTVShowViewModel {
-    
-    private let service: SimilarServiceProtocol
-    private var page = 1
-    private var tvShowID: Int
-    var similarModel: [SimilarResult] = []
-    weak var delegate: SimilarTVShowViewModelDelegate?
-    
-    init(service: SimilarServiceProtocol, tvShowID: Int) {
-        self.service = service
-        self.tvShowID = tvShowID
-    }
-    
-    func fetchTVShowSimilarModel() {
-        service.similarContentSelected(contentID: tvShowID, requestModel: CommonRequestModel(page: page)) { [weak self] result in
+final class SimilarTVShowViewModel: BaseSimilarViewViewModel {
+    override func fetchSimilarContent() {
+        service.similarContentSelected(similarID: similarID, requestModel: CommonRequestModel(page: page)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let result):

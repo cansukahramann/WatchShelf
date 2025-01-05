@@ -11,8 +11,8 @@ import Moya
 struct SimilarService: SimilarServiceProtocol {
     private let provider = MoyaProvider<SimilarAPI>()
    
-    func similarContentSelected(contentID: Int, requestModel: CommonRequestModel, completion: @escaping (Result<[SimilarResult], any Error>) -> Void) {
-        provider.request(.movieSimilar(movieID: contentID, requestModel: requestModel)) { result in
+    func similarContentSelected(similarID: Int, requestModel: CommonRequestModel, completion: @escaping (Result<[SimilarResult], any Error>) -> Void) {
+        provider.request(.movieSimilar(movieID: similarID, requestModel: requestModel)) { result in
             switch result {
             case let .success(response):
                 completion(mapResponseDetail(from: response.data))

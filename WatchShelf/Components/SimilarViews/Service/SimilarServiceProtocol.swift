@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SimilarServiceProtocol {
-    func similarContentSelected(contentID: Int,requestModel: CommonRequestModel, completion: @escaping(Result<[SimilarResult], Error>) -> Void)
+    func similarContentSelected(similarID: Int,requestModel: CommonRequestModel, completion: @escaping(Result<[SimilarResult], Error>) -> Void)
 }
 
 extension SimilarServiceProtocol {

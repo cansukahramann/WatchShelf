@@ -7,26 +7,11 @@
 
 import Foundation
 
-protocol SimilarMovieViewModelDelegate: AnyObject {
-    func updateCollectionView()
-}
 
-final class SimilarMovieViewModel {
-    private let service: SimilarServiceProtocol!
-    private var movieID: Int
-    private var page = 1
-    var similarModel: [SimilarResult] = []
-    weak var delegate: SimilarMovieViewModelDelegate?
-    var shouldRequestNextPage = true
-    var isFetchingContent = false
+final class SimilarMovieViewModel: BaseSimilarViewViewModel{
     
-    init(service: SimilarServiceProtocol ,movieID: Int) {
-        self.service = service
-        self.movieID = movieID
-    }
-    
-    func fetchSimilarModel() {
-        service.similarContentSelected(contentID: movieID, requestModel: CommonRequestModel(page: page)) { [weak self] result in
+    override func fetchSimilarContent() {
+        service.similarContentSelected(similarID: similarID, requestModel: CommonRequestModel(page: page)) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let result):

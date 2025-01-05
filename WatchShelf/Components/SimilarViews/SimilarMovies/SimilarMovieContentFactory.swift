@@ -10,7 +10,7 @@ import UIKit
 enum SimilarMovieContentFactory {
     static func makeView(with id: Int, onItemSelection: @escaping (Int) -> Void) -> UIView {
         let service = SimilarService()
-        let viewModel = SimilarMovieViewModel(service: service, movieID: id)
+        let viewModel = SimilarMovieViewModel(service: service, similarID: id)
         let view = SimilarMoviesView(viewModel: viewModel)
         view.didSelectItem = onItemSelection
         return view

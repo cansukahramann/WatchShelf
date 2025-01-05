@@ -7,14 +7,17 @@
 
 import UIKit
 
-final class MovieDetailViewController: UIViewController, MovieDetailViewModelDelegate, SimilarMoviesViewDelegate {
+final class MovieDetailViewController: UIViewController, MovieDetailViewModelDelegate, BaseSimilarViewDelegate {
+    
+    
     private let headerView = DetailHeaderView()
     private let descriptionView = ExpandableDescriptionView()
     private let videoView = VideoView()
     private let castView = CastView()
+    private var similarMoviesView: SimilarMoviesView!
     
     private var viewModel: MovieDetailViewModel!
-    private var similarMoviesView: SimilarMoviesView!
+   
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -53,7 +56,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     
     private func similarView() {
         let similarMoviesView = SimilarMovieContentFactory.makeView(with: viewModel.movieID) { movieID in
-            self.similarMovieSelected(movieID: movieID)
+            self.similarContentSelected(similarID: movieID)
         }
         self.similarMoviesView = similarMoviesView as? SimilarMoviesView
         stackView.addArrangedSubview(similarMoviesView)
@@ -75,10 +78,11 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         navigationItem.setRightBarButton(rightBarButtonItem, animated: true)
     }
         
-    func similarMovieSelected(movieID: Int) {
-        let detailVC = MovieDetailFactory.makeCastDetailVC(movieID: movieID)
+    func similarContentSelected(similarID: Int) {
+        let detailVC = MovieDetailFactory.makeCastDetailVC(movieID: similarID)
         navigationController?.pushViewController(detailVC, animated: true)
     }
+    
         
     func didFetchDetail() {
         setRightBarButtonItem(with: viewModel.isFavorite ? .checkmark.withTintColor(.gray) : .add)
