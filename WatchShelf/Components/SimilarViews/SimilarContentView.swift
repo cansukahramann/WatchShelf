@@ -1,5 +1,5 @@
 //
-//  BaseSimilarView.swift
+//  SimilarContentView.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 5.01.2025.
@@ -11,7 +11,7 @@ protocol BaseSimilarViewDelegate: AnyObject {
     func similarContentSelected(similarID: Int)
 }
 
-class BaseSimilarView: UIView, BaseSimilarViewViewModelDelegate {
+class SimilarContentView: UIView, SimilarContentViewModelDelegate {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -21,23 +21,19 @@ class BaseSimilarView: UIView, BaseSimilarViewViewModelDelegate {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    
-    let scrollView: UIScrollView = {
-            let scrollView = UIScrollView()
-            scrollView.translatesAutoresizingMaskIntoConstraints = false
-            return scrollView
-        }()
+    let titleLabel = UILabel(text: "Similar Shows", font: UIFont.boldSystemFont(ofSize: 18), textAlignment: .left)
 
-    private var viewModel: BaseSimilarViewViewModel!
+    private var viewModel: SimilarContentViewModel!
     weak var delegate: BaseSimilarViewDelegate!
     var didSelectItem: ((_ id: Int) -> Void)?
     
-    convenience init(viewModel: BaseSimilarViewViewModel) {
+    convenience init(viewModel: SimilarContentViewModel) {
         self.init(frame: .zero)
         self.viewModel = viewModel
         viewModel.delegate = self
         configureUI()
         viewModel.fetchSimilarContent()
+        setupConstraints()
     }
     
     func configureUI() {
@@ -47,10 +43,15 @@ class BaseSimilarView: UIView, BaseSimilarViewViewModelDelegate {
         collectionView.delegate = self
     }
     
-    func setupCollectionViewConstraints() {
-           addSubview(collectionView)
-           
-           NSLayoutConstraint.activate([
+    func setupConstraints() {
+        addSubviews(titleLabel,collectionView)
+            
+            NSLayoutConstraint.activate([
+                titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+                titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+                titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+                
+                collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
                collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
                collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
                collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
@@ -67,7 +68,7 @@ class BaseSimilarView: UIView, BaseSimilarViewViewModelDelegate {
     }
 }
 
-extension BaseSimilarView: UICollectionViewDataSource {
+extension SimilarContentView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.similarModel.count
     }
@@ -88,7 +89,11 @@ extension BaseSimilarView: UICollectionViewDataSource {
         let selectedSimilarMovieID = viewModel.similarModel[indexPath.item].id
         delegate?.similarContentSelected(similarID: selectedSimilarMovieID)
     }
-    
+}
+
+
+#warning("hele bura bak, bide burada yapılacak var")
+extension SimilarContentView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if (indexPath.row == viewModel.similarModel.count ) && !viewModel.isFetchingContent && viewModel.shouldRequestNextPage{
             _ = (Int(viewModel.similarModel.count) / 20) + 1
@@ -100,19 +105,5 @@ extension BaseSimilarView: UICollectionViewDataSource {
         let size = collectionView.frame.size
         let cellHeight =  (indexPath.item == viewModel.similarModel.count && viewModel.isFetchingContent ) ? 40  : (size.height)
         return CGSize(width: 190, height: cellHeight)
-    }
-}
-
-extension BaseSimilarView: UICollectionViewDelegateFlowLayout {
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let offsetX = scrollView.contentOffset.x
-        let contentWidth = scrollView.contentSize.height
-        let width = scrollView.frame.size.width
-        
-        if offsetX >= contentWidth - (2 * width) {
-            viewModel.fetchSimilarContent()
-            self.updateCollectionView()
-        }
     }
 }

@@ -14,7 +14,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     private let descriptionView = ExpandableDescriptionView()
     private let videoView = VideoView()
     private let castView = CastView()
-    private var similarMoviesView: SimilarMoviesView!
+    private var similarContentView: SimilarContentView!
     
     private var viewModel: MovieDetailViewModel!
    
@@ -46,7 +46,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
         setupConstraints()
         configureUI()
         similarView()
-        similarMoviesView.delegate = self
+        similarContentView.delegate = self
         
         castView.onCastSelection = { [unowned self] id in
             let vc = CastDetailFactory.makeCastDetailVC(castID: id)
@@ -55,11 +55,11 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     }
     
     private func similarView() {
-        let similarMoviesView = SimilarMovieContentFactory.makeView(with: viewModel.movieID) { movieID in
+        let similarContentView = SimilarMovieContentFactory.makeView(with: viewModel.movieID) { movieID in
             self.similarContentSelected(similarID: movieID)
         }
-        self.similarMoviesView = similarMoviesView as? SimilarMoviesView
-        stackView.addArrangedSubview(similarMoviesView)
+        self.similarContentView = similarContentView as? SimilarContentView
+        stackView.addArrangedSubview(similarContentView)
     }
     
     private func configureUI() {
@@ -93,7 +93,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailViewModelDel
     
         castView.isHidden = viewModel.casts.isEmpty
         videoView.isHidden = viewModel.movieVideoModel.isEmpty
-        similarMoviesView.hiddenIfNoData()
+        similarContentView.hiddenIfNoData()
     }
     
     @objc

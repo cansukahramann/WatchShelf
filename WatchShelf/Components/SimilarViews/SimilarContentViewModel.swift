@@ -1,5 +1,5 @@
 //
-//  BaseSimilarViewViewModel.swift
+//  SimilarContentViewModel.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 5.01.2025.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol BaseSimilarViewViewModelDelegate: AnyObject {
+protocol SimilarContentViewModelDelegate: AnyObject {
     func updateCollectionView()
 }
 
-class BaseSimilarViewViewModel {
+class SimilarContentViewModel {
     let service: SimilarServiceProtocol!
     let similarID: Int
     var page = 1
@@ -19,7 +19,7 @@ class BaseSimilarViewViewModel {
     var shouldRequestNextPage = true
     var isFetchingContent = false
     
-    weak var delegate: BaseSimilarViewViewModelDelegate?
+    weak var delegate: SimilarContentViewModelDelegate?
     
     init(service: SimilarServiceProtocol ,similarID: Int) {
         self.service = service

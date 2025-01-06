@@ -8,17 +8,29 @@
 import Foundation
 
 struct MovieDetailModel: Decodable {
-    let genres: [Genres]
     let id: Int
     let title: String
     let overview: String
-    let posterPath: String?
     let releaseDate: String
+    let posterPath: String?
+    let genres: [Genres]
     let runtime: Int
     let voteAverage: Double
 }
 
 struct Genres: Decodable {
-    let id: Int
     let name: String
+}
+
+struct DetailModel {
+    let id: Int
+    let title: String
+    let overview: String
+    let posterPath: String?
+    let attributes: [AttributeModel]
+}
+
+struct AttributeModel {
+    let name: String
+    let image: String
 }

@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelDelegate, BaseSimilarViewDelegate {
    
     private let headerView = DetailHeaderView()
@@ -16,7 +15,7 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
     private let castView = CastView()
     private var viewModel: TVShowDetailViewModel!
     
-    private var similarTvShowView: SimilarTVShowView!
+    private var similarContentView: SimilarContentView!
     
     
     let scrollView: UIScrollView = {
@@ -47,7 +46,7 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
         viewModel.fetchTVShowDetail()
         viewModel.delegate = self
         similarTVShowView()
-        similarTvShowView.delegate = self
+        similarContentView.delegate = self
         
         castView.onCastSelection = { [unowned self] id in
             let castDetailVC = CastDetailFactory.makeCastDetailVC(castID: id)
@@ -59,7 +58,7 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
         let similarView = SimilarTVShowContentFactory.makeView(with: viewModel.tvShowID) { tvShowID in
             self.similarContentSelected(similarID: tvShowID)
         }
-        self.similarTvShowView = similarView as? SimilarTVShowView
+        self.similarContentView = similarView as? SimilarContentView
         stackView.addArrangedSubview(similarView)
     }
     
@@ -85,7 +84,7 @@ final class TVShowDetailViewController: UIViewController, TVShowDetailViewModelD
         castView.casts = viewModel.casts
         castView.isHidden = viewModel.casts.isEmpty
         videoView.isHidden = viewModel.tvVideoModel.isEmpty
-        similarTvShowView.hiddenIfNoData()
+        similarContentView.hiddenIfNoData()
     }
     
     func similarContentSelected(similarID: Int) {
