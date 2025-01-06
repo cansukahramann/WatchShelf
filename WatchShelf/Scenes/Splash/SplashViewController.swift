@@ -36,9 +36,9 @@ final class SplashViewController: UIViewController {
         
         setupPosterImages()
         
-//        animationGroup.notify(queue: .main) { [self] in
+        animationGroup.notify(queue: .main) { [self] in
             pushToTabBarController()
-//        }
+        }
     }
     
     private func rowHeight() -> CGFloat {
