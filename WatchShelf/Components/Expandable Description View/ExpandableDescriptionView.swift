@@ -1,5 +1,5 @@
 //
-//  DescriptionView.swift
+//  ExpandableDescriptionView.swift
 //  WatchShelf
 //
 //  Created by Cansu Kahraman on 3.10.2024.

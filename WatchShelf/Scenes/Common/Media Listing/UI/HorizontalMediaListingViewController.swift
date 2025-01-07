@@ -37,7 +37,7 @@ final class HorizontalMediaListingViewController: UIViewController, MediaListing
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .systemBackground
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(PosterCell.self)

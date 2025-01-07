@@ -13,6 +13,13 @@ protocol SearchViewControllerDelegate: AnyObject {
 
 final class SearchViewController: UITableViewController {
     private let viewModel = SearchViewModel()
+    let label = UILabel(
+        text: "No results found",
+        textColor: .secondaryLabel,
+        font: UIFont.systemFont(ofSize: 16),
+        textAlignment: .center
+    )
+    
     weak var delegate: SearchViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -20,6 +27,7 @@ final class SearchViewController: UITableViewController {
         
         view.backgroundColor = .systemBackground
         title = "Search"
+        tableView.separatorStyle = .none
         
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "Search and don’t get lost..."
@@ -30,6 +38,7 @@ final class SearchViewController: UITableViewController {
         viewModel.delegate = self
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
+        configureNoResultsLabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,7 +47,6 @@ final class SearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        (viewModel.model.count > 0) ? (viewModel.model.count + 1) : 0
         if viewModel.model.isEmpty{
             return .zero
         }
@@ -101,16 +109,6 @@ final class SearchViewController: UITableViewController {
         guard indexPath.row >= viewModel.model.count - 3 else { return }
         viewModel.performSearchRequest()
     }
-    
-    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        let height = scrollView.frame.size.height
-        
-        if offsetY >= contentHeight - (2 * height), !viewModel.model.isEmpty {
-            viewModel.performSearchRequest()
-        }
-    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -118,25 +116,34 @@ extension SearchViewController: UISearchBarDelegate {
         if searchText.isEmpty {
             viewModel.resetSearch()
             tableView.reloadData()
+            label.isHidden = true
         } else {
             viewModel.search(searchText)
+            label.isHidden = true
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         viewModel.resetSearch()
         tableView.reloadData()
+        label.isHidden = true
     }
 }
 
 extension SearchViewController: SearchViewModelDelegate {
-    func didCompleteWith(results: [SearchResult]) {
-        viewModel.model = results
+    func didCompleteWith() {
+        if viewModel.model.isEmpty {
+            label.isHidden = false
+        } else {
+            label.isHidden = true
+        }
         tableView.reloadData()
     }
     
     func didCompleteWithError() {
-        print("search did compelte with error")
+        tableView.reloadData()
+        label.isHidden = true
+        UIHelper.showHUDerror("search did compelte with error")
     }
 }
 

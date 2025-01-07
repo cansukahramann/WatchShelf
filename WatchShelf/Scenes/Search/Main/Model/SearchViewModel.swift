@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 protocol SearchViewModelDelegate: AnyObject {
-    func didCompleteWith(results: [SearchResult])
+    func didCompleteWith()
     func didCompleteWithError()
 }
 
@@ -27,10 +27,14 @@ final class SearchViewModel {
     private(set) var hasMoreItemsToLoad = true
     
     func search(_ searchText: String) {
+        guard searchText != self.searchText else { return }
         self.searchText = searchText
+        model = []
+        page = 1
+        hasMoreItemsToLoad = true
         debounceTimer?.invalidate()
         debounceTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { [weak self] _ in
-            guard let self else { return }
+            guard let self, !searchText.isEmpty else { return }
             debounceTimer = nil
             performSearchRequest()
         }
@@ -44,7 +48,7 @@ final class SearchViewModel {
     }
     
     func performSearchRequest() {
-        guard !isLoadingMore, hasMoreItemsToLoad else { return }
+        guard !isLoadingMore, hasMoreItemsToLoad, !searchText.isEmpty else { return }
         isLoadingMore = true
         searchCancellationToken = service.search(searchText: searchText, requestModel: CommonRequestModel(page: page)) { [weak self] result in
             self?.searchCancellationToken = nil
@@ -55,7 +59,7 @@ final class SearchViewModel {
                 self?.model.append(contentsOf: filteredResults)
                 self?.hasMoreItemsToLoad = !filteredResults.isEmpty
                 self?.page += 1
-                self?.delegate?.didCompleteWith(results: self?.model ?? [])
+                self?.delegate?.didCompleteWith()
             case .failure:
                 self?.delegate?.didCompleteWithError()
             }

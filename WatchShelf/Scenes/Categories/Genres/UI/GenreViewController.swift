@@ -35,6 +35,7 @@ final class GenreViewController: UIViewController, GenreViewModelDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         collectionView.dataSource = self
         collectionView.delegate = self
         setupUI()
@@ -48,8 +49,7 @@ final class GenreViewController: UIViewController, GenreViewModelDelegate {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 300)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
