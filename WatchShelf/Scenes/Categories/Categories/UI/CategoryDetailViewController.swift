@@ -78,6 +78,7 @@ final class CategoryDetailViewController: UIViewController, CategoryDetailViewMo
         viewModel.delegate = self
         viewModel.fetchCategoryDetail()
         setupBarButtonWithContextMenu()
+        noContentLabel.isHidden = true 
     }
     
     private func setupBarButtonWithContextMenu() {
