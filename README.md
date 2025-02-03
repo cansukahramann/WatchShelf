@@ -180,4 +180,7 @@ This screen provides users with an easy way to view and manage their favorite co
   <img src="https://github.com/user-attachments/assets/42767435-018a-4bbc-9f2b-66b81dc714b5" width="250" />
 </p>
 
+## 🔗[View the Project Video on LinkedIn](https://www.linkedin.com/posts/fatma-cansu-kahraman-6935491b8_ios-iosdeveloper-swift-activity-7282727789483413506-IeNs?utm_source=share&utm_medium=member_desktop)
+
+
 
